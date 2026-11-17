@@ -13,13 +13,14 @@ DUO helps two people discover places and events in Minsk, plan dates, save favor
 - Events: structured JSON-LD scraper in backend/app/services/event_sync.py. The existing scheduled Supabase Edge Function remains active until the FastAPI endpoint is configured and verified.
 
 ## Repository layout
-- index.html — DUO frontend and 110-place fallback catalog.
-- minsk-auth.js — Supabase Auth only; all application data requests go through FastAPI.
-- duo-features.js — events, city updates and date planner via FastAPI.
+- public/index.html — DUO frontend and 110-place fallback catalog.
+- public/minsk-auth.js — Supabase Auth only; all application data requests go through FastAPI.
+- public/duo-features.js — events, city updates and date planner via FastAPI.
 - backend/app — FastAPI application, ORM models, auth and event importer.
 - backend/seed/places.json — normalized public catalog source.
 - backend/migrations — Alembic schema migration.
-- api/index.py — Vercel ASGI entry point.
+- app.py — Vercel FastAPI entry point.
+- public/ — static frontend assets served by Vercel CDN.
 
 ## Local backend setup
 1. Create a Python virtual environment.
@@ -27,7 +28,7 @@ DUO helps two people discover places and events in Minsk, plan dates, save favor
 3. Copy backend/.env.example to backend/.env. Create the restricted runtime role using backend/role.sql, then set DATABASE_URL from the Supabase Transaction Pooler URI and MIGRATION_DATABASE_URL for trusted migrations.
 4. From backend/: run alembic upgrade head using MIGRATION_DATABASE_URL (trusted admin connection).
 5. From backend/: run python seed_places.py.
-6. Run uvicorn app.main:app --reload from backend/.
+6. Run uvicorn app:app --reload from the project root.
 
 Open /docs for Swagger UI and /api/health for the health check.
 

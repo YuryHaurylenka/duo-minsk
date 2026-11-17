@@ -242,3 +242,21 @@ def test_valid_supabase_hs256_token_sets_authenticated_database_role(db, monkeyp
     )
     assert user == AuthUser(id=USER_ID, email="test@example.com")
     assert db.execute.call_count == 4
+
+
+def test_create_couple_handles_concurrent_membership_conflict(client, db):
+    db.scalar.return_value = None
+    db.execute.side_effect = RuntimeError('duplicate key violates unique constraint "couple_members_user_id_key"')
+    response = client.post("/api/couples", json={"name": "Race"})
+    assert response.status_code == 409
+    assert response.json()["detail"] == "Вы уже состоите в паре"
+    db.rollback.assert_called_once()
+
+
+def test_join_couple_handles_concurrent_membership_conflict(client, db):
+    db.scalar.return_value = None
+    db.execute.side_effect = RuntimeError('duplicate key violates unique constraint "couple_members_user_id_key"')
+    response = client.post("/api/couples/join", json={"invite_code": "ABC123"})
+    assert response.status_code == 409
+    assert response.json()["detail"] == "Вы уже состоите в паре"
+    db.rollback.assert_called_once()

@@ -58,7 +58,7 @@ Authenticated:
 - DATABASE_URL is a sensitive Vercel environment variable, not stored in Git.
 - Runtime DB role duo_api is NOINHERIT and NOBYPASSRLS; request handlers switch to anon or authenticated transaction-locally.
 - PostgreSQL RLS policies protect couple-scoped records; public API roles use least-privilege table grants and cannot TRUNCATE application tables.
-- Transaction-scoped two-user RLS isolation checks live in `supabase/tests/database/rls_isolation.sql`; see `docs/SECURITY.md`.
+- Transaction-scoped multi-user RLS and couple-invite isolation checks live in `supabase/tests/database/rls_isolation.sql`; see `docs/SECURITY.md`.
 - No Supabase service-role key is present in the client.
 - Never commit .env files.
 

@@ -102,8 +102,14 @@ def create_couple(payload: CoupleCreate, user: AuthUser = Depends(require_user),
     existing = db.scalar(select(CoupleMember).where(CoupleMember.user_id == user.id))
     if existing:
         raise HTTPException(status_code=409, detail="Вы уже состоите в паре")
-    row = db.execute(text("select * from public.create_couple(:name)"), {"name": payload.name.strip() or "Наша пара"}).mappings().one()
-    db.commit()
+    try:
+        row = db.execute(text("select * from public.create_couple(:name)"), {"name": payload.name.strip() or "Наша пара"}).mappings().one()
+        db.commit()
+    except Exception as exc:
+        db.rollback()
+        if "couple_members_user_id_key" in str(exc) or "User already belongs to a couple" in str(exc):
+            raise HTTPException(status_code=409, detail="Вы уже состоите в паре")
+        raise
     return CoupleOut(id=row["id"], name=row["name"], invite_code=row["invite_code"], role="owner")
 
 
@@ -118,6 +124,8 @@ def join_couple(payload: CoupleJoin, user: AuthUser = Depends(require_user), db:
         message = str(exc)
         if "В паре уже два участника" in message:
             raise HTTPException(status_code=409, detail="В этой паре уже два участника")
+        if "User already belongs to another couple" in message or "couple_members_user_id_key" in message:
+            raise HTTPException(status_code=409, detail="Вы уже состоите в паре")
         raise HTTPException(status_code=404, detail="Код пары не найден")
     db.commit()
     return CoupleOut(id=row["id"], name=row["name"], invite_code=row["invite_code"], role="member")

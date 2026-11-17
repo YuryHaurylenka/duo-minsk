@@ -11,8 +11,8 @@ FastAPI backend for DUO. PostgreSQL is the source of truth for places, events, c
 
 ## Run locally
 1. Create a virtual environment and install requirements.txt.
-2. Copy .env.example to .env and set DATABASE_URL, Supabase URL and publishable key.
-3. Run alembic upgrade head (the migration connection is used for schema changes).
+2. Copy .env.example to .env. Set DATABASE_URL to the Supabase Transaction Pooler URI and MIGRATION_DATABASE_URL to a trusted admin connection. Set the Supabase URL and publishable key.
+3. Run role.sql once in Supabase SQL Editor after replacing the password placeholder. Then run alembic upgrade head (the migration connection is used for schema changes).
 4. Run python seed_places.py.
 5. Run uvicorn app.main:app --reload --app-dir .
 
@@ -27,7 +27,6 @@ Swagger UI: /docs; health: /api/health.
 ## Security
 - Access tokens are verified against Supabase Auth JWKS; expired or invalid tokens are rejected.
 - Couple-scoped reads and writes always resolve membership server-side.
-- Cron endpoint requires a private secret.
 - Never commit .env, database passwords, JWT secrets, or service-role keys.
 - Existing Supabase RLS policies remain enabled as defense in depth. The runtime login should be a dedicated NOINHERIT role granted membership in anon and authenticated so requests can SET LOCAL ROLE and let PostgreSQL enforce RLS.
 

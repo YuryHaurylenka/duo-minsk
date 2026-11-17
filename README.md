@@ -24,7 +24,7 @@ DUO helps two people discover places and events in Minsk, plan dates, save favor
 ## Local backend setup
 1. Create a Python virtual environment.
 2. Install root requirements.txt.
-3. Copy backend/.env.example to backend/.env and set DATABASE_URL.
+3. Copy backend/.env.example to backend/.env. Create the restricted runtime role using backend/role.sql, then set DATABASE_URL from the Supabase Transaction Pooler URI and MIGRATION_DATABASE_URL for trusted migrations.
 4. From backend/: run alembic upgrade head using MIGRATION_DATABASE_URL (trusted admin connection).
 5. From backend/: run python seed_places.py.
 6. Run uvicorn app.main:app --reload from backend/.
@@ -45,4 +45,4 @@ Open /docs for Swagger UI and /api/health for the health check.
 - Never commit .env files.
 
 ## Migration status
-The API and frontend adapters are scaffolded. Production cutover is not complete until the PostgreSQL connection secret is configured, the Alembic migration and 110-place seed are applied, API tests pass against the database, and the Vercel deployment is verified end-to-end. The current production site remains the fallback during this migration.
+The places table and 110-place seed have already been applied to Supabase PostgreSQL. The local Alembic migration is idempotent for new environments. The API and frontend adapters are scaffolded; production cutover is not complete until the runtime PostgreSQL connection is configured, API endpoints are tested against the live database, and a Vercel deployment is verified end-to-end. The current production site remains the fallback during this migration.

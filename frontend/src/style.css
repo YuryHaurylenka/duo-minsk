@@ -3,3 +3,28 @@
 .history-toolbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:18px 0 8px}.history-toolbar>span{font-size:9px;color:var(--muted)}.memory-open{border:1px solid var(--line);background:#20261e;color:var(--lime);border-radius:8px;padding:7px 10px;font-size:9px;white-space:nowrap}.memory-row{min-width:0}.memory-row>div{min-width:0}@media(max-width:680px){.memory-row{flex-wrap:wrap}.memory-open{margin-left:47px}}
 .group-size{display:flex;align-items:center;gap:12px;margin-top:12px;color:var(--muted);font-size:10px}.group-size input{width:86px;height:36px;padding:0 10px;border:1px solid #384333;border-radius:9px;background:#20261e;color:#fff}
 .detail-links{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px}.detail-links .secondary{color:#9aa58f}.category-pills button{transition:background .18s,border-color .18s,color .18s}.category-pills button:hover{border-color:#829c53;color:#e7f0db}
+
+/* DUO experience refresh */
+:root{font-family:'Plus Jakarta Sans','Manrope',system-ui,sans-serif;--radius:20px;--muted:#a5ad9d}
+.welcome-row h1,.section-head h2,.modal h2,.plan-preview h2{font-family:'Space Grotesk','Plus Jakarta Sans',sans-serif;letter-spacing:-.055em}
+.place-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.place-card{border-radius:20px;background:linear-gradient(155deg,#1b2119,#111610);box-shadow:0 8px 30px #0002}
+.place-image{height:190px;overflow:hidden;background-color:#242d20;transition:filter .25s}
+.place-image:before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#080b08c9,transparent 68%);z-index:1;opacity:.8;transition:opacity .25s}
+.place-image:hover:before{opacity:1}
+.image-open-label{position:absolute;z-index:3;right:12px;bottom:13px;display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border:1px solid #ffffff55;border-radius:999px;background:#10150fd9;color:#f5f8ef;font-size:9px;font-weight:700;opacity:0;transform:translateY(5px);transition:.2s}
+.place-image:hover .image-open-label,.place-image:focus-visible .image-open-label{opacity:1;transform:translateY(0)}
+.place-content{padding:16px}.place-content>p{font-size:11px;line-height:1.65;min-height:42px}.place-title-button{font-size:15px}.place-meta{font-size:10px}.place-bottom button{padding:7px 0;font-size:10px}
+.heart-button{width:36px;height:36px;border:1px solid #ffffff12;border-radius:11px;background:#ffffff06;display:grid;place-items:center}.heart-button:hover{background:#ff779022;color:#ff91a5}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.profile-grid h3{margin:0 0 8px;font-size:17px;letter-spacing:-.04em}.preference-options{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 26px}.health-options{display:grid;gap:10px;margin:18px 0}.health-option{display:flex;align-items:flex-start;gap:11px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#ffffff04;color:#d9e0d2;font-size:11px;line-height:1.5;cursor:pointer}.health-option input{accent-color:var(--lime);width:16px;height:16px;flex:none;margin:0}.health-footnote{padding:12px;border-radius:11px;background:#282b1d;color:#aeb99f;font-size:9px;line-height:1.6}
+.branch-list{display:grid;gap:7px;margin:18px 0}.branch-list>b{font-size:11px;margin-bottom:3px}.branch-list a{display:flex;align-items:center;gap:9px;padding:11px 12px;border:1px solid var(--line);border-radius:11px;color:#dce5d4;text-decoration:none;font-size:10px;transition:.2s}.branch-list a:hover{border-color:var(--lime);color:var(--lime)}.branch-list a span{flex:1}
+.detail-actions .button-primary,.detail-actions .button-ghost{flex:1;min-width:0}
+.detail-rating button{width:34px;height:34px;border-radius:9px}.detail-rating button:hover{background:#c8f36b18}
+.sort-select,.filter-toggle,.surprise-button,.category-pills button,.quick-filters button{min-height:40px}
+button,a,select{ -webkit-tap-highlight-color:transparent }
+button:active{transform:scale(.985)}
+@media(max-width:1200px){.place-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.profile-grid{grid-template-columns:1fr}.place-image{height:180px}}
+@media(max-width:680px){.place-grid{grid-template-columns:1fr}.place-image{height:210px}.image-open-label{opacity:1;transform:none}.detail-actions{flex-direction:column}}
+.review-nudge{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;margin:12px 0;border:1px solid #657d3c;border-radius:13px;background:#29351e55}.review-nudge b{font-size:11px}.review-nudge p{margin:5px 0 0;color:var(--muted);font-size:9px;line-height:1.5}.review-nudge a{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;color:var(--lime);font-size:9px;font-weight:800;text-decoration:none}.review-nudge a:hover{text-decoration:underline}@media(max-width:680px){.review-nudge{align-items:flex-start;flex-direction:column}}
+.place-card{cursor:pointer;outline:none}.place-card:focus-visible{outline:2px solid var(--lime);outline-offset:4px}.place-card .place-image{cursor:pointer}.place-title-row h3{font-size:15px;letter-spacing:-.04em;margin:0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.card-detail-link{display:inline-flex;align-items:center;gap:5px;color:var(--lime);font-size:10px;font-weight:800}.place-card:hover .card-detail-link{gap:9px}.place-card .place-image{pointer-events:none}.place-card .heart-button{pointer-events:auto}

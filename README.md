@@ -12,7 +12,7 @@ DUO helps two people discover places and events, build date itineraries, keep a 
 - Database: Supabase PostgreSQL, Frankfurt.
 - Identity: Supabase Auth; FastAPI verifies JWTs against the project JWKS.
 - Deployment: Vercel FastAPI, function region fra1.
-- Migrations: Alembic.
+- Migrations: Alembic for the API schema plus tracked Supabase SQL migrations for managed database security and indexes.
 - Event ingestion: existing scheduled Supabase Edge Function.
 
 ## Repository layout
@@ -23,7 +23,9 @@ DUO helps two people discover places and events, build date itineraries, keep a 
 - backend/app/ — API, auth, ORM models, schemas and services.
 - backend/seed/places.json — normalized source catalog.
 - backend/migrations/ — Alembic migrations.
-- docs/ — product strategy and architecture.
+- docs/ — product strategy, architecture and security runbooks.
+- supabase/migrations/ — tracked Supabase database security and performance migrations.
+- supabase/tests/database/ — transaction-scoped PostgreSQL isolation checks.
 
 ## API
 Public:
@@ -55,7 +57,8 @@ Authenticated:
 ## Security
 - DATABASE_URL is a sensitive Vercel environment variable, not stored in Git.
 - Runtime DB role duo_api is NOINHERIT and NOBYPASSRLS; request handlers switch to anon or authenticated transaction-locally.
-- Existing PostgreSQL RLS policies protect couple-scoped records.
+- PostgreSQL RLS policies protect couple-scoped records; public API roles use least-privilege table grants and cannot TRUNCATE application tables.
+- Transaction-scoped two-user RLS isolation checks live in `supabase/tests/database/rls_isolation.sql`; see `docs/SECURITY.md`.
 - No Supabase service-role key is present in the client.
 - Never commit .env files.
 
@@ -63,7 +66,7 @@ Authenticated:
 - FastAPI is deployed to production in Frankfurt.
 - Production PostgreSQL connectivity is verified through the public API.
 - The live API returned places, events and editorial updates from PostgreSQL.
-- 110 places, 32 current/upcoming events and 7 city updates were visible in the latest browser smoke test.
+- 110 places, 65 current/upcoming events and 7 city updates were returned by the latest production API smoke test.
 - A startup-order race between Auth and event loading was fixed.
 - Public link audit: 203 unique place/source URLs; 115 returned HTTP 200, 84 returned HTTP 204 and 4 hosts blocked automated checks with 403; no 404/410 responses were found.
 - Saved-plan and two-account end-to-end tests still require real test accounts.
@@ -71,5 +74,8 @@ Authenticated:
 ## International expansion
 Minsk is the first city, not a claim of global coverage. Read docs/GO_TO_MARKET.md before expanding to another market. The next milestones are English localization, a city data pipeline, privacy/legal readiness, payments/affiliate partnerships and retention validation.
 
-## Important
-The current Vercel deployment is deployed directly from source files. A private GitHub repository has been created; connect it to Vercel after the repository source is pushed and verified. Keep the working production deployment as the fallback until the Git-linked pipeline is proven.
+## Delivery pipeline
+- Private GitHub repository: https://github.com/YuryHaurylenka/duo-minsk
+- Vercel is linked to the GitHub repository and automatically deploys `main` to production.
+- GitHub Actions runs the backend test suite on pushes and pull requests.
+- Keep database migrations reviewed and explicit; do not place production secrets in GitHub or the browser.

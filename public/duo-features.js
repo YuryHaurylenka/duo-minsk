@@ -141,7 +141,9 @@ for(const id of ['eventsGrid','placeUpdates']){
   host?.addEventListener('keydown',event=>{if(event.key!=='Enter'&&event.key!==' ')return;const card=event.target.closest('[data-url]');if(card){event.preventDefault();window.open(card.dataset.url,'_blank','noopener')}});
 }
 $('generatePlan').addEventListener('click',buildPlan);
-initDates();loadEvents();loadPlaceUpdates();loadSavedPlans();
+initDates();
+await (window.duoApi ? Promise.resolve() : new Promise(resolve => window.addEventListener('duo-api-ready', resolve, {once:true})));
+loadEvents();loadPlaceUpdates();loadSavedPlans();
 async function subscribePlansRealtime(){
   const client=window.duoSupabaseRealtime;
   if(!client)return;

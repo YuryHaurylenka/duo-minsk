@@ -23,6 +23,7 @@ async function api(path, options = {}) {
   return payload;
 }
 window.duoApi = api;
+window.dispatchEvent(new Event('duo-api-ready'));
 
 const $ = id => document.getElementById(id);
 window.loadDuoPlaces?.();

@@ -12,7 +12,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from app.config import get_settings
 from app.database import get_db
 from app.auth import AuthUser, require_user
-from app.models.entities import City, Place, Couple, CoupleMember, PlaceActivity, DuoEvent, DuoDatePlan, DuoPlaceUpdate
+from app.models.entities import City, Place, Couple, CoupleMember, PlaceActivity, PersonalPlaceActivity, DuoEvent, DuoDatePlan, DuoPlaceUpdate
 from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, ActivitySyncItem, PlanCreate, PlanOut
 
 settings = get_settings()
@@ -171,14 +171,14 @@ def leave_couple(user: AuthUser = Depends(require_user), db: Session = Depends(g
 
 @app.get("/api/activity")
 def get_activity(user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
-    couple = get_couple(db, user)
-    rows = db.scalars(select(PlaceActivity).where(PlaceActivity.couple_id == couple.id)).all()
+    member = db.scalar(select(CoupleMember).where(CoupleMember.user_id == user.id).limit(1))
+    rows = db.scalars(select(PlaceActivity).where(PlaceActivity.couple_id == member.couple_id)).all() if member else db.scalars(select(PersonalPlaceActivity).where(PersonalPlaceActivity.user_id == user.id)).all()
     return [{"place_slug": r.place_slug, "place_name": r.place_name, "is_favorite": r.is_favorite, "visited_at": r.visited_at, "rating": r.rating, "note": r.note} for r in rows]
 
 
 @app.put("/api/activity", status_code=204)
 def sync_activity(items: list[ActivitySyncItem], user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
-    couple = get_couple(db, user)
+    member = db.scalar(select(CoupleMember).where(CoupleMember.user_id == user.id).limit(1))
     slugs = [item.place_slug for item in items]
     places = db.scalars(select(Place).where(Place.slug.in_(slugs))).all() if slugs else []
     names = {p.slug: p.name for p in places}
@@ -187,10 +187,16 @@ def sync_activity(items: list[ActivitySyncItem], user: AuthUser = Depends(requir
         place_name = names.get(item.place_slug)
         if not place_name:
             continue
-        stmt = insert(PlaceActivity).values(id=uuid4(), couple_id=couple.id, place_slug=item.place_slug, place_name=place_name, is_favorite=item.is_favorite, visited_at=now if item.visited else None, rating=item.rating, note="", updated_by=user.id, updated_at=now).on_conflict_do_update(
-            constraint="place_activity_couple_id_place_slug_key",
-            set_={"is_favorite": item.is_favorite, "visited_at": now if item.visited else None, "rating": item.rating, "updated_by": user.id, "updated_at": now},
-        )
+        if member:
+            stmt = insert(PlaceActivity).values(id=uuid4(), couple_id=member.couple_id, place_slug=item.place_slug, place_name=place_name, is_favorite=item.is_favorite, visited_at=now if item.visited else None, rating=item.rating, note=item.note, updated_by=user.id, updated_at=now).on_conflict_do_update(
+                constraint="place_activity_couple_id_place_slug_key",
+                set_={"is_favorite": item.is_favorite, "visited_at": now if item.visited else None, "rating": item.rating, "note": item.note, "updated_by": user.id, "updated_at": now},
+            )
+        else:
+            stmt = insert(PersonalPlaceActivity).values(id=uuid4(), user_id=user.id, place_slug=item.place_slug, place_name=place_name, is_favorite=item.is_favorite, visited_at=now if item.visited else None, rating=item.rating, note=item.note, updated_at=now).on_conflict_do_update(
+                constraint="personal_place_activity_user_place_key",
+                set_={"is_favorite": item.is_favorite, "visited_at": now if item.visited else None, "rating": item.rating, "note": item.note, "updated_at": now},
+            )
         db.execute(stmt)
     db.commit()
     return None

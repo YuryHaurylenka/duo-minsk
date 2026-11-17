@@ -85,6 +85,20 @@ class PlaceActivity(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
 
+class PersonalPlaceActivity(Base):
+    __tablename__ = "personal_place_activity"
+    __table_args__ = (UniqueConstraint("user_id", "place_slug", name="personal_place_activity_user_place_key"), {"schema": "public"})
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), index=True)
+    place_slug: Mapped[str] = mapped_column(String(180), ForeignKey("public.places.slug", ondelete="CASCADE"))
+    place_name: Mapped[str] = mapped_column(Text)
+    is_favorite: Mapped[bool] = mapped_column(Boolean, default=False)
+    visited_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    rating: Mapped[int | None] = mapped_column(SmallInteger, nullable=True)
+    note: Mapped[str] = mapped_column(Text, default="")
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
 class DuoEvent(Base):
     __tablename__ = "duo_events"
     __table_args__ = {"schema": "public"}

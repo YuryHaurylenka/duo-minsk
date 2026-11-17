@@ -95,6 +95,7 @@ class ActivitySyncItem(BaseModel):
     is_favorite: bool = False
     visited: bool = False
     rating: int | None = Field(default=None, ge=1, le=5)
+    note: str = Field(default="", max_length=2000)
 
 
 class PlanCreate(BaseModel):

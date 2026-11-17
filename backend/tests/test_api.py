@@ -125,10 +125,12 @@ def test_leave_couple_returns_not_found_without_membership(client, db):
     db.execute.assert_not_called()
 
 
-def test_activity_requires_membership(client, db):
+def test_activity_is_available_for_personal_account(client, db):
     db.scalar.return_value = None
+    db.scalars.return_value.all.return_value = []
     response = client.get("/api/activity")
-    assert response.status_code == 409
+    assert response.status_code == 200
+    assert response.json() == []
 
 
 def test_activity_returns_couple_records(client, db):
@@ -156,6 +158,17 @@ def test_activity_sync_upserts_known_places_and_ignores_unknown(client, db):
     assert db.execute.call_count == 1
     db.commit.assert_called_once()
 
+
+
+def test_personal_activity_sync_upserts_for_user_without_couple(client, db):
+    db.scalar.return_value = None
+    db.scalars.return_value.all.return_value = [Place(slug=PLACE_SLUG, name="Test Cafe")]
+    response = client.put("/api/activity", json=[
+        {"place_slug": PLACE_SLUG, "is_favorite": True, "visited": True, "rating": 5, "note": "Great"}
+    ])
+    assert response.status_code == 204
+    db.execute.assert_called_once()
+    db.commit.assert_called_once()
 
 def test_activity_rating_must_be_between_one_and_five(client, db):
     response = client.put("/api/activity", json=[{"place_slug": PLACE_SLUG, "rating": 6}])

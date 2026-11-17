@@ -13,3 +13,16 @@ __pycache__/
 .DS_Store
 .vercel/
 node_modules/
+
+# Archived local patches and exported snapshots
+add-minsk-places.js
+add-personal-tracker.js
+fix-minsk-auth*.js
+fix-minsk-state.js
+patch-auth-realtime.js
+patch-minsk.js
+redesign-minsk.js
+minsk-auth.css.html
+DUO — Field Guide Minsk.html
+Куда сходить в Минске — 100 мест.html
+Куда сходить вдвоём — Минск.html

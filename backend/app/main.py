@@ -164,11 +164,7 @@ def leave_couple(user: AuthUser = Depends(require_user), db: Session = Depends(g
     member = db.scalar(select(CoupleMember).where(CoupleMember.user_id == user.id).limit(1))
     if not member:
         raise HTTPException(status_code=404, detail="Вы не состоите в паре")
-    couple_id = member.couple_id
-    db.execute(delete(CoupleMember).where(CoupleMember.user_id == user.id, CoupleMember.couple_id == couple_id))
-    remaining = db.scalar(select(func.count()).select_from(CoupleMember).where(CoupleMember.couple_id == couple_id)) or 0
-    if remaining == 0:
-        db.execute(delete(Couple).where(Couple.id == couple_id))
+    db.execute(delete(CoupleMember).where(CoupleMember.user_id == user.id, CoupleMember.couple_id == member.couple_id))
     db.commit()
     return None
 

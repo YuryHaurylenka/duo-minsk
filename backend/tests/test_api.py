@@ -110,19 +110,11 @@ def test_join_returns_not_found_for_unknown_invite(client, db):
     db.rollback.assert_called_once()
 
 
-def test_leave_couple_removes_only_current_membership_when_partner_remains(client, db):
-    db.scalar.side_effect = [membership(), 1]
+def test_leave_couple_removes_only_current_membership(client, db):
+    db.scalar.return_value = membership()
     response = client.delete("/api/couples/me")
     assert response.status_code == 204
     db.execute.assert_called_once()
-    db.commit.assert_called_once()
-
-
-def test_leave_couple_deletes_empty_space_after_last_member(client, db):
-    db.scalar.side_effect = [membership(), 0]
-    response = client.delete("/api/couples/me")
-    assert response.status_code == 204
-    assert db.execute.call_count == 2
     db.commit.assert_called_once()
 
 

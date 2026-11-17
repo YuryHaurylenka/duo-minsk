@@ -1,3 +1,5 @@
+![DUO CI](https://github.com/YuryHaurylenka/duo-minsk/actions/workflows/ci.yml/badge.svg)
+
 # DUO — date planning for two
 
 Production: https://minsk-date-ideas.vercel.app

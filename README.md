@@ -1,89 +1,207 @@
-![DUO CI](https://github.com/YuryHaurylenka/duo-minsk/actions/workflows/ci.yml/badge.svg)
+<!-- DUO README | Product-first, backend-focused -->
 
-# DUO — date planning for two
+<div align="center">
 
-Production: https://minsk-date-ideas.vercel.app
+# DUO
+### Make time together count.
 
-DUO helps two people discover places and events, build date itineraries, keep a shared history and save plans together.
+**A shared space for discovering places, choosing what to do, and planning experiences together.**
 
-## Production stack
-- Client: responsive HTML/CSS/JavaScript in public/.
-- API: FastAPI + Pydantic + SQLAlchemy 2.
-- Database: Supabase PostgreSQL, Frankfurt.
-- Identity: Supabase Auth; FastAPI verifies JWTs against the project JWKS.
-- Deployment: Vercel FastAPI, function region fra1.
-- Migrations: Alembic for the API schema plus tracked Supabase SQL migrations for database security, city catalog and indexes.
-- Event ingestion: existing scheduled Supabase Edge Function.
+[Open DUO](https://minsk-date-ideas.vercel.app) · [Report an issue](https://github.com/YuryHaurylenka/duo-minsk/issues)
 
-## Repository layout
-- public/index.html — DUO experience and initial fallback catalog.
-- public/minsk-auth.js — Supabase Auth and FastAPI client.
-- public/duo-features.js — events, city updates, date planner and saved plans.
-- main.py — Vercel FastAPI entry point.
-- backend/app/ — API, auth, ORM models, schemas and services.
-- backend/seed/places.json — normalized source catalog.
-- backend/migrations/ — Alembic migrations.
-- docs/ — product strategy, architecture and security runbooks.
-- supabase/migrations/ — tracked Supabase database security and performance migrations.
-- supabase/tests/database/ — transaction-scoped PostgreSQL isolation checks.
-- supabase/functions/duo-event-sync/ — city-aware event ingestion function source.
+<br/>
+
+![CI](https://github.com/YuryHaurylenka/duo-minsk/actions/workflows/ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Active%20development-8B5CF6)
+
+</div>
+
+---
+
+## The idea
+
+Choosing a place or planning a date should feel easy.
+
+DUO helps couples and friends discover things to do, make decisions together, save ideas, and turn them into shared plans. Minsk is the first city in the catalog; the product is being built with a foundation for expanding to other cities and activity categories.
+
+## What you can do
+
+| Discover | Decide together | Keep the memories |
+|:--|:--|:--|
+| Explore places and local events | Create a shared couple space | Save favorites and plans |
+| Search by category and district | Compare preferences and votes | Keep a shared activity history |
+| View places on an interactive map | Find ideas that work for both | Rate places and add personal notes |
+| Build an evening plan | Coordinate a date itinerary | Return to ideas you liked |
+
+> The product is evolving. Some collaborative flows still need end-to-end verification with two real user accounts.
+
+## Product preview
+
+<div align="center">
+
+[**Explore the live application →**](https://minsk-date-ideas.vercel.app)
+
+</div>
+
+## Engineering
+
+DUO is built around a Python backend, a relational data model, and explicit access boundaries for shared data.
+
+```text
+                         ┌─────────────────────┐
+                         │     Web client      │
+                         │  responsive UI      │
+                         └──────────┬──────────┘
+                                    │ HTTPS / JWT
+                                    ▼
+                         ┌─────────────────────┐
+                         │     FastAPI         │
+                         │ routes · schemas    │
+                         │ services · auth     │
+                         └──────────┬──────────┘
+                                    │ SQLAlchemy 2
+                                    ▼
+                         ┌─────────────────────┐
+                         │  PostgreSQL         │
+                         │  Supabase           │
+                         │  RLS · migrations   │
+                         └─────────────────────┘
+```
+
+### Core stack
+
+| Area | Technology |
+|---|---|
+| Backend | **Python 3.12, FastAPI, Pydantic** |
+| ORM & database access | **SQLAlchemy 2** |
+| Database | **PostgreSQL (Supabase)** |
+| Authentication | Supabase Auth, JWT verification via JWKS |
+| Schema migrations | Alembic + versioned Supabase SQL migrations |
+| Frontend | React + Vite |
+| Deployment | Vercel (API and web client) |
+| Quality | Pytest, GitHub Actions, PostgreSQL isolation checks |
+
+## Architecture at a glance
+
+- **API-first backend** — request handling, validation, authentication, and business logic are separated into focused modules.
+- **Typed data layer** — SQLAlchemy 2 models and Pydantic schemas define the application contracts.
+- **User-scoped access** — JWT identity is verified by the API; PostgreSQL Row-Level Security protects couple-related records.
+- **Explicit migrations** — application schema changes and database security changes are version-controlled.
+- **Multi-city foundation** — city-aware endpoints make it possible to add locations without mixing unverified catalog data.
+- **Automated checks** — backend tests run in GitHub Actions on pushes and pull requests.
 
 ## API
-Public:
-- GET /api/health, GET /api/health/ready
-- GET /api/cities
-- GET /api/places
-- GET /api/places/{slug}
-- GET /api/events
-- GET /api/updates
 
-Authenticated:
-- GET /api/me
-- POST /api/couples
-- POST /api/couples/join
-- GET /api/activity
-- PUT /api/activity
-- GET /api/plans
-- POST /api/plans
-- DELETE /api/plans/{id}
+Interactive API documentation is available when running the backend locally:
 
-## Local development
-1. Create a Python 3.12 virtual environment.
-2. Install requirements.txt.
-3. Copy backend/.env.example to backend/.env.
-4. Set DATABASE_URL to the Supabase Transaction Pooler URL. Set MIGRATION_DATABASE_URL only for trusted migration runs.
-5. Run alembic -c backend/alembic.ini upgrade head.
-6. Run python backend/seed_places.py if initializing a fresh catalog.
-7. Start uvicorn main:app --reload.
+- Swagger UI: `/docs`
+- ReDoc: `/redoc`
 
-## Security
-- DATABASE_URL is a sensitive Vercel environment variable, not stored in Git.
-- Runtime DB role duo_api is NOINHERIT and NOBYPASSRLS; request handlers switch to anon or authenticated transaction-locally.
-- PostgreSQL RLS policies protect couple-scoped records; public API roles use least-privilege table grants and cannot TRUNCATE application tables.
-- Multi-city API foundation: `/api/cities` lists active cities; pass `?city=minsk` to places, events and updates. Minsk is currently the only active city; additional cities are not advertised before their data is verified.
-- Couple SECURITY DEFINER functions are isolated in the non-exposed `private` schema; FastAPI calls them only after JWT verification.
-- Transaction-scoped multi-user RLS and couple-invite isolation checks live in `supabase/tests/database/rls_isolation.sql`; see `docs/SECURITY.md`.
-- No Supabase service-role key is present in the client.
-- Never commit .env files.
+A few key routes:
 
-## Current status
-- FastAPI is deployed to production in Frankfurt.
-- Production PostgreSQL connectivity is verified through the public API.
-- The live API returned places, events and editorial updates from PostgreSQL.
-- The production catalog currently contains 110 Minsk places, active city-scoped event listings and 7 editorial city updates.
-- A startup-order race between Auth and event loading was fixed.
-- Public link audit: 203 unique place/source URLs; 115 returned HTTP 200, 84 returned HTTP 204 and 4 hosts blocked automated checks with 403; no 404/410 responses were found.
-- SQL-level two-user isolation and invite-capacity tests pass; browser-level realtime and saved-plan flows still require two real test accounts.
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/api/health` | Service health |
+| GET | `/api/cities` | Active cities |
+| GET | `/api/places` | Discover places |
+| GET | `/api/places/{slug}` | Place details |
+| GET | `/api/events` | Local events |
+| GET | `/api/activity` | User activity |
+| PUT | `/api/activity` | Update activity |
+| GET | `/api/plans` | Saved plans |
+| POST | `/api/plans` | Create a plan |
 
-## International expansion
-Minsk is the first city, not a claim of global coverage. Read docs/GO_TO_MARKET.md before expanding to another market. The next milestones are English localization, a city data pipeline, privacy/legal readiness, payments/affiliate partnerships and retention validation.
+Authenticated routes require a valid Supabase access token.
 
-## Delivery pipeline
-- Private GitHub repository: https://github.com/YuryHaurylenka/duo-minsk
-- Vercel is linked to the GitHub repository and automatically deploys `main` to production.
-- GitHub Actions runs the backend test suite on pushes and pull requests.
-- Keep database migrations reviewed and explicit; do not place production secrets in GitHub or the browser.
+## Run locally
 
-## Frontend
+### Requirements
 
-The production UI is a React + Vite app. See [docs/FRONTEND.md](docs/FRONTEND.md) for the stack, local development, deployment pipeline, and data-integrity notes. Vercel builds the frontend with `npm ci && npm run build` while retaining the FastAPI API.
+- Python 3.12
+- Node.js and npm
+- A Supabase project (PostgreSQL + Auth)
+
+### Backend
+
+```bash
+git clone https://github.com/YuryHaurylenka/duo-minsk.git
+cd duo-minsk
+
+python3.12 -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+cp backend/.env.example backend/.env
+```
+
+Configure the environment variables in `backend/.env`. Set `DATABASE_URL` to the Supabase Transaction Pooler connection string. Use `MIGRATION_DATABASE_URL` only for trusted migration operations.
+
+Apply migrations and start the API:
+
+```bash
+alembic -c backend/alembic.ini upgrade head
+uvicorn main:app --reload
+```
+
+The API will be available at `http://127.0.0.1:8000`.
+
+### Frontend
+
+The frontend source and scripts are maintained separately. See [docs/FRONTEND.md](docs/FRONTEND.md) for the current build, local development, and deployment instructions.
+
+## Security principles
+
+- Secrets belong in environment variables, never in source control.
+- The Supabase service-role key must never be exposed to the browser.
+- Couple data is protected with PostgreSQL RLS policies.
+- The API verifies user identity before accessing protected operations.
+- Database permissions follow least-privilege principles.
+- Never commit `.env` files or production credentials.
+
+For implementation details, see [SECURITY.md](docs/SECURITY.md).
+
+## Project structure
+
+```text
+.
+├── backend/
+│   ├── app/                 # API, auth, models, schemas and services
+│   ├── migrations/          # Alembic migrations
+│   └── seed/                # Catalog source data
+├── public/                  # Web application assets and entry point
+├── supabase/
+│   ├── migrations/          # Database security and performance SQL
+│   ├── tests/               # PostgreSQL isolation checks
+│   └── functions/           # Scheduled event ingestion
+├── docs/                    # Architecture, frontend and security docs
+├── main.py                  # FastAPI application entry point
+└── requirements.txt
+```
+
+## Roadmap
+
+- [ ] Strengthen end-to-end coverage for authentication and shared couple flows
+- [ ] Improve collaborative planning and date recommendations
+- [ ] Expand verified places and event coverage
+- [ ] Add more cities with localized catalogs
+- [ ] Explore additional shared-interest categories: movies, food, games, and trips
+- [ ] Introduce AI-assisted recommendations grounded in real catalog data
+
+## Documentation
+
+- [Frontend guide](docs/FRONTEND.md)
+- [Security notes](docs/SECURITY.md)
+- [Product and market direction](docs/GO_TO_MARKET.md)
+
+---
+
+<div align="center">
+
+**Built with Python, FastAPI, PostgreSQL, and a lot of care.**
+
+[Live application](https://minsk-date-ideas.vercel.app) · [GitHub repository](https://github.com/YuryHaurylenka/duo-minsk)
+
+</div>

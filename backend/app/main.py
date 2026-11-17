@@ -5,7 +5,7 @@ from decimal import Decimal
 from uuid import UUID, uuid4
 from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import select, func, or_, text
+from sqlalchemy import select, func, or_, text, delete
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
@@ -156,6 +156,21 @@ def join_couple(payload: CoupleJoin, user: AuthUser = Depends(require_user), db:
         raise HTTPException(status_code=404, detail="Код пары не найден")
     db.commit()
     return CoupleOut(id=row["id"], name=row["name"], invite_code=row["invite_code"], role="member")
+
+
+@app.delete("/api/couples/me", status_code=204)
+def leave_couple(user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    """Remove the current user from their shared couple space without affecting a remaining member."""
+    member = db.scalar(select(CoupleMember).where(CoupleMember.user_id == user.id).limit(1))
+    if not member:
+        raise HTTPException(status_code=404, detail="Вы не состоите в паре")
+    couple_id = member.couple_id
+    db.execute(delete(CoupleMember).where(CoupleMember.user_id == user.id, CoupleMember.couple_id == couple_id))
+    remaining = db.scalar(select(func.count()).select_from(CoupleMember).where(CoupleMember.couple_id == couple_id)) or 0
+    if remaining == 0:
+        db.execute(delete(Couple).where(Couple.id == couple_id))
+    db.commit()
+    return None
 
 
 @app.get("/api/activity")

@@ -10,7 +10,7 @@ const localMidnight = date => new Date(date+'T00:00:00+03:00');
 const fmtDate = date => new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Minsk',weekday:'short',day:'numeric',month:'long'}).format(new Date(date));
 const fmtTime = date => new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Minsk',hour:'2-digit',minute:'2-digit'}).format(new Date(date));
 const fmtMoney = n => Number(n).toLocaleString('ru-RU',{maximumFractionDigits:0})+' BYN';
-let allEvents=[],rangeMode='7',selectedPlan=null,plansChannel=null,activePlansCouple=null;
+let allEvents=[],rangeMode='7',selectedPlan=null,plansChannel=null;
 
 function initDates(){
   const today=todayMinsk();
@@ -142,4 +142,15 @@ for(const id of ['eventsGrid','placeUpdates']){
 }
 $('generatePlan').addEventListener('click',buildPlan);
 initDates();loadEvents();loadPlaceUpdates();loadSavedPlans();
-window.duoSupabaseRealtime?.auth.onAuthStateChange(()=>loadSavedPlans());
+async function subscribePlansRealtime(){
+  const client=window.duoSupabaseRealtime;
+  if(!client)return;
+  const {data:{session}}=await client.auth.getSession();
+  if(!session)return;
+  if(plansChannel)await client.removeChannel(plansChannel);
+  plansChannel=client.channel('duo-date-plans-'+session.user.id)
+    .on('postgres_changes',{event:'*',schema:'public',table:'duo_date_plans'},()=>loadSavedPlans())
+    .subscribe();
+}
+window.duoSupabaseRealtime?.auth.onAuthStateChange(()=>{loadSavedPlans();subscribePlansRealtime()});
+subscribePlansRealtime();

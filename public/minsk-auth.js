@@ -26,6 +26,7 @@ window.duoApi = api;
 window.dispatchEvent(new Event('duo-api-ready'));
 
 const $ = id => document.getElementById(id);
+const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 window.loadDuoPlaces?.();
 let user = null, couple = null, authMode = 'login', pendingSync = null, liveChannel = null;
 const layer = $('authLayer'), body = $('authBody'), message = $('authMessage');
@@ -144,7 +145,8 @@ $('accountButton').onclick=()=>{
   if(user&&couple){
     $('authTitle').textContent='Ваше пространство.';
     $('authSub').textContent='Общие отметки синхронизируются у обоих участников.';
-    body.innerHTML='<div class="auth-field"><label>ВАША ПАРА</label><div style="font-size:15px;font-weight:800">'+couple.name+'</div></div><div class="auth-field"><label>КОД ДЛЯ ПРИГЛАШЕНИЯ</label><div class="couple-code">'+couple.invite_code+'</div><button class="auth-secondary" id="copyInvite">Скопировать код</button></div><button class="auth-secondary" id="signOut">Выйти из аккаунта</button>';
+    const state=localState(),avgValues=Object.values(state.ratings).map(Number).filter(Boolean),avg=avgValues.length?(avgValues.reduce((a,b)=>a+b,0)/avgValues.length).toFixed(1):'—';
+    body.innerHTML='<div class="profile-hero"><div class="profile-avatar">'+(user.email||'D').slice(0,1).toUpperCase()+'</div><div><strong>'+(user.email||'Ваш аккаунт')+'</strong><span>Участник DUO · пространство активно</span></div></div><div class="profile-stats"><div><b>'+state.favs.length+'</b><span>избранное</span></div><div><b>'+state.visited.length+'</b><span>посетили</span></div><div><b>'+avg+'</b><span>средняя оценка</span></div></div><div class="auth-field"><label>ВАША ПАРА</label><div class="profile-couple-name">'+escapeHTML(couple.name)+'</div><div class="profile-caption">Общее пространство для планов, мест и впечатлений</div></div><div class="auth-field"><label>КОД ПРИГЛАШЕНИЯ</label><div class="couple-code">'+couple.invite_code+'</div><button class="auth-secondary" id="copyInvite">Скопировать приглашение ↗</button></div><button class="auth-secondary" id="signOut">Выйти из аккаунта</button>';
     $('copyInvite').onclick=()=>navigator.clipboard.writeText(couple.invite_code).then(()=>say('Код скопирован'));
     $('signOut').onclick=async()=>{await sb.auth.signOut();localStorage.removeItem('minskDuoFavs');localStorage.removeItem('minskDuoVisited');localStorage.removeItem('minskDuoRatings');location.reload()};
   }else if(user)coupleForm();else authForm();

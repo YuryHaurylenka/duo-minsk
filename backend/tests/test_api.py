@@ -1,0 +1,244 @@
+from datetime import date, datetime, timezone
+from decimal import Decimal
+from types import SimpleNamespace
+from unittest.mock import MagicMock
+from uuid import uuid4
+
+import pytest
+from fastapi.testclient import TestClient
+
+from app.auth import AuthUser, get_current_user, require_user
+from app.database import get_db
+from app.main import app
+from app.models.entities import Couple, CoupleMember, DuoDatePlan, Place
+
+
+USER_ID = uuid4()
+COUPLE_ID = uuid4()
+PLACE_SLUG = "test-cafe"
+
+
+@pytest.fixture
+def db():
+    return MagicMock()
+
+
+@pytest.fixture
+def client(db):
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    with TestClient(app) as test_client:
+        yield test_client
+    app.dependency_overrides.clear()
+
+
+def membership(couple_id=COUPLE_ID, user_id=USER_ID, role="owner"):
+    return CoupleMember(couple_id=couple_id, user_id=user_id, role=role)
+
+
+def couple(couple_id=COUPLE_ID):
+    return Couple(id=couple_id, name="Us", invite_code="ABC123", created_by=USER_ID,
+                  created_at=datetime.now(timezone.utc))
+
+
+def test_health_is_public():
+    response = TestClient(app).get("/api/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok", "service": "duo-api", "version": "2.0.0"}
+
+
+def test_me_returns_user_without_couple(client, db):
+    db.scalar.return_value = None
+    response = client.get("/api/me")
+    assert response.status_code == 200
+    assert response.json() == {"id": str(USER_ID), "email": "test@example.com", "couple": None}
+
+
+def test_me_returns_couple_membership(client, db):
+    db.scalar.return_value = membership()
+    db.get.return_value = couple()
+    response = client.get("/api/me")
+    assert response.status_code == 200
+    assert response.json()["couple"] == {
+        "id": str(COUPLE_ID), "name": "Us", "invite_code": "ABC123", "role": "owner"
+    }
+
+
+def test_create_couple_calls_database_rpc(client, db):
+    db.scalar.return_value = None
+    db.execute.return_value.mappings.return_value.one.return_value = {
+        "id": COUPLE_ID, "name": "Our duo", "invite_code": "ABC123"
+    }
+    response = client.post("/api/couples", json={"name": "  Our duo  "})
+    assert response.status_code == 201
+    assert response.json()["invite_code"] == "ABC123"
+    db.commit.assert_called_once()
+
+
+def test_user_cannot_create_second_couple(client, db):
+    db.scalar.return_value = membership()
+    response = client.post("/api/couples", json={"name": "Another"})
+    assert response.status_code == 409
+    db.execute.assert_not_called()
+
+
+def test_join_couple_normalizes_invite_code(client, db):
+    db.scalar.return_value = None
+    db.execute.return_value.mappings.return_value.one.return_value = {
+        "id": COUPLE_ID, "name": "Us", "invite_code": "ABC123"
+    }
+    response = client.post("/api/couples/join", json={"invite_code": " abc123 "})
+    assert response.status_code == 200
+    assert response.json()["role"] == "member"
+    assert db.execute.call_args.args[1] == {"code": "ABC123"}
+
+
+def test_join_rejects_user_already_in_couple(client, db):
+    db.scalar.return_value = membership()
+    response = client.post("/api/couples/join", json={"invite_code": "ABC123"})
+    assert response.status_code == 409
+    db.execute.assert_not_called()
+
+
+def test_join_returns_not_found_for_unknown_invite(client, db):
+    db.scalar.return_value = None
+    db.execute.side_effect = RuntimeError("unknown invite")
+    response = client.post("/api/couples/join", json={"invite_code": "ABC123"})
+    assert response.status_code == 404
+    db.rollback.assert_called_once()
+
+
+def test_activity_requires_membership(client, db):
+    db.scalar.return_value = None
+    response = client.get("/api/activity")
+    assert response.status_code == 409
+
+
+def test_activity_returns_couple_records(client, db):
+    db.scalar.return_value = membership()
+    db.get.return_value = couple()
+    db.scalars.return_value.all.return_value = [SimpleNamespace(
+        place_name="Cafe", is_favorite=True, visited_at=None, rating=5, note="Great"
+    )]
+    response = client.get("/api/activity")
+    assert response.status_code == 200
+    assert response.json() == [{
+        "place_name": "Cafe", "is_favorite": True, "visited_at": None, "rating": 5, "note": "Great"
+    }]
+
+
+def test_activity_sync_upserts_known_places_and_ignores_unknown(client, db):
+    db.scalar.return_value = membership()
+    db.get.return_value = couple()
+    db.scalars.return_value.all.return_value = [Place(slug=PLACE_SLUG, name="Test Cafe")]
+    response = client.put("/api/activity", json=[
+        {"place_slug": PLACE_SLUG, "is_favorite": True, "visited": True, "rating": 5},
+        {"place_slug": "missing-place", "is_favorite": True}
+    ])
+    assert response.status_code == 204
+    assert db.execute.call_count == 1
+    db.commit.assert_called_once()
+
+
+def test_activity_rating_must_be_between_one_and_five(client, db):
+    response = client.put("/api/activity", json=[{"place_slug": PLACE_SLUG, "rating": 6}])
+    assert response.status_code == 422
+
+
+def test_plans_requires_membership(client, db):
+    db.scalar.return_value = None
+    response = client.get("/api/plans")
+    assert response.status_code == 409
+
+
+def test_create_plan_persists_for_current_couple(client, db):
+    db.scalar.return_value = membership()
+    db.get.return_value = couple()
+    response = client.post("/api/plans", json={
+        "plan_date": "2026-12-01", "title": "Dinner", "mood": "romantic",
+        "budget": "75.50", "items": [{"place": PLACE_SLUG}], "notes": "Book a table"
+    })
+    assert response.status_code == 201
+    assert response.json()["title"] == "Dinner"
+    assert response.json()["budget"] == "75.50"
+    db.add.assert_called_once()
+    db.commit.assert_called_once()
+
+
+def test_create_plan_rejects_invalid_budget(client, db):
+    response = client.post("/api/plans", json={
+        "plan_date": "2026-12-01", "title": "Dinner", "budget": -1
+    })
+    assert response.status_code == 422
+
+
+def test_delete_plan_is_scoped_to_current_couple(client, db):
+    db.scalar.return_value = membership()
+    db.get.return_value = couple()
+    db.scalar.side_effect = [membership(), None]
+    response = client.delete(f"/api/plans/{uuid4()}")
+    assert response.status_code == 404
+    db.delete.assert_not_called()
+
+
+def test_delete_plan_deletes_matching_plan(client, db):
+    plan = SimpleNamespace(id=uuid4())
+    db.scalar.side_effect = [membership(), plan]
+    db.get.return_value = couple()
+    response = client.delete(f"/api/plans/{plan.id}")
+    assert response.status_code == 204
+    db.delete.assert_called_once_with(plan)
+    db.commit.assert_called_once()
+
+
+def test_protected_endpoint_rejects_missing_bearer_token(db):
+    from fastapi.testclient import TestClient
+    app.dependency_overrides[get_db] = lambda: db
+    try:
+        response = TestClient(app).get("/api/me")
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 401
+    assert response.json()["detail"] == "Требуется авторизация"
+
+
+def test_protected_endpoint_rejects_invalid_bearer_token(db):
+    from fastapi.testclient import TestClient
+    app.dependency_overrides[get_db] = lambda: db
+    try:
+        response = TestClient(app).get("/api/me", headers={"Authorization": "Bearer not-a-jwt"})
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 401
+    assert response.json()["detail"] == "Недействительная или истёкшая сессия"
+
+
+def test_join_returns_conflict_when_couple_is_full(client, db):
+    db.scalar.return_value = None
+    db.execute.side_effect = RuntimeError("В паре уже два участника")
+    response = client.post("/api/couples/join", json={"invite_code": "ABC123"})
+    assert response.status_code == 409
+    assert response.json()["detail"] == "В этой паре уже два участника"
+
+
+def test_valid_supabase_hs256_token_sets_authenticated_database_role(db, monkeypatch):
+    import jwt
+    from datetime import timedelta
+    from fastapi.security import HTTPAuthorizationCredentials
+    import app.auth as auth_module
+
+    secret = "ci-test-secret-that-is-not-used-in-production"
+    issuer = "https://example.supabase.co/auth/v1"
+    monkeypatch.setattr(auth_module, "get_settings", lambda: SimpleNamespace(
+        supabase_url="https://example.supabase.co", supabase_jwt_secret=secret
+    ))
+    token = jwt.encode({
+        "sub": str(USER_ID), "email": "test@example.com", "role": "authenticated",
+        "aud": "authenticated", "iss": issuer,
+        "exp": datetime.now(timezone.utc) + timedelta(minutes=5)
+    }, secret, algorithm="HS256")
+    user = get_current_user(
+        credentials=HTTPAuthorizationCredentials(scheme="Bearer", credentials=token), db=db
+    )
+    assert user == AuthUser(id=USER_ID, email="test@example.com")
+    assert db.execute.call_count == 4

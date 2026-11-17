@@ -153,8 +153,12 @@ $('accountButton').onclick=()=>{
 $('authClose').onclick=closeAuth;
 layer.addEventListener('click',event=>{if(event.target===layer)closeAuth()});
 
-const {data:{session}}=await sb.auth.getSession();
-if(session){user=session.user;try{await afterLogin()}catch(error){authForm();say(error.message);openAuth()}}else authForm();
+async function initializeAuthSession(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(session){user=session.user;try{await afterLogin()}catch(error){authForm();say(error.message);openAuth()}}
+  else authForm();
+}
+initializeAuthSession().catch(error=>{authForm();say(error.message);openAuth()});
 sb.auth.onAuthStateChange((_event,session)=>{
   if(session?.user&&!user){user=session.user;afterLogin().catch(error=>{say(error.message);openAuth()})}
 });

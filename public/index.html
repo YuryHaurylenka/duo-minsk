@@ -122,7 +122,20 @@ button:focus-visible,a:focus-visible,.card:focus-visible{outline:3px solid #8cae
 (()=>{const modal=document.getElementById('placeDetails');const close=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true')};const open=(name)=>{const x=places.find(p=>p.n===name);if(!x)return;document.getElementById('detailCat').textContent=x.cat+' · Минск';document.getElementById('detailTitle').textContent=x.n;document.getElementById('detailDesc').textContent=x.desc;document.getElementById('detailMeta').innerHTML='<div><b>Адрес:</b> '+x.addr+'</div><div><b>Цена:</b> '+x.price+'</div><div><b>Для двоих:</b> '+x.couple+'</div><div><b>Нагрузка:</b> '+x.level+'/5</div><div><b>Подсказка:</b> '+x.why+'</div>';const map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(x.n+' '+x.addr+' Минск Беларусь');document.getElementById('detailLinks').innerHTML='<a href="'+x.site+'" target="_blank" rel="noopener">Сайт места ↗</a><a class="secondary" href="'+map+'" target="_blank" rel="noopener">Маршрут ↗</a><a class="secondary" href="'+x.src+'" target="_blank" rel="noopener">Отзывы ↗</a>';modal.classList.add('open');modal.setAttribute('aria-hidden','false')};document.getElementById('grid').addEventListener('click',e=>{if(e.target.closest('button,a'))return;const card=e.target.closest('[data-place]');if(card)open(card.dataset.place)});document.getElementById('grid').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-place]')){e.preventDefault();open(e.target.dataset.place)}});document.getElementById('detailClose').onclick=close;modal.addEventListener('click',e=>{if(e.target===modal)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});document.getElementById('statAll').onclick=()=>{document.getElementById('search').value='';document.getElementById('riskFilter').value='all';document.getElementById('budget').value='all';['onlyFav','onlyVisited','onlyPriced','onlyEasy'].forEach(id=>document.getElementById(id).checked=false);cat='Все';render()};document.getElementById('statFav').onclick=()=>{document.getElementById('onlyFav').checked=!document.getElementById('onlyFav').checked;document.getElementById('onlyVisited').checked=false;render()};document.getElementById('statVisited').onclick=()=>{document.getElementById('onlyVisited').checked=!document.getElementById('onlyVisited').checked;document.getElementById('onlyFav').checked=false;render()};document.getElementById('statPair').onclick=()=>document.getElementById('accountButton')?.click();document.getElementById('random').onclick=()=>{const opts=places.filter(x=>x.risk==='good'&&x.level<=2);const x=opts[Math.floor(Math.random()*opts.length)];if(x)open(x.n)}})();
 </script>
 <div id="authLayer" aria-hidden="true"><section class="auth-panel"><button class="auth-close" id="authClose" aria-label="Закрыть">×</button><div class="auth-kicker">DUO · SPACE FOR TWO</div><h2 id="authTitle">Ваше место<br>для двоих.</h2><p class="auth-sub" id="authSub">Войдите или создайте аккаунт, чтобы ваши свидания сохранялись.</p><div id="authBody"></div><div class="auth-message" id="authMessage" role="status"></div></section></div>
-<script type="module" src="/minsk-auth.js"></script><script type="module" src="/duo-features.js"></script>
+<script>
+window.__duoBootErrors=[];
+window.addEventListener('error',event=>window.__duoBootErrors.push(event.message||'Script error'));
+window.addEventListener('unhandledrejection',event=>window.__duoBootErrors.push(String(event.reason)));
+</script>
+<script type="module">
+try {
+  await import('/minsk-auth.js');
+  await import('/duo-features.js');
+} catch (error) {
+  window.__duoBootErrors.push(error?.stack||String(error));
+  console.error('DUO startup failed',error);
+}
+</script>
 
 <style>
 :root{--bg:#f7f7f4;--paper:#fff;--ink:#1e2420;--muted:#7a827b;--line:#e8eae5;--accent:#466b54;--accent-soft:#edf2ed;--shadow:0 12px 38px rgba(25,35,27,.055)}

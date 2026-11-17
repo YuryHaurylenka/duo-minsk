@@ -10,9 +10,9 @@ from sqlalchemy.dialects.postgresql import insert
 from app.models.entities import DuoEvent
 
 SOURCES = {
-    "hubl-minsk": ("Hubl Minsk", "https://hubl.by/minsk/afisha"),
-    "bezkassira-concerts": ("BezKassira — концерты", "https://bezkassira.by/events/concert-minsk/"),
-    "bezkassira-culture": ("BezKassira — культура", "https://bezkassira.by/events/culture-minsk/"),
+    "hubl-minsk": ("Hubl Minsk", "https://hubl.by/minsk/afisha", "minsk"),
+    "bezkassira-concerts": ("BezKassira — концерты", "https://bezkassira.by/events/concert-minsk/", "minsk"),
+    "bezkassira-culture": ("BezKassira — культура", "https://bezkassira.by/events/culture-minsk/", "minsk"),
 }
 
 
@@ -34,7 +34,7 @@ def _text(value):
     return str(value or "")
 
 
-def _parse_source(key, url):
+def _parse_source(key, url, city_slug="minsk"):
     response = requests.get(url, timeout=20, headers={"User-Agent": "DUO event indexer/1.0"})
     response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
@@ -61,6 +61,7 @@ def _parse_source(key, url):
             except ValueError:
                 price = None
             items.append({
+                "city_slug": city_slug,
                 "source_key": key, "source_url": urljoin(url, event.get("url") or (offers.get("url") if isinstance(offers, dict) else "") or "#"+re.sub(r"[^a-z0-9]+", "-", title.lower())+"-"+str(start)), "title": title[:500],
                 "description": BeautifulSoup(str(event.get("description") or ""), "html.parser").get_text(" ", strip=True)[:4000],
                 "category": _text(event.get("eventType")) or "Событие", "venue": _text(location.get("name")),
@@ -75,9 +76,9 @@ def _parse_source(key, url):
 
 def sync_events(db):
     total, failures = 0, []
-    for key, (_, url) in SOURCES.items():
+    for key, (_, url, city_slug) in SOURCES.items():
         try:
-            items = _parse_source(key, url)
+            items = _parse_source(key, url, city_slug)
             for item in items:
                 stmt = insert(DuoEvent).values(id=uuid4(), **item, created_at=datetime.now(timezone.utc), updated_at=datetime.now(timezone.utc)).on_conflict_do_update(
                     constraint="duo_events_source_key_source_url_key",

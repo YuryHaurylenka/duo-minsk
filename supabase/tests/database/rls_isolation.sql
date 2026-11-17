@@ -10,6 +10,9 @@ BEGIN
   IF position('FOR UPDATE' IN pg_get_functiondef('public.join_couple(text)'::regprocedure)) = 0 THEN
     RAISE EXCEPTION 'join_couple must lock the couple row before counting members';
   END IF;
+  IF NOT has_table_privilege('anon', 'public.cities', 'SELECT') THEN
+    RAISE EXCEPTION 'anon must be able to read active city metadata';
+  END IF;
   IF has_table_privilege('anon', 'public.couples', 'SELECT') THEN
     RAISE EXCEPTION 'anon must not read couples';
   END IF;
@@ -38,6 +41,9 @@ SELECT set_config('duo.test.user_e', gen_random_uuid()::text, true);
 SELECT set_config('duo.test.couple_a', gen_random_uuid()::text, true);
 SELECT set_config('duo.test.couple_b', gen_random_uuid()::text, true);
 SELECT set_config('duo.test.couple_c', gen_random_uuid()::text, true);
+
+SELECT set_config('duo.test.place_slug', (SELECT p.slug FROM public.places AS p WHERE p.city_slug='minsk' ORDER BY p.slug LIMIT 1), true);
+SELECT set_config('duo.test.place_name', (SELECT p.name FROM public.places AS p WHERE p.slug=current_setting('duo.test.place_slug')), true);
 
 INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at,
                         raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
@@ -73,10 +79,10 @@ VALUES
   (current_setting('duo.test.couple_a')::uuid, current_setting('duo.test.user_a')::uuid, current_date, 'Fixture A'),
   (current_setting('duo.test.couple_b')::uuid, current_setting('duo.test.user_b')::uuid, current_date, 'Fixture B');
 
-INSERT INTO public.place_activity (couple_id, place_name, updated_by)
+INSERT INTO public.place_activity (couple_id, place_slug, place_name, updated_by)
 VALUES
-  (current_setting('duo.test.couple_a')::uuid, 'RLS fixture place A', current_setting('duo.test.user_a')::uuid),
-  (current_setting('duo.test.couple_b')::uuid, 'RLS fixture place B', current_setting('duo.test.user_b')::uuid);
+  (current_setting('duo.test.couple_a')::uuid, current_setting('duo.test.place_slug'), current_setting('duo.test.place_name'), current_setting('duo.test.user_a')::uuid),
+  (current_setting('duo.test.couple_b')::uuid, current_setting('duo.test.place_slug'), current_setting('duo.test.place_name'), current_setting('duo.test.user_b')::uuid);
 
 SET LOCAL ROLE authenticated;
 SELECT set_config('request.jwt.claim.sub', current_setting('duo.test.user_a'), true);
@@ -175,7 +181,10 @@ END $$;
 RESET ROLE;
 SET LOCAL ROLE anon;
 DO $$
+DECLARE city_count integer;
 BEGIN
+  SELECT count(*) INTO city_count FROM public.cities;
+  IF city_count <> 1 THEN RAISE EXCEPTION 'Expected one active city, found %', city_count; END IF;
   BEGIN
     PERFORM count(*) FROM public.couples;
     RAISE EXCEPTION 'anon unexpectedly has access to couples';

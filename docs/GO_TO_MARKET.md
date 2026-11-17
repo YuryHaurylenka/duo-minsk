@@ -56,3 +56,16 @@ Do not add paid ranking or sponsored listings before users trust the catalog. Ne
 - Do not fabricate venue ratings, prices, bookings or availability.
 - Do not scale paid acquisition before retention and referral loops are measured.
 - Do not treat AI-generated itineraries as verified local facts.
+
+
+## City launch gate
+
+The backend supports a city directory and city-scoped venues, events, updates and event sources. Only Minsk is active today. Do not switch on another city just because the schema supports it. A pilot city should have:
+
+- A reviewed starter catalog of at least 40 genuinely useful venues, with working source links and local currency prices where verifiable.
+- At least two dependable event sources with repeatable structured data or an explicitly staffed editorial process.
+- Correct local time zone, currency, language metadata and localized city/country names.
+- A human quality review of opening status, location accuracy, duplicate venues and stale events.
+- A local acquisition channel and a measurable retention hypothesis before paid promotion.
+
+Keep city activation separate from data ingestion: a city remains inactive until its catalog and event feed are ready. This prevents the product from implying coverage it does not actually have.

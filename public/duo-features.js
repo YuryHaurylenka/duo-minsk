@@ -10,6 +10,7 @@ const localMidnight = date => new Date(date+'T00:00:00+03:00');
 const fmtDate = date => new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Minsk',weekday:'short',day:'numeric',month:'long'}).format(new Date(date));
 const fmtTime = date => new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Minsk',hour:'2-digit',minute:'2-digit'}).format(new Date(date));
 const fmtMoney = n => Number(n).toLocaleString('ru-RU',{maximumFractionDigits:0})+' BYN';
+const slugifyPlace = value => String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zа-яё0-9]+/gi,'-').replace(/^-|-$/g,'').slice(0,170);
 let allEvents=[],rangeMode='7',selectedPlan=null,plansChannel=null;
 
 function initDates(){
@@ -106,9 +107,9 @@ function buildPlan(){
   const event=affordable[0]||null;
   const remaining=budget===999?999:Math.max(0,budget-(event?.price_min!=null?Number(event.price_min)*2:0));
   const places=pickPlaces(mood,remaining),steps=[];
-  if(event)steps.push({kind:'СОБЫТИЕ',title:event.title,description:(event.venue||'Минск')+' · '+(dateInMinsk(event.starts_at)===date?fmtTime(event.starts_at):'в течение дня')+' · '+eventPrice(event),url:event.ticket_url||event.source_url,event_id:event.id});
-  if(places[0])steps.push({kind:event?'ПЕРЕД СОБЫТИЕМ':'ИДЕЯ ВЕЧЕРА',title:places[0].n,description:places[0].desc+' · '+places[0].price,url:places[0].site,place_name:places[0].n});
-  if(places[1])steps.push({kind:'ПОСЛЕ',title:places[1].n,description:places[1].desc+' · '+places[1].price,url:places[1].site,place_name:places[1].n});
+  if(event)steps.push({kind:'СОБЫТИЕ',title:event.title,description:(event.venue||'Минск')+' · '+(dateInMinsk(event.starts_at)===date?fmtTime(event.starts_at):'в течение дня')+' · '+eventPrice(event),url:event.ticket_url||event.source_url,event_id:event.id,city_slug:event.city_slug||'minsk'});
+  if(places[0])steps.push({kind:event?'ПЕРЕД СОБЫТИЕМ':'ИДЕЯ ВЕЧЕРА',title:places[0].n,description:places[0].desc+' · '+places[0].price,url:places[0].site,place_name:places[0].n,place_slug:places[0].slug||slugifyPlace(places[0].n),city_slug:places[0].city_slug||'minsk'});
+  if(places[1])steps.push({kind:'ПОСЛЕ',title:places[1].n,description:places[1].desc+' · '+places[1].price,url:places[1].site,place_name:places[1].n,place_slug:places[1].slug||slugifyPlace(places[1].n),city_slug:places[1].city_slug||'minsk'});
   if(!steps.length)steps.push({kind:'ПРОГУЛКА',title:'Прогулка по центру Минска',description:'Начните с Троицкого предместья и продолжите вечер в кафе на ваш вкус.',url:'https://www.google.com/maps/search/?api=1&query=Троицкое+предместье+Минск'});
   const moodName={romantic:'Романтичный вечер',active:'Активное свидание',cozy:'Спокойный вечер',culture:'Культурный маршрут',surprise:'Свидание-сюрприз'}[mood];
   const total=steps.reduce((sum,step)=>sum+(step.event_id?(event?.price_min?Number(event.price_min)*2:0):(places.find(place=>place.n===step.place_name)?.cost||0)),0);

@@ -4,10 +4,24 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field
 
 
+class CityOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    slug: str
+    name: str
+    name_localized: str
+    country_code: str
+    country_name: str
+    country_name_localized: str
+    timezone: str
+    currency_code: str
+    default_language: str
+
+
 class PlaceOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: UUID
     slug: str
+    city_slug: str
     name: str
     category: str
     emoji: str
@@ -29,6 +43,7 @@ class PlaceOut(BaseModel):
 class EventOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: UUID
+    city_slug: str
     title: str
     description: str
     category: str
@@ -49,6 +64,7 @@ class EventOut(BaseModel):
 class PlaceUpdateOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: UUID
+    city_slug: str
     place_name: str
     change_type: str
     address: str
@@ -75,7 +91,7 @@ class CoupleOut(BaseModel):
 
 
 class ActivitySyncItem(BaseModel):
-    place_slug: str
+    place_slug: str = Field(min_length=1, max_length=180)
     is_favorite: bool = False
     visited: bool = False
     rating: int | None = Field(default=None, ge=1, le=5)

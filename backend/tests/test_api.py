@@ -10,7 +10,7 @@ from fastapi.testclient import TestClient
 from app.auth import AuthUser, get_current_user, require_user
 from app.database import get_db
 from app.main import app
-from app.models.entities import Couple, CoupleMember, DuoDatePlan, Place
+from app.models.entities import City, Couple, CoupleMember, DuoDatePlan, Place
 
 
 USER_ID = uuid4()
@@ -118,12 +118,12 @@ def test_activity_returns_couple_records(client, db):
     db.scalar.return_value = membership()
     db.get.return_value = couple()
     db.scalars.return_value.all.return_value = [SimpleNamespace(
-        place_name="Cafe", is_favorite=True, visited_at=None, rating=5, note="Great"
+        place_slug=PLACE_SLUG, place_name="Cafe", is_favorite=True, visited_at=None, rating=5, note="Great"
     )]
     response = client.get("/api/activity")
     assert response.status_code == 200
     assert response.json() == [{
-        "place_name": "Cafe", "is_favorite": True, "visited_at": None, "rating": 5, "note": "Great"
+        "place_slug": PLACE_SLUG, "place_name": "Cafe", "is_favorite": True, "visited_at": None, "rating": 5, "note": "Great"
     }]
 
 
@@ -260,3 +260,51 @@ def test_join_couple_handles_concurrent_membership_conflict(client, db):
     assert response.status_code == 409
     assert response.json()["detail"] == "Вы уже состоите в паре"
     db.rollback.assert_called_once()
+
+
+
+def city_fixture(slug="minsk", active=True):
+    return City(slug=slug, name="Minsk", name_localized="Минск", country_code="BY",
+                country_name="Belarus", country_name_localized="Беларусь", timezone="Europe/Minsk",
+                currency_code="BYN", default_language="ru", is_active=active)
+
+
+def test_list_cities_returns_active_city_catalog(client, db):
+    db.scalars.return_value.all.return_value = [city_fixture()]
+    response = client.get("/api/cities")
+    assert response.status_code == 200
+    assert response.json() == [{
+        "slug": "minsk", "name": "Minsk", "name_localized": "Минск", "country_code": "BY",
+        "country_name": "Belarus", "country_name_localized": "Беларусь", "timezone": "Europe/Minsk",
+        "currency_code": "BYN", "default_language": "ru"
+    }]
+
+
+def test_places_are_scoped_to_requested_city(client, db):
+    db.get.return_value = city_fixture()
+    db.scalars.return_value.all.return_value = []
+    response = client.get("/api/places?city=minsk")
+    assert response.status_code == 200
+    assert response.json() == []
+    db.get.assert_called_once_with(City, "minsk")
+
+
+def test_places_reject_unknown_or_inactive_city(client, db):
+    db.get.return_value = None
+    response = client.get("/api/places?city=unknown-city")
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Город пока недоступен"
+
+
+def test_events_reject_unknown_city(client, db):
+    db.get.return_value = None
+    response = client.get("/api/events?city=unknown-city")
+    assert response.status_code == 404
+
+
+def test_updates_are_scoped_to_requested_city(client, db):
+    db.get.return_value = city_fixture()
+    db.scalars.return_value.all.return_value = []
+    response = client.get("/api/updates?city=minsk")
+    assert response.status_code == 200
+    assert response.json() == []

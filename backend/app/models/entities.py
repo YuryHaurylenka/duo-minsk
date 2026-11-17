@@ -1,16 +1,34 @@
 import uuid
 from datetime import date, datetime
 from decimal import Decimal
-from sqlalchemy import Boolean, Date, DateTime, Integer, Numeric, SmallInteger, String, Text, UniqueConstraint, func
+from sqlalchemy import Boolean, Date, DateTime, ForeignKey, Integer, Numeric, SmallInteger, String, Text, UniqueConstraint, func
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 from app.database import Base
+
+
+class City(Base):
+    __tablename__ = "cities"
+    __table_args__ = {"schema": "public"}
+    slug: Mapped[str] = mapped_column(String(80), primary_key=True)
+    name: Mapped[str] = mapped_column(String(120))
+    name_localized: Mapped[str] = mapped_column(Text)
+    country_code: Mapped[str] = mapped_column(String(2))
+    country_name: Mapped[str] = mapped_column(String(120))
+    country_name_localized: Mapped[str] = mapped_column(Text)
+    timezone: Mapped[str] = mapped_column(String(80))
+    currency_code: Mapped[str] = mapped_column(String(3))
+    default_language: Mapped[str] = mapped_column(String(8))
+    is_active: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
 
 class Place(Base):
     __tablename__ = "places"
     __table_args__ = {"schema": "public"}
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    city_slug: Mapped[str] = mapped_column(String(80), ForeignKey("public.cities.slug"), default="minsk", server_default="minsk")
     slug: Mapped[str] = mapped_column(String(180), unique=True)
     name: Mapped[str] = mapped_column(String(255), index=True)
     category: Mapped[str] = mapped_column(String(120), index=True)
@@ -54,9 +72,10 @@ class CoupleMember(Base):
 
 class PlaceActivity(Base):
     __tablename__ = "place_activity"
-    __table_args__ = (UniqueConstraint("couple_id", "place_name", name="place_activity_couple_id_place_name_key"), {"schema": "public"})
+    __table_args__ = (UniqueConstraint("couple_id", "place_slug", name="place_activity_couple_id_place_slug_key"), {"schema": "public"})
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     couple_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), index=True)
+    place_slug: Mapped[str] = mapped_column(String(180), ForeignKey("public.places.slug", ondelete="CASCADE"))
     place_name: Mapped[str] = mapped_column(Text)
     is_favorite: Mapped[bool] = mapped_column(Boolean, default=False)
     visited_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
@@ -70,6 +89,7 @@ class DuoEvent(Base):
     __tablename__ = "duo_events"
     __table_args__ = {"schema": "public"}
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
+    city_slug: Mapped[str] = mapped_column(String(80), ForeignKey("public.cities.slug"), default="minsk", server_default="minsk")
     source_key: Mapped[str] = mapped_column(Text)
     source_url: Mapped[str] = mapped_column(Text)
     title: Mapped[str] = mapped_column(Text)
@@ -110,6 +130,7 @@ class DuoPlaceUpdate(Base):
     __tablename__ = "duo_place_updates"
     __table_args__ = {"schema": "public"}
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
+    city_slug: Mapped[str] = mapped_column(String(80), ForeignKey("public.cities.slug"), default="minsk", server_default="minsk")
     place_name: Mapped[str] = mapped_column(Text)
     change_type: Mapped[str] = mapped_column(Text)
     address: Mapped[str] = mapped_column(Text)

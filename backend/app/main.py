@@ -11,8 +11,8 @@ from sqlalchemy.orm import Session
 from app.config import get_settings
 from app.database import get_db
 from app.auth import AuthUser, require_user
-from app.models.entities import Place, Couple, CoupleMember, PlaceActivity, DuoEvent, DuoDatePlan, DuoPlaceUpdate
-from app.schemas import PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, ActivitySyncItem, PlanCreate, PlanOut
+from app.models.entities import City, Place, Couple, CoupleMember, PlaceActivity, DuoEvent, DuoDatePlan, DuoPlaceUpdate
+from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, ActivitySyncItem, PlanCreate, PlanOut
 
 settings = get_settings()
 
@@ -23,7 +23,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="DUO API", version="2.0.0", description="Backend для DUO — свидания и места Минска", lifespan=lifespan)
+app = FastAPI(title="DUO API", version="2.0.0", description="Backend для DUO — city discovery and shared date planning", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=settings.allowed_origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 
@@ -47,9 +47,22 @@ def health():
     return {"status": "ok", "service": "duo-api", "version": "2.0.0"}
 
 
+def require_active_city(db: Session, city_slug: str) -> City:
+    city = db.get(City, city_slug)
+    if not city or not city.is_active:
+        raise HTTPException(status_code=404, detail="Город пока недоступен")
+    return city
+
+
+@app.get("/api/cities", response_model=list[CityOut])
+def list_cities(db: Session = Depends(get_db)):
+    return db.scalars(select(City).where(City.is_active.is_(True)).order_by(City.name)).all()
+
+
 @app.get("/api/places", response_model=list[PlaceOut])
-def list_places(q: str | None = None, category: str | None = None, risk: str | None = None, max_cost: Decimal | None = Query(default=None, ge=0), limit: int = Query(default=150, ge=1, le=250), db: Session = Depends(get_db)):
-    query = select(Place).where(Place.is_active.is_(True))
+def list_places(city: str = Query(default="minsk", min_length=2, max_length=80), q: str | None = None, category: str | None = None, risk: str | None = None, max_cost: Decimal | None = Query(default=None, ge=0), limit: int = Query(default=150, ge=1, le=250), db: Session = Depends(get_db)):
+    city_record = require_active_city(db, city)
+    query = select(Place).where(Place.is_active.is_(True), Place.city_slug == city_record.slug)
     if q:
         pattern = f"%{q.strip()}%"
         query = query.where(or_(Place.name.ilike(pattern), Place.description.ilike(pattern), Place.address.ilike(pattern)))
@@ -63,19 +76,21 @@ def list_places(q: str | None = None, category: str | None = None, risk: str | N
 
 
 @app.get("/api/places/{slug}", response_model=PlaceOut)
-def get_place(slug: str, db: Session = Depends(get_db)):
-    place = db.scalar(select(Place).where(Place.slug == slug, Place.is_active.is_(True)))
+def get_place(slug: str, city: str = Query(default="minsk", min_length=2, max_length=80), db: Session = Depends(get_db)):
+    city_record = require_active_city(db, city)
+    place = db.scalar(select(Place).where(Place.slug == slug, Place.city_slug == city_record.slug, Place.is_active.is_(True)))
     if not place:
         raise HTTPException(status_code=404, detail="Место не найдено")
     return place
 
 
 @app.get("/api/events", response_model=list[EventOut])
-def list_events(day: date | None = None, days: int = Query(default=30, ge=1, le=365), limit: int = Query(default=250, ge=1, le=500), db: Session = Depends(get_db)):
+def list_events(day: date | None = None, days: int = Query(default=30, ge=1, le=365), limit: int = Query(default=250, ge=1, le=500), city: str = Query(default="minsk", min_length=2, max_length=80), db: Session = Depends(get_db)):
+    city_record = require_active_city(db, city)
     now = datetime.now(timezone.utc)
-    query = select(DuoEvent).where(DuoEvent.status == "scheduled", or_(DuoEvent.ends_at >= now, (DuoEvent.ends_at.is_(None) & (DuoEvent.starts_at >= now))))
+    query = select(DuoEvent).where(DuoEvent.city_slug == city_record.slug, DuoEvent.status == "scheduled", or_(DuoEvent.ends_at >= now, (DuoEvent.ends_at.is_(None) & (DuoEvent.starts_at >= now))))
     if day:
-        start = datetime.combine(day, time.min, tzinfo=ZoneInfo("Europe/Minsk"))
+        start = datetime.combine(day, time.min, tzinfo=ZoneInfo(city_record.timezone))
         end = start + timedelta(days=1)
         query = query.where(DuoEvent.starts_at < end, or_(DuoEvent.ends_at.is_(None), DuoEvent.ends_at >= start))
     else:
@@ -84,8 +99,9 @@ def list_events(day: date | None = None, days: int = Query(default=30, ge=1, le=
 
 
 @app.get("/api/updates", response_model=list[PlaceUpdateOut])
-def list_updates(limit: int = Query(default=9, ge=1, le=50), db: Session = Depends(get_db)):
-    return db.scalars(select(DuoPlaceUpdate).order_by(DuoPlaceUpdate.reported_on.desc()).limit(limit)).all()
+def list_updates(limit: int = Query(default=9, ge=1, le=50), city: str = Query(default="minsk", min_length=2, max_length=80), db: Session = Depends(get_db)):
+    city_record = require_active_city(db, city)
+    return db.scalars(select(DuoPlaceUpdate).where(DuoPlaceUpdate.city_slug == city_record.slug).order_by(DuoPlaceUpdate.reported_on.desc()).limit(limit)).all()
 
 
 @app.get("/api/me")
@@ -135,7 +151,7 @@ def join_couple(payload: CoupleJoin, user: AuthUser = Depends(require_user), db:
 def get_activity(user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
     couple = get_couple(db, user)
     rows = db.scalars(select(PlaceActivity).where(PlaceActivity.couple_id == couple.id)).all()
-    return [{"place_name": r.place_name, "is_favorite": r.is_favorite, "visited_at": r.visited_at, "rating": r.rating, "note": r.note} for r in rows]
+    return [{"place_slug": r.place_slug, "place_name": r.place_name, "is_favorite": r.is_favorite, "visited_at": r.visited_at, "rating": r.rating, "note": r.note} for r in rows]
 
 
 @app.put("/api/activity", status_code=204)
@@ -149,8 +165,8 @@ def sync_activity(items: list[ActivitySyncItem], user: AuthUser = Depends(requir
         place_name = names.get(item.place_slug)
         if not place_name:
             continue
-        stmt = insert(PlaceActivity).values(id=uuid4(), couple_id=couple.id, place_name=place_name, is_favorite=item.is_favorite, visited_at=now if item.visited else None, rating=item.rating, note="", updated_by=user.id, updated_at=now).on_conflict_do_update(
-            constraint="place_activity_couple_id_place_name_key",
+        stmt = insert(PlaceActivity).values(id=uuid4(), couple_id=couple.id, place_slug=item.place_slug, place_name=place_name, is_favorite=item.is_favorite, visited_at=now if item.visited else None, rating=item.rating, note="", updated_by=user.id, updated_at=now).on_conflict_do_update(
+            constraint="place_activity_couple_id_place_slug_key",
             set_={"is_favorite": item.is_favorite, "visited_at": now if item.visited else None, "rating": item.rating, "updated_by": user.id, "updated_at": now},
         )
         db.execute(stmt)

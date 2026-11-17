@@ -7,6 +7,8 @@
 - Supabase Auth provides identity; FastAPI validates JWTs using the project's JWKS endpoint.
 - Runtime DB access uses the dedicated duo_api login with NOINHERIT and NOBYPASSRLS.
 - The API switches transaction-locally to anon for public endpoints and to authenticated after JWT validation, setting Supabase request claims so existing RLS policies continue to apply.
+- Public discovery is city-scoped through `cities.slug`; places, events, updates, event sources and sync runs carry `city_slug`. Only active cities are returned by `/api/cities`.
+- Couple activity is keyed by `place_slug` rather than venue name, preventing same-name collisions when more cities are added.
 - Public API roles have least-privilege grants: read-only public catalog access, no access to event-sync control tables, and no TRUNCATE/REFERENCES/TRIGGER privileges. Future objects created by postgres receive no broad API-role grants by default.
 - The Supabase publishable key is used only by the browser Auth SDK; it is not a secret.
 - The existing Supabase Edge Function continues to refresh the event catalog on its scheduled cadence.
@@ -34,4 +36,5 @@
 - Event ingestion currently relies on a small set of Minsk sources and structured event metadata. A missing structured feed can reduce coverage.
 - City openings/closures are editorially curated; they are not yet fully automated.
 - Couple realtime uses Supabase Realtime; SQL-level two-user RLS isolation is verified, but browser-level realtime behavior still needs two real accounts before calling the feature fully production-verified.
+- Event ingestion resolves each source to active city metadata and stores city-scoped events. Minsk is the only active city until another catalog and event feed pass the data-quality gate.
 - See docs/SECURITY.md for database role boundaries, live security checks and the transaction-scoped RLS integration test.

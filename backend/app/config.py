@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     supabase_jwt_secret: str | None = None
     cors_origins: str = "https://minsk-date-ideas.vercel.app,http://localhost:3000,http://localhost:5173"
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file="backend/.env", extra="ignore")
 
     @property
     def allowed_origins(self) -> list[str]:

@@ -11,10 +11,10 @@ FastAPI backend for DUO. PostgreSQL is the source of truth for places, events, c
 
 ## Run locally
 1. Create a virtual environment and install requirements.txt.
-2. Copy .env.example to .env. Set DATABASE_URL to the Supabase Transaction Pooler URI and MIGRATION_DATABASE_URL to a trusted admin connection. Set the Supabase URL and publishable key.
-3. Run role.sql once in Supabase SQL Editor after replacing the password placeholder. Then run alembic upgrade head (the migration connection is used for schema changes).
-4. Run python seed_places.py.
-5. Run uvicorn app.main:app --reload --app-dir .
+2. From the repository root, copy backend/.env.example to backend/.env. Set DATABASE_URL to the Supabase Transaction Pooler URI and MIGRATION_DATABASE_URL to a trusted admin connection. Set the Supabase URL and publishable key.
+3. Run role.sql once in Supabase SQL Editor after replacing the password placeholder. Then run alembic -c backend/alembic.ini upgrade head from the repository root.
+4. Run python backend/seed_places.py from the repository root.
+5. Run uvicorn main:app --reload from the repository root.
 
 Swagger UI: /docs; health: /api/health.
 

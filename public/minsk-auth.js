@@ -23,9 +23,9 @@ async function api(path, options = {}) {
   return payload;
 }
 window.duoApi = api;
-window.loadDuoPlaces?.();
 
 const $ = id => document.getElementById(id);
+window.loadDuoPlaces?.();
 let user = null, couple = null, authMode = 'login', pendingSync = null, liveChannel = null;
 const layer = $('authLayer'), body = $('authBody'), message = $('authMessage');
 const localState = () => ({
@@ -102,14 +102,12 @@ window.persistCoupleState=()=>{
   clearTimeout(pendingSync);
   pendingSync=setTimeout(async()=>{
     const state=localState(), places=window.DUO_PLACES||[];
-    const byName=new Map(places.map(place=>[place.n,place]));
-    const names=new Set([...state.favs,...state.visited,...Object.keys(state.ratings)]);
-    const items=[...names].map(name=>{
-      const place=byName.get(name);
-      if(!place)return null;
-      return {place_slug:place.n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zа-яё0-9]+/gi,'-').replace(/^-|-$/g,'').slice(0,170),
-        is_favorite:state.favs.includes(name),visited:state.visited.includes(name),rating:state.ratings[name]||null};
-    }).filter(Boolean);
+    const items=places.map(place=>({
+      place_slug:place.n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zа-яё0-9]+/gi,'-').replace(/^-|-$/g,'').slice(0,170),
+      is_favorite:state.favs.includes(place.n),
+      visited:state.visited.includes(place.n),
+      rating:state.ratings[place.n]||null
+    }));
     try{await api('/activity',{method:'PUT',body:items})}catch(error){console.error('DUO API activity sync:',error)}
   },350);
 };

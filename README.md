@@ -19,16 +19,16 @@ DUO helps two people discover places and events in Minsk, plan dates, save favor
 - backend/app — FastAPI application, ORM models, auth and event importer.
 - backend/seed/places.json — normalized public catalog source.
 - backend/migrations — Alembic schema migration.
-- app.py — Vercel FastAPI entry point.
+- main.py — Vercel FastAPI entry point.
 - public/ — static frontend assets served by Vercel CDN.
 
 ## Local backend setup
 1. Create a Python virtual environment.
 2. Install root requirements.txt.
 3. Copy backend/.env.example to backend/.env. Create the restricted runtime role using backend/role.sql, then set DATABASE_URL from the Supabase Transaction Pooler URI and MIGRATION_DATABASE_URL for trusted migrations.
-4. From backend/: run alembic upgrade head using MIGRATION_DATABASE_URL (trusted admin connection).
-5. From backend/: run python seed_places.py.
-6. Run uvicorn app:app --reload from the project root.
+4. From the project root, run: alembic -c backend/alembic.ini upgrade head using MIGRATION_DATABASE_URL (trusted admin connection).
+5. From the project root, run: python backend/seed_places.py.
+6. Run uvicorn main:app --reload from the project root.
 
 Open /docs for Swagger UI and /api/health for the health check.
 

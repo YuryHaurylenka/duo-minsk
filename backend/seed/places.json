@@ -19,7 +19,8 @@
     "latitude": 53.9187458,
     "longitude": 27.607427,
     "location_verified": true,
-    "slug": "дворец-водного-спорта"
+    "slug": "дворец-водного-спорта",
+    "district": "Первомайский"
   },
   {
     "n": "Бассейн САК «Трактор»",
@@ -41,7 +42,8 @@
     "latitude": 53.8874347,
     "longitude": 27.6188348,
     "location_verified": true,
-    "slug": "бассеин-сак-трактор"
+    "slug": "бассеин-сак-трактор",
+    "district": "Партизанский"
   },
   {
     "n": "ВТК «Уручье»",
@@ -63,7 +65,8 @@
     "latitude": 53.9494899,
     "longitude": 27.7071676,
     "location_verified": true,
-    "slug": "втк-уручье"
+    "slug": "втк-уручье",
+    "district": "Первомайский"
   },
   {
     "n": "Плавательный комплекс БГУФК",
@@ -82,7 +85,15 @@
     "source": "Yandex Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Плавательный%20комплекс%20БГУФК",
     "cost": 999,
-    "slug": "плавательныи-комплекс-бгуфк"
+    "slug": "плавательныи-комплекс-бгуфк",
+    "latitude": 53.933985086127,
+    "longitude": 27.489822240309,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 78.96,
+    "geocode_match": "проспект Победителей 109В, Минск",
+    "district": "Центральный",
+    "location_verified": false
   },
   {
     "n": "Аквапарк «Лебяжий»",
@@ -104,7 +115,8 @@
     "latitude": 53.9527518,
     "longitude": 27.4522032,
     "location_verified": true,
-    "slug": "аквапарк-лебяжии"
+    "slug": "аквапарк-лебяжии",
+    "district": "Центральный"
   },
   {
     "n": "Скалодром Plato",
@@ -126,7 +138,8 @@
     "latitude": 53.9148535,
     "longitude": 27.570798,
     "location_verified": true,
-    "slug": "скалодром-plato"
+    "slug": "скалодром-plato",
+    "district": "Центральный"
   },
   {
     "n": "Скалодром «Трапеция»",
@@ -148,7 +161,8 @@
     "latitude": 53.8859771,
     "longitude": 27.5812612,
     "location_verified": true,
-    "slug": "скалодром-трапеция"
+    "slug": "скалодром-трапеция",
+    "district": "Ленинский"
   },
   {
     "n": "Скалодром «Динамо»",
@@ -170,7 +184,8 @@
     "latitude": 53.8966214,
     "longitude": 27.5596779,
     "location_verified": false,
-    "slug": "скалодром-динамо"
+    "slug": "скалодром-динамо",
+    "district": "Ленинский"
   },
   {
     "n": "Ледовый дворец Минской области",
@@ -192,7 +207,8 @@
     "latitude": 53.907597,
     "longitude": 27.4864928,
     "location_verified": true,
-    "slug": "ледовыи-дворец-минскои-области"
+    "slug": "ледовыи-дворец-минскои-области",
+    "district": "Фрунзенский"
   },
   {
     "n": "Каток ТЦ «Замок»",
@@ -211,7 +227,15 @@
     "source": "Яндекс Карты",
     "src": "https://yandex.by/maps/org/ledovy_katok/1260463552/",
     "cost": 16,
-    "slug": "каток-тц-замок"
+    "slug": "каток-тц-замок",
+    "latitude": 53.92649149705,
+    "longitude": 27.517700617908,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 78.58,
+    "geocode_match": "проспект Победителей 65, Минск",
+    "district": "Центральный",
+    "location_verified": false
   },
   {
     "n": "Чижовка-Арена",
@@ -233,7 +257,8 @@
     "latitude": 53.8443924,
     "longitude": 27.6286347,
     "location_verified": true,
-    "slug": "чижовка-арена"
+    "slug": "чижовка-арена",
+    "district": "Заводской"
   },
   {
     "n": "F1 Каток у Дворца спорта",
@@ -252,7 +277,15 @@
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=F1каток%20Минск",
     "cost": 999,
-    "slug": "f1-каток-у-дворца-спорта"
+    "slug": "f1-каток-у-дворца-спорта",
+    "latitude": 53.8976873,
+    "longitude": 27.5494218,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "Locality",
+    "geocode_score": 75.0,
+    "geocode_match": "Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "SkyKart",
@@ -271,7 +304,15 @@
     "source": "Kart-Map / сайт",
     "src": "https://www.kart-map.com/en/circuits/skykart",
     "cost": 50,
-    "slug": "skykart"
+    "slug": "skykart",
+    "latitude": 53.908847381318,
+    "longitude": 27.549006690993,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 84.1,
+    "geocode_match": "проспект Победителей 9, Минск",
+    "district": "Центральный",
+    "location_verified": false
   },
   {
     "n": "Kartlend",
@@ -293,7 +334,8 @@
     "latitude": 53.8912552,
     "longitude": 27.4220979,
     "location_verified": true,
-    "slug": "kartlend"
+    "slug": "kartlend",
+    "district": "Фрунзенский"
   },
   {
     "n": "Bowling Haus",
@@ -312,7 +354,15 @@
     "source": "Яндекс Карты",
     "src": "https://yandex.com/maps/org/bowling_haus/1060010597/",
     "cost": 45,
-    "slug": "bowling-haus"
+    "slug": "bowling-haus",
+    "latitude": 53.931389210714,
+    "longitude": 27.637430321256,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 83.39,
+    "geocode_match": "проспект Независимости 117А, Минск",
+    "district": "Первомайский",
+    "location_verified": false
   },
   {
     "n": "Боулинг Madison / Barberry",
@@ -334,7 +384,8 @@
     "latitude": 53.9075948,
     "longitude": 27.5294684,
     "location_verified": true,
-    "slug": "боулинг-madison-barberry"
+    "slug": "боулинг-madison-barberry",
+    "district": "Фрунзенский"
   },
   {
     "n": "Спорт Парк",
@@ -356,7 +407,8 @@
     "latitude": 53.8965719,
     "longitude": 27.5431539,
     "location_verified": true,
-    "slug": "спорт-парк"
+    "slug": "спорт-парк",
+    "district": "Московский"
   },
   {
     "n": "Боулинг на Герасименко, 51",
@@ -378,7 +430,8 @@
     "latitude": 53.8859037,
     "longitude": 27.6782091,
     "location_verified": true,
-    "slug": "боулинг-на-герасименко-51"
+    "slug": "боулинг-на-герасименко-51",
+    "district": "Заводской"
   },
   {
     "n": "Бильярдный клуб Start",
@@ -400,7 +453,8 @@
     "latitude": 53.9391353,
     "longitude": 27.6508336,
     "location_verified": true,
-    "slug": "бильярдныи-клуб-start"
+    "slug": "бильярдныи-клуб-start",
+    "district": "Первомайский"
   },
   {
     "n": "VR LIFE",
@@ -419,7 +473,15 @@
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=VR%20LIFE%20Минск",
     "cost": 999,
-    "slug": "vr-life"
+    "slug": "vr-life",
+    "latitude": 53.90762747913,
+    "longitude": 27.484558237477,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 96.28,
+    "geocode_match": "улица Притыцкого 29, Минск",
+    "district": "Фрунзенский",
+    "location_verified": true
   },
   {
     "n": "VRG Hub",
@@ -438,7 +500,15 @@
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=VRG%20Hub%20Минск",
     "cost": 999,
-    "slug": "vrg-hub"
+    "slug": "vrg-hub",
+    "latitude": 53.888266707718,
+    "longitude": 27.52107232228,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 88.83,
+    "geocode_match": "проспект Дзержинского 11, Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "Elonium VR",
@@ -460,7 +530,8 @@
     "latitude": 53.9134765,
     "longitude": 27.524879,
     "location_verified": true,
-    "slug": "elonium-vr"
+    "slug": "elonium-vr",
+    "district": "Центральный"
   },
   {
     "n": "Neurobox",
@@ -479,7 +550,15 @@
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
     "cost": 999,
-    "slug": "neurobox"
+    "slug": "neurobox",
+    "latitude": 53.862078415166,
+    "longitude": 27.480709016081,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 87.56,
+    "geocode_match": "проспект Дзержинского 104, Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "Rooms of Magic",
@@ -498,7 +577,15 @@
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Rooms%20of%20Magic%20Минск",
     "cost": 999,
-    "slug": "rooms-of-magic"
+    "slug": "rooms-of-magic",
+    "latitude": 53.915703484749,
+    "longitude": 27.568938605287,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 80.33,
+    "geocode_match": "проспект Машерова 11, Минск",
+    "district": "Центральный",
+    "location_verified": false
   },
   {
     "n": "Pandora’s Box",
@@ -517,7 +604,15 @@
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Pandora%27s%20Box%20Минск",
     "cost": 999,
-    "slug": "pandora-s-box"
+    "slug": "pandora-s-box",
+    "latitude": 53.917274504861,
+    "longitude": 27.590410526651,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 82.25,
+    "geocode_match": "проспект Независимости 58, Минск",
+    "district": "Советский",
+    "location_verified": false
   },
   {
     "n": "Квест «Проклятие Эмили»",
@@ -536,7 +631,15 @@
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Проклятие%20Эмили%20Минск",
     "cost": 999,
-    "slug": "квест-проклятие-эмили"
+    "slug": "квест-проклятие-эмили",
+    "latitude": 53.8976873,
+    "longitude": 27.5494218,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "Locality",
+    "geocode_score": 75.0,
+    "geocode_match": "Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "Форт Боярд / FNAF",
@@ -558,7 +661,8 @@
     "latitude": 53.9199175,
     "longitude": 27.5643444,
     "location_verified": true,
-    "slug": "форт-боярд-fnaf"
+    "slug": "форт-боярд-fnaf",
+    "district": "Советский"
   },
   {
     "n": "Квест «Пила»",
@@ -577,7 +681,15 @@
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Квест%20Пила%20Минск",
     "cost": 999,
-    "slug": "квест-пила"
+    "slug": "квест-пила",
+    "latitude": 53.8976873,
+    "longitude": 27.5494218,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "Locality",
+    "geocode_score": 75.0,
+    "geocode_match": "Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "Квесты Pinkerton",
@@ -596,7 +708,15 @@
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Pinkerton%20Минск",
     "cost": 999,
-    "slug": "квесты-pinkerton"
+    "slug": "квесты-pinkerton",
+    "latitude": 53.915703484749,
+    "longitude": 27.568938605287,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 81.36,
+    "geocode_match": "проспект Машерова 11, Минск",
+    "district": "Центральный",
+    "location_verified": false
   },
   {
     "n": "Квесты «Взаперти»",
@@ -618,7 +738,8 @@
     "latitude": 53.8962105,
     "longitude": 27.5543788,
     "location_verified": true,
-    "slug": "квесты-взаперти"
+    "slug": "квесты-взаперти",
+    "district": "Ленинский"
   },
   {
     "n": "Force Recon — квесты",
@@ -640,7 +761,8 @@
     "latitude": 53.9215631,
     "longitude": 27.5648041,
     "location_verified": true,
-    "slug": "force-recon-квесты"
+    "slug": "force-recon-квесты",
+    "district": "Советский"
   },
   {
     "n": "Golf Park",
@@ -662,7 +784,8 @@
     "latitude": 53.9096853,
     "longitude": 27.557856,
     "location_verified": true,
-    "slug": "golf-park"
+    "slug": "golf-park",
+    "district": "Центральный"
   },
   {
     "n": "Клуб настольных игр People Meeple",
@@ -684,7 +807,8 @@
     "latitude": 53.9112384,
     "longitude": 27.5828267,
     "location_verified": true,
-    "slug": "клуб-настольных-игр-people-meeple"
+    "slug": "клуб-настольных-игр-people-meeple",
+    "district": "Советский"
   },
   {
     "n": "Клуб VR U-ViW",
@@ -703,7 +827,15 @@
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=U-ViW%20Минск",
     "cost": 999,
-    "slug": "клуб-vr-u-viw"
+    "slug": "клуб-vr-u-viw",
+    "latitude": 53.874706087576,
+    "longitude": 27.498495582258,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 95.95,
+    "geocode_match": "вуліца Уманская 54, Мінск",
+    "district": "Московский",
+    "location_verified": true
   },
   {
     "n": "Лазертаг / парк 0,67",
@@ -725,7 +857,8 @@
     "latitude": 53.8860251,
     "longitude": 27.6207915,
     "location_verified": true,
-    "slug": "лазертаг-парк-0-67"
+    "slug": "лазертаг-парк-0-67",
+    "district": "Партизанский"
   },
   {
     "n": "R-Park",
@@ -744,7 +877,15 @@
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=paintball+Minsk+Belarus",
     "cost": 999,
-    "slug": "r-park"
+    "slug": "r-park",
+    "latitude": 53.9806373,
+    "longitude": 27.3307693,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "Locality",
+    "geocode_score": 87.54,
+    "geocode_match": "Гонолес, Минский район, Минская область",
+    "district": null,
+    "location_verified": false
   },
   {
     "n": "Activity Park Colt",
@@ -763,7 +904,15 @@
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=paintball+Minsk+Belarus",
     "cost": 999,
-    "slug": "activity-park-colt"
+    "slug": "activity-park-colt",
+    "latitude": 53.944122411285,
+    "longitude": 27.328372116819,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 92.59,
+    "geocode_match": "вуліца Прыгожая 30, Ратамка, Мінскі раён, Мінская вобласць",
+    "district": null,
+    "location_verified": true
   },
   {
     "n": "BATTLER",
@@ -782,7 +931,15 @@
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
     "cost": 999,
-    "slug": "battler"
+    "slug": "battler",
+    "latitude": 53.926210066346,
+    "longitude": 27.47504819294,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "StreetAddressExt",
+    "geocode_score": 96.17,
+    "geocode_match": "улица Михася Лынькова 121, Минск",
+    "district": "Фрунзенский",
+    "location_verified": false
   },
   {
     "n": "Прогулка по парку Победы",
@@ -801,7 +958,15 @@
     "source": "Top-Rated.Online",
     "src": "https://www.google.com/search?q=Парк+Победы+Минск+отзывы",
     "cost": 0,
-    "slug": "прогулка-по-парку-победы"
+    "slug": "прогулка-по-парку-победы",
+    "latitude": 53.8976873,
+    "longitude": 27.5494218,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "Locality",
+    "geocode_score": 75.0,
+    "geocode_match": "Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "Лошицкий парк",
@@ -823,7 +988,8 @@
     "latitude": 53.8549157,
     "longitude": 27.5814325,
     "location_verified": false,
-    "slug": "лошицкии-парк"
+    "slug": "лошицкии-парк",
+    "district": "Ленинский"
   },
   {
     "n": "Парк Горького",
@@ -845,7 +1011,8 @@
     "latitude": 53.9042537,
     "longitude": 27.574652,
     "location_verified": true,
-    "slug": "парк-горького"
+    "slug": "парк-горького",
+    "district": "Партизанский"
   },
   {
     "n": "Центральный ботанический сад",
@@ -867,7 +1034,8 @@
     "latitude": 53.9149776,
     "longitude": 27.6068493,
     "location_verified": true,
-    "slug": "центральныи-ботаническии-сад"
+    "slug": "центральныи-ботаническии-сад",
+    "district": "Первомайский"
   },
   {
     "n": "Прогулочный катер «Касатка»",
@@ -889,7 +1057,8 @@
     "latitude": 53.9225949,
     "longitude": 27.5369616,
     "location_verified": false,
-    "slug": "прогулочныи-катер-касатка"
+    "slug": "прогулочныи-катер-касатка",
+    "district": "Центральный"
   },
   {
     "n": "SUP-прогулка Red Croc",
@@ -908,7 +1077,15 @@
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
     "cost": 999,
-    "slug": "sup-прогулка-red-croc"
+    "slug": "sup-прогулка-red-croc",
+    "latitude": 53.898339115036,
+    "longitude": 27.425340678275,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 94.91,
+    "geocode_match": "улица Скрипникова 36, Минск",
+    "district": "Фрунзенский",
+    "location_verified": true
   },
   {
     "n": "Каяки Kajak",
@@ -927,7 +1104,15 @@
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
     "cost": 999,
-    "slug": "каяки-kajak"
+    "slug": "каяки-kajak",
+    "latitude": 53.969328889609,
+    "longitude": 27.57686017434,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 95.88,
+    "geocode_match": "улица Зеленолугская 15, Минск",
+    "district": "Советский",
+    "location_verified": true
   },
   {
     "n": "Hero Park",
@@ -949,7 +1134,8 @@
     "latitude": 53.9010413,
     "longitude": 27.5458555,
     "location_verified": true,
-    "slug": "hero-park"
+    "slug": "hero-park",
+    "district": "Московский"
   },
   {
     "n": "Верёвочный парк «Тарзания»",
@@ -971,7 +1157,8 @@
     "latitude": 53.9206985,
     "longitude": 27.6177016,
     "location_verified": false,
-    "slug": "веревочныи-парк-тарзания"
+    "slug": "веревочныи-парк-тарзания",
+    "district": "Первомайский"
   },
   {
     "n": "Flash Park — Arena City",
@@ -990,7 +1177,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Flash%20Park%20%E2%80%94%20Arena%20City%20%D0%BF%D1%80-%D1%82%20%D0%9F%D0%BE%D0%B1%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9%2C%2084%2C%20%D0%A2%D0%A0%D0%A6%20Arena%20City%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "flash-park-arena-city"
+    "slug": "flash-park-arena-city",
+    "latitude": 53.93811501746,
+    "longitude": 27.486752535909,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 76.32,
+    "geocode_match": "проспект Победителей 84, Минск",
+    "district": "Центральный",
+    "location_verified": false
   },
   {
     "n": "Flash Park — Palazzo",
@@ -1009,7 +1204,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Flash%20Park%20%E2%80%94%20Palazzo%20%D1%83%D0%BB.%20%D0%A2%D0%B8%D0%BC%D0%B8%D1%80%D1%8F%D0%B7%D0%B5%D0%B2%D0%B0%2C%2074%D0%90%2C%20%D0%A2%D0%A0%D0%A6%20Palazzo%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "flash-park-palazzo"
+    "slug": "flash-park-palazzo",
+    "latitude": 53.92684039377,
+    "longitude": 27.509646111871,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 95.09,
+    "geocode_match": "улица Тимирязева 74А, Минск",
+    "district": "Центральный",
+    "location_verified": true
   },
   {
     "n": "Flash Park — Diamond City",
@@ -1028,7 +1231,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Flash%20Park%20%E2%80%94%20Diamond%20City%20%D0%A2%D0%A0%D0%A6%20Diamond%20City%2C%20%D0%BF%D0%B5%D1%80%D0%B5%D1%81%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20%D1%83%D0%BB.%20%D0%93%D1%80%D0%BE%D0%BC%D0%BE%D0%B2%D0%B0%20%D0%B8%2028%20%D0%BA%D0%BC%20%D0%9C%D0%9A%D0%90%D0%94%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "flash-park-diamond-city"
+    "slug": "flash-park-diamond-city",
+    "latitude": 53.852389312281,
+    "longitude": 27.442759195083,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 90.16,
+    "geocode_match": "Громова 28, Минск",
+    "district": "Московский",
+    "location_verified": true
   },
   {
     "n": "Flash Park — Евроопт",
@@ -1047,7 +1258,15 @@
     "source": "Официальный сайт",
     "src": "https://www.google.com/maps/search/?api=1&query=Flash%20Park%20%E2%80%94%20%D0%95%D0%B2%D1%80%D0%BE%D0%BE%D0%BF%D1%82%20%D1%83%D0%BB.%20%D0%9A%D0%B0%D0%B7%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%2C%206%2C%20%D0%A2%D0%A0%D0%A6%20%D0%95%D0%B2%D1%80%D0%BE%D0%BE%D0%BF%D1%82%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 40,
-    "slug": "flash-park-евроопт"
+    "slug": "flash-park-евроопт",
+    "latitude": 53.916455781238,
+    "longitude": 27.42974021335,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "StreetAddress",
+    "geocode_score": 95.18,
+    "geocode_match": "улица Казимировская 6, Минск",
+    "district": "Фрунзенский",
+    "location_verified": false
   },
   {
     "n": "Flash Park — Червенский",
@@ -1069,7 +1288,8 @@
     "latitude": 53.8846288,
     "longitude": 27.5657779,
     "location_verified": false,
-    "slug": "flash-park-червенскии"
+    "slug": "flash-park-червенскии",
+    "district": "Ленинский"
   },
   {
     "n": "Батутная арена «Пружина»",
@@ -1088,7 +1308,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%91%D0%B0%D1%82%D1%83%D1%82%D0%BD%D0%B0%D1%8F%20%D0%B0%D1%80%D0%B5%D0%BD%D0%B0%20%C2%AB%D0%9F%D1%80%D1%83%D0%B6%D0%B8%D0%BD%D0%B0%C2%BB%20%D1%83%D0%BB.%20%D0%A3%D0%BC%D0%B0%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%2C%2054%2C%20%D0%A2%D0%A6%20Globo%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "батутная-арена-пружина"
+    "slug": "батутная-арена-пружина",
+    "latitude": 53.874706087576,
+    "longitude": 27.498495582258,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 94.63,
+    "geocode_match": "вуліца Уманская 54, Мінск",
+    "district": "Московский",
+    "location_verified": true
   },
   {
     "n": "Батутный парк «Мистерия XL»",
@@ -1110,7 +1338,8 @@
     "latitude": 53.8980521,
     "longitude": 27.5270149,
     "location_verified": true,
-    "slug": "батутныи-парк-мистерия-xl"
+    "slug": "батутныи-парк-мистерия-xl",
+    "district": "Московский"
   },
   {
     "n": "Батутный парк Sky Park",
@@ -1132,7 +1361,8 @@
     "latitude": 53.8860251,
     "longitude": 27.6207915,
     "location_verified": true,
-    "slug": "батутныи-парк-sky-park"
+    "slug": "батутныи-парк-sky-park",
+    "district": "Партизанский"
   },
   {
     "n": "Батутный центр Fly City",
@@ -1154,7 +1384,8 @@
     "latitude": 53.9367996,
     "longitude": 27.5350162,
     "location_verified": true,
-    "slug": "батутныи-центр-fly-city"
+    "slug": "батутныи-центр-fly-city",
+    "district": "Центральный"
   },
   {
     "n": "Развлекательный центр Joy Jump",
@@ -1176,7 +1407,8 @@
     "latitude": 53.9240751,
     "longitude": 27.428889,
     "location_verified": true,
-    "slug": "развлекательныи-центр-joy-jump"
+    "slug": "развлекательныи-центр-joy-jump",
+    "district": "Фрунзенский"
   },
   {
     "n": "Neon Park",
@@ -1195,7 +1427,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Neon%20Park%20%D0%BF%D1%80-%D1%82%20%D0%9D%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%2C%203%2F2%2C%20%D0%A2%D0%A6%20%D0%A1%D1%82%D0%BE%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "neon-park"
+    "slug": "neon-park",
+    "latitude": 53.895549,
+    "longitude": 27.547953,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 96.53,
+    "geocode_match": "Neon Park",
+    "district": "Московский",
+    "location_verified": true
   },
   {
     "n": "TELEPORT",
@@ -1214,7 +1454,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=TELEPORT%20%D1%83%D0%BB.%20%D0%91%D0%BE%D0%B1%D1%80%D1%83%D0%B9%D1%81%D0%BA%D0%B0%D1%8F%2C%206%2C%20%D0%A2%D0%A0%D0%A6%20Galileo%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "teleport"
+    "slug": "teleport",
+    "latitude": 53.889987596259,
+    "longitude": 27.555084073709,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 95.91,
+    "geocode_match": "улица Бобруйская 6, Минск",
+    "district": "Октябрьский",
+    "location_verified": true
   },
   {
     "n": "TikTok Park",
@@ -1233,7 +1481,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=TikTok%20Park%20%D0%BF%D1%80-%D1%82%20%D0%9D%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%2C%203%2F2%2C%20%D0%A2%D0%A6%20%D0%A1%D1%82%D0%BE%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "tiktok-park"
+    "slug": "tiktok-park",
+    "latitude": 53.8956128,
+    "longitude": 27.5479403,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 95.83,
+    "geocode_match": "Столица",
+    "district": "Московский",
+    "location_verified": true
   },
   {
     "n": "Развлекательный центр «Титан»",
@@ -1252,7 +1508,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A0%D0%B0%D0%B7%D0%B2%D0%BB%D0%B5%D0%BA%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%86%D0%B5%D0%BD%D1%82%D1%80%20%C2%AB%D0%A2%D0%B8%D1%82%D0%B0%D0%BD%C2%BB%20%D0%BF%D1%80-%D1%82%20%D0%94%D0%B7%D0%B5%D1%80%D0%B6%D0%B8%D0%BD%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%20104%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "развлекательныи-центр-титан"
+    "slug": "развлекательныи-центр-титан",
+    "latitude": 53.862078415166,
+    "longitude": 27.480709016081,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 78.28,
+    "geocode_match": "проспект Дзержинского 104, Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "Бильярдный клуб «Билли Джойс»",
@@ -1274,7 +1538,8 @@
     "latitude": 53.8774955,
     "longitude": 27.4962095,
     "location_verified": true,
-    "slug": "бильярдныи-клуб-билли-джоис"
+    "slug": "бильярдныи-клуб-билли-джоис",
+    "district": "Московский"
   },
   {
     "n": "Бильярдный клуб «Европа»",
@@ -1296,7 +1561,8 @@
     "latitude": 53.9286469,
     "longitude": 27.5827981,
     "location_verified": true,
-    "slug": "бильярдныи-клуб-европа"
+    "slug": "бильярдныи-клуб-европа",
+    "district": "Советский"
   },
   {
     "n": "Тир «Калибр»",
@@ -1315,7 +1581,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A2%D0%B8%D1%80%20%C2%AB%D0%9A%D0%B0%D0%BB%D0%B8%D0%B1%D1%80%C2%BB%20%D1%83%D0%BB.%20%D0%A1%D1%83%D1%80%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%2C%2057%D0%91%2C%20%D0%BF%D0%B0%D0%B2.%20314%D0%90%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "тир-калибр"
+    "slug": "тир-калибр",
+    "latitude": 53.928673903001,
+    "longitude": 27.580389559097,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "StreetAddress",
+    "geocode_score": 95.61,
+    "geocode_match": "улица Сурганова 57, Минск",
+    "district": "Советский",
+    "location_verified": false
   },
   {
     "n": "Тир «Снайпер»",
@@ -1337,7 +1611,8 @@
     "latitude": 53.893304,
     "longitude": 27.5509913,
     "location_verified": true,
-    "slug": "тир-снаипер"
+    "slug": "тир-снаипер",
+    "district": "Октябрьский"
   },
   {
     "n": "Конный центр в Ратомке",
@@ -1356,7 +1631,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9A%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%86%D0%B5%D0%BD%D1%82%D1%80%20%D0%B2%20%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B5%20%D0%B0%D0%B3.%20%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0%2C%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "конныи-центр-в-ратомке"
+    "slug": "конныи-центр-в-ратомке",
+    "latitude": 53.9396681,
+    "longitude": 27.3261276,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "Locality",
+    "geocode_score": 79.57,
+    "geocode_match": "Ратомка, Минский район, Минская область",
+    "district": null,
+    "location_verified": false
   },
   {
     "n": "Конюшня в Тарасово",
@@ -1375,7 +1658,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9A%D0%BE%D0%BD%D1%8E%D1%88%D0%BD%D1%8F%20%D0%B2%20%D0%A2%D0%B0%D1%80%D0%B0%D1%81%D0%BE%D0%B2%D0%BE%20%D1%83%D0%BB.%20%D0%A2%D0%B5%D0%BD%D0%B8%D1%81%D1%82%D0%B0%D1%8F%2C%2027%2C%20%D0%B4.%20%D0%A2%D0%B0%D1%80%D0%B0%D1%81%D0%BE%D0%B2%D0%BE%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "конюшня-в-тарасово"
+    "slug": "конюшня-в-тарасово",
+    "latitude": 53.935654006868,
+    "longitude": 27.725528733677,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 95.0,
+    "geocode_match": "улица Тенистая 27, Минск",
+    "district": "Первомайский",
+    "location_verified": true
   },
   {
     "n": "Велопрокат Velodisko",
@@ -1397,7 +1688,8 @@
     "latitude": 53.8833996,
     "longitude": 27.5689701,
     "location_verified": true,
-    "slug": "велопрокат-velodisko"
+    "slug": "велопрокат-velodisko",
+    "district": "Ленинский"
   },
   {
     "n": "Велопрокат KRUTI.BY",
@@ -1419,7 +1711,8 @@
     "latitude": 53.9194151,
     "longitude": 27.5508942,
     "location_verified": true,
-    "slug": "велопрокат-kruti-by"
+    "slug": "велопрокат-kruti-by",
+    "district": "Центральный"
   },
   {
     "n": "El Gato Dance Center",
@@ -1441,7 +1734,8 @@
     "latitude": 53.8952843,
     "longitude": 27.5753447,
     "location_verified": false,
-    "slug": "el-gato-dance-center"
+    "slug": "el-gato-dance-center",
+    "district": "Ленинский"
   },
   {
     "n": "Студия танцев KVARTAL",
@@ -1463,7 +1757,8 @@
     "latitude": 53.9147675,
     "longitude": 27.5900034,
     "location_verified": true,
-    "slug": "студия-танцев-kvartal"
+    "slug": "студия-танцев-kvartal",
+    "district": "Советский"
   },
   {
     "n": "Гончарная школа «Колокол»",
@@ -1485,7 +1780,8 @@
     "latitude": 53.91948,
     "longitude": 27.56266,
     "location_verified": true,
-    "slug": "гончарная-школа-колокол"
+    "slug": "гончарная-школа-колокол",
+    "district": "Советский"
   },
   {
     "n": "Дом художников Угриновичей",
@@ -1507,7 +1803,8 @@
     "latitude": 53.902106,
     "longitude": 27.5547026,
     "location_verified": true,
-    "slug": "дом-художников-угриновичеи"
+    "slug": "дом-художников-угриновичеи",
+    "district": "Центральный"
   },
   {
     "n": "Художественная студия INDIGO",
@@ -1526,7 +1823,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A5%D1%83%D0%B4%D0%BE%D0%B6%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F%20%D1%81%D1%82%D1%83%D0%B4%D0%B8%D1%8F%20INDIGO%20%D0%BF%D1%80-%D1%82%20%D0%9D%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%2C%2095%2C%20%D0%BA%D0%BE%D1%80%D0%BF.%2016%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "художественная-студия-indigo"
+    "slug": "художественная-студия-indigo",
+    "latitude": 53.8976873,
+    "longitude": 27.5494218,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "Locality",
+    "geocode_score": 75.0,
+    "geocode_match": "Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "Fantasy Room Minsk",
@@ -1548,7 +1853,8 @@
     "latitude": 53.8977283,
     "longitude": 27.5507784,
     "location_verified": true,
-    "slug": "fantasy-room-minsk"
+    "slug": "fantasy-room-minsk",
+    "district": "Московский"
   },
   {
     "n": "Mon chalet vert",
@@ -1570,7 +1876,8 @@
     "latitude": 53.9115583,
     "longitude": 27.5616303,
     "location_verified": true,
-    "slug": "mon-chalet-vert"
+    "slug": "mon-chalet-vert",
+    "district": "Центральный"
   },
   {
     "n": "Художественный комбинат UP",
@@ -1592,7 +1899,8 @@
     "latitude": 53.9316971,
     "longitude": 27.5929978,
     "location_verified": true,
-    "slug": "художественныи-комбинат-up"
+    "slug": "художественныи-комбинат-up",
+    "district": "Советский"
   },
   {
     "n": "Национальный художественный музей",
@@ -1614,7 +1922,8 @@
     "latitude": 53.898377,
     "longitude": 27.5606454,
     "location_verified": true,
-    "slug": "национальныи-художественныи-музеи"
+    "slug": "национальныи-художественныи-музеи",
+    "district": "Ленинский"
   },
   {
     "n": "Галерея FARBA",
@@ -1633,7 +1942,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%93%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F%20FARBA%20%D0%BF%D1%80-%D1%82%20%D0%9D%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%2C%2047%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "галерея-farba"
+    "slug": "галерея-farba",
+    "latitude": 53.9139081,
+    "longitude": 27.5804883,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 98.31,
+    "geocode_match": "Галерея Farba",
+    "district": "Советский",
+    "location_verified": true
   },
   {
     "n": "Галерея «Арт-Беларусь»",
@@ -1655,7 +1972,8 @@
     "latitude": 53.9103215,
     "longitude": 27.5795481,
     "location_verified": true,
-    "slug": "галерея-арт-беларусь"
+    "slug": "галерея-арт-беларусь",
+    "district": "Советский"
   },
   {
     "n": "Выставочный зал LIBRA",
@@ -1674,7 +1992,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%92%D1%8B%D1%81%D1%82%D0%B0%D0%B2%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%B0%D0%BB%20LIBRA%20%D0%BF%D1%80-%D1%82%20%D0%9D%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%2C%2047%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "выставочныи-зал-libra"
+    "slug": "выставочныи-зал-libra",
+    "latitude": 53.9139081,
+    "longitude": 27.5804883,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 95.64,
+    "geocode_match": "Libra",
+    "district": "Советский",
+    "location_verified": true
   },
   {
     "n": "Музей-мастерская Заира Азгура",
@@ -1696,7 +2022,8 @@
     "latitude": 53.8992882,
     "longitude": 27.5784712,
     "location_verified": true,
-    "slug": "музеи-мастерская-заира-азгура"
+    "slug": "музеи-мастерская-заира-азгура",
+    "district": "Партизанский"
   },
   {
     "n": "Национальный исторический музей",
@@ -1718,7 +2045,8 @@
     "latitude": 53.896814,
     "longitude": 27.5556159,
     "location_verified": true,
-    "slug": "национальныи-историческии-музеи"
+    "slug": "национальныи-историческии-музеи",
+    "district": "Ленинский"
   },
   {
     "n": "Музей древнебелорусской культуры",
@@ -1740,7 +2068,8 @@
     "latitude": 53.9167554,
     "longitude": 27.6026531,
     "location_verified": true,
-    "slug": "музеи-древнебелорусскои-культуры"
+    "slug": "музеи-древнебелорусскои-культуры",
+    "district": "Первомайский"
   },
   {
     "n": "Музей миниатюр «Страна мини»",
@@ -1762,7 +2091,8 @@
     "latitude": 53.9031723,
     "longitude": 27.5628432,
     "location_verified": true,
-    "slug": "музеи-миниатюр-страна-мини"
+    "slug": "музеи-миниатюр-страна-мини",
+    "district": "Центральный"
   },
   {
     "n": "Музей истории Великой Отечественной войны",
@@ -1781,7 +2111,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9C%D1%83%D0%B7%D0%B5%D0%B9%20%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D0%B8%20%D0%92%D0%B5%D0%BB%D0%B8%D0%BA%D0%BE%D0%B9%20%D0%9E%D1%82%D0%B5%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9%20%D0%B2%D0%BE%D0%B9%D0%BD%D1%8B%20%D0%BF%D1%80-%D1%82%20%D0%9F%D0%BE%D0%B1%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9%2C%208%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "музеи-истории-великои-отечественнои-воины"
+    "slug": "музеи-истории-великои-отечественнои-воины",
+    "latitude": 53.916299,
+    "longitude": 27.538281,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 90.33,
+    "geocode_match": "Белорусский Государственный Музей Истории Великой Отечественной Войны",
+    "district": "Центральный",
+    "location_verified": true
   },
   {
     "n": "Музей истории Минска",
@@ -1803,7 +2141,8 @@
     "latitude": 53.903891,
     "longitude": 27.553539,
     "location_verified": true,
-    "slug": "музеи-истории-минска"
+    "slug": "музеи-истории-минска",
+    "district": "Центральный"
   },
   {
     "n": "Театр имени Янки Купалы",
@@ -1825,7 +2164,8 @@
     "latitude": 53.9009059,
     "longitude": 27.5627503,
     "location_verified": true,
-    "slug": "театр-имени-янки-купалы"
+    "slug": "театр-имени-янки-купалы",
+    "district": "Ленинский"
   },
   {
     "n": "Большой театр Беларуси",
@@ -1847,7 +2187,8 @@
     "latitude": 53.9094458,
     "longitude": 27.561931,
     "location_verified": false,
-    "slug": "большои-театр-беларуси"
+    "slug": "большои-театр-беларуси",
+    "district": "Центральный"
   },
   {
     "n": "Кинотеатр «Москва»",
@@ -1869,7 +2210,8 @@
     "latitude": 53.9096809,
     "longitude": 27.5475678,
     "location_verified": true,
-    "slug": "кинотеатр-москва"
+    "slug": "кинотеатр-москва",
+    "district": "Центральный"
   },
   {
     "n": "Кинотеатр «Беларусь»",
@@ -1891,7 +2233,8 @@
     "latitude": 53.9050057,
     "longitude": 27.5429121,
     "location_verified": true,
-    "slug": "кинотеатр-беларусь"
+    "slug": "кинотеатр-беларусь",
+    "district": "Центральный"
   },
   {
     "n": "Минский планетарий",
@@ -1910,7 +2253,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BF%D0%BB%D0%B0%D0%BD%D0%B5%D1%82%D0%B0%D1%80%D0%B8%D0%B9%20%D1%83%D0%BB.%20%D0%A4%D1%80%D1%83%D0%BD%D0%B7%D0%B5%2C%202%2C%20%D0%BF%D0%B0%D1%80%D0%BA%20%D0%93%D0%BE%D1%80%D1%8C%D0%BA%D0%BE%D0%B3%D0%BE%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "минскии-планетарии"
+    "slug": "минскии-планетарии",
+    "latitude": 53.9042375,
+    "longitude": 27.5735726,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 96.02,
+    "geocode_match": "Минский Планетарий",
+    "district": "Партизанский",
+    "location_verified": true
   },
   {
     "n": "Минская обсерватория",
@@ -1929,7 +2280,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D1%81%D0%B5%D1%80%D0%B2%D0%B0%D1%82%D0%BE%D1%80%D0%B8%D1%8F%20%D1%83%D0%BB.%20%D0%A4%D1%80%D1%83%D0%BD%D0%B7%D0%B5%2C%202%2C%20%D0%BF%D0%B0%D1%80%D0%BA%20%D0%93%D0%BE%D1%80%D1%8C%D0%BA%D0%BE%D0%B3%D0%BE%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "минская-обсерватория"
+    "slug": "минская-обсерватория",
+    "latitude": 53.904235909648,
+    "longitude": 27.574617763783,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 94.15,
+    "geocode_match": "улица Фрунзе 2, Минск",
+    "district": "Партизанский",
+    "location_verified": true
   },
   {
     "n": "Минский зоопарк",
@@ -1951,7 +2310,8 @@
     "latitude": 53.8499373,
     "longitude": 27.6355888,
     "location_verified": true,
-    "slug": "минскии-зоопарк"
+    "slug": "минскии-зоопарк",
+    "district": "Заводской"
   },
   {
     "n": "Контактный зоопарк в ТЦ «Титан»",
@@ -1970,7 +2330,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9A%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA%20%D0%B2%20%D0%A2%D0%A6%20%C2%AB%D0%A2%D0%B8%D1%82%D0%B0%D0%BD%C2%BB%20%D0%BF%D1%80-%D1%82%20%D0%94%D0%B7%D0%B5%D1%80%D0%B6%D0%B8%D0%BD%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%20104%2C%20%D0%A2%D0%A6%20%D0%A2%D0%B8%D1%82%D0%B0%D0%BD%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "контактныи-зоопарк-в-тц-титан"
+    "slug": "контактныи-зоопарк-в-тц-титан",
+    "latitude": 53.862078415166,
+    "longitude": 27.480709016081,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 76.22,
+    "geocode_match": "проспект Дзержинского 104, Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "SPA Riviera",
@@ -1992,7 +2360,8 @@
     "latitude": 53.9390988,
     "longitude": 27.4758706,
     "location_verified": true,
-    "slug": "spa-riviera"
+    "slug": "spa-riviera",
+    "district": "Центральный"
   },
   {
     "n": "Yestoday Sport Club",
@@ -2011,7 +2380,15 @@
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Yestoday%20Sport%20Club%20%D1%83%D0%BB.%20%D0%95%D1%84%D1%80%D0%BE%D1%81%D0%B8%D0%BD%D1%8C%D0%B8%20%D0%9F%D0%BE%D0%BB%D0%BE%D1%86%D0%BA%D0%BE%D0%B9%2C%204%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
     "cost": 999,
-    "slug": "yestoday-sport-club"
+    "slug": "yestoday-sport-club",
+    "latitude": 53.903341250603,
+    "longitude": 27.473570014999,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "StreetName",
+    "geocode_score": 77.57,
+    "geocode_match": "улица Ефросинии Полоцкой, Минск",
+    "district": "Фрунзенский",
+    "location_verified": false
   },
   {
     "n": "YOGA PLACE",
@@ -2033,7 +2410,8 @@
     "latitude": 53.8891328,
     "longitude": 27.5749759,
     "location_verified": true,
-    "slug": "yoga-place"
+    "slug": "yoga-place",
+    "district": "Ленинский"
   },
   {
     "n": "Остров слёз",
@@ -2055,7 +2433,8 @@
     "latitude": 53.9096403,
     "longitude": 27.5545133,
     "location_verified": false,
-    "slug": "остров-слез"
+    "slug": "остров-слез",
+    "district": "Центральный"
   },
   {
     "n": "Троицкое предместье",
@@ -2077,7 +2456,8 @@
     "latitude": 53.9083332,
     "longitude": 27.5565713,
     "location_verified": false,
-    "slug": "троицкое-предместье"
+    "slug": "троицкое-предместье",
+    "district": "Центральный"
   },
   {
     "n": "ZABAVA — парк развлечений",
@@ -2096,7 +2476,15 @@
     "source": "Официальный сайт",
     "src": "https://www.google.com/maps/search/?api=1&query=ZABAVA+Маяковского+6+Минск",
     "cost": 999,
-    "slug": "zabava-парк-развлечении"
+    "slug": "zabava-парк-развлечении",
+    "latitude": 53.8847829,
+    "longitude": 27.5657617,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 95.97,
+    "geocode_match": "ТРЦ \"Червенский\"",
+    "district": "Ленинский",
+    "location_verified": true
   },
   {
     "n": "R-парк — лазертаг и троллей",
@@ -2115,7 +2503,15 @@
     "source": "Официальный сайт",
     "src": "https://www.google.com/maps/search/?api=1&query=R-парк+Гонолес+Беларусь",
     "cost": 999,
-    "slug": "r-парк-лазертаг-и-троллеи"
+    "slug": "r-парк-лазертаг-и-троллеи",
+    "latitude": 53.8976873,
+    "longitude": 27.5494218,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "Locality",
+    "geocode_score": 75.0,
+    "geocode_match": "Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "FlyAway — аэротруба",
@@ -2134,7 +2530,15 @@
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=FlyAway+Diamond+City+Минск",
     "cost": 999,
-    "slug": "flyaway-аэротруба"
+    "slug": "flyaway-аэротруба",
+    "latitude": 53.848076502223,
+    "longitude": 27.670304858201,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "StreetName",
+    "geocode_score": 78.28,
+    "geocode_match": "МКАД, Мінск",
+    "district": "Заводской",
+    "location_verified": false
   },
   {
     "n": "Wakepark Ptich — вейкбординг",
@@ -2153,7 +2557,15 @@
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Wakepark+Ptich+Волковичи",
     "cost": 999,
-    "slug": "wakepark-ptich-веикбординг"
+    "slug": "wakepark-ptich-веикбординг",
+    "latitude": 53.867921,
+    "longitude": 27.3174715,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "Locality",
+    "geocode_score": 79.2,
+    "geocode_match": "Птичь, Минский район, Минская область",
+    "district": null,
+    "location_verified": false
   },
   {
     "n": "U-ViW — клуб виртуальной реальности",
@@ -2172,7 +2584,15 @@
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=U-ViW+ТЦ+GLOBO+Минск",
     "cost": 999,
-    "slug": "u-viw-клуб-виртуальнои-реальности"
+    "slug": "u-viw-клуб-виртуальнои-реальности",
+    "latitude": 53.874706087576,
+    "longitude": 27.498495582258,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 94.03,
+    "geocode_match": "вуліца Уманская 54, Мінск",
+    "district": "Московский",
+    "location_verified": true
   },
   {
     "n": "Pandora's Box — квесты и перформансы",
@@ -2191,7 +2611,15 @@
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Pandora's+Box+Минск",
     "cost": 60,
-    "slug": "pandora-s-box-квесты-и-перформансы"
+    "slug": "pandora-s-box-квесты-и-перформансы",
+    "latitude": 53.917274504861,
+    "longitude": 27.590410526651,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 76.49,
+    "geocode_match": "проспект Независимости 58, Минск",
+    "district": "Советский",
+    "location_verified": false
   },
   {
     "n": "iFLY Minsk — полёт в аэротрубе",
@@ -2210,7 +2638,15 @@
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=iFLY+Minsk+Тимирязева+74А",
     "cost": 999,
-    "slug": "ifly-minsk-полет-в-аэротрубе"
+    "slug": "ifly-minsk-полет-в-аэротрубе",
+    "latitude": 53.92684039377,
+    "longitude": 27.509646111871,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 94.85,
+    "geocode_match": "улица Тимирязева 74А, Минск",
+    "district": "Центральный",
+    "location_verified": true
   },
   {
     "n": "VR LIFE — виртуальная реальность",
@@ -2232,7 +2668,8 @@
     "latitude": 53.9078612,
     "longitude": 27.4845038,
     "location_verified": true,
-    "slug": "vr-life-виртуальная-реальность"
+    "slug": "vr-life-виртуальная-реальность",
+    "district": "Фрунзенский"
   },
   {
     "n": "Pbaza — пейнтбол и лазертаг",
@@ -2251,7 +2688,15 @@
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Pbaza+Минск+пейнтбол",
     "cost": 999,
-    "slug": "pbaza-пеинтбол-и-лазертаг"
+    "slug": "pbaza-пеинтбол-и-лазертаг",
+    "latitude": 53.8976873,
+    "longitude": 27.5494218,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "Locality",
+    "geocode_score": 75.0,
+    "geocode_match": "Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "F1-Картинг Веснянка",
@@ -2273,7 +2718,8 @@
     "latitude": 53.9380758,
     "longitude": 27.4439011,
     "location_verified": true,
-    "slug": "f1-картинг-веснянка"
+    "slug": "f1-картинг-веснянка",
+    "district": "Центральный"
   },
   {
     "n": "Sherlock Coffee Hall",
@@ -2295,7 +2741,8 @@
     "latitude": 53.8938671,
     "longitude": 27.5513392,
     "location_verified": true,
-    "slug": "sherlock-coffee-hall"
+    "slug": "sherlock-coffee-hall",
+    "district": "Октябрьский"
   },
   {
     "n": "Zavtraki",
@@ -2317,7 +2764,8 @@
     "latitude": 53.904365,
     "longitude": 27.5585905,
     "location_verified": true,
-    "slug": "zavtraki"
+    "slug": "zavtraki",
+    "district": "Центральный"
   },
   {
     "n": "Tiden",
@@ -2339,7 +2787,8 @@
     "latitude": 53.9130907,
     "longitude": 27.5675324,
     "location_verified": true,
-    "slug": "tiden"
+    "slug": "tiden",
+    "district": "Центральный"
   },
   {
     "n": "Burgerlab",
@@ -2358,7 +2807,15 @@
     "source": "Городской гид DUO",
     "src": "https://looni-dating.com/blog/kuda-shodit-na-pervoe-svidanie-v-minske",
     "cost": 80,
-    "slug": "burgerlab"
+    "slug": "burgerlab",
+    "latitude": 53.891186417961,
+    "longitude": 27.572196399594,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 97.02,
+    "geocode_match": "улица Октябрьская 19, Минск",
+    "district": "Ленинский",
+    "location_verified": true
   },
   {
     "n": "Underdog",
@@ -2380,7 +2837,8 @@
     "latitude": 53.8901352,
     "longitude": 27.5754642,
     "location_verified": true,
-    "slug": "underdog"
+    "slug": "underdog",
+    "district": "Ленинский"
   },
   {
     "n": "Кухмистр",
@@ -2402,7 +2860,8 @@
     "latitude": 53.9014337,
     "longitude": 27.565632,
     "location_verified": true,
-    "slug": "кухмистр"
+    "slug": "кухмистр",
+    "district": "Ленинский"
   },
   {
     "n": "Нола",
@@ -2424,7 +2883,8 @@
     "latitude": 53.9042672,
     "longitude": 27.5553726,
     "location_verified": true,
-    "slug": "нола"
+    "slug": "нола",
+    "district": "Центральный"
   },
   {
     "n": "Legendar",
@@ -2446,7 +2906,8 @@
     "latitude": 53.9029786,
     "longitude": 27.5523535,
     "location_verified": true,
-    "slug": "legendar"
+    "slug": "legendar",
+    "district": "Центральный"
   },
   {
     "n": "Graf Cafe",
@@ -2465,7 +2926,15 @@
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Graf+Cafe+Minsk",
     "cost": null,
-    "slug": "graf-cafe"
+    "slug": "graf-cafe",
+    "latitude": 53.9312335,
+    "longitude": 27.6460819,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 92.25,
+    "geocode_match": "Обзорная Площадка Национальной Библиотеки Беларуси",
+    "district": "Первомайский",
+    "location_verified": true
   },
   {
     "n": "The View",
@@ -2484,7 +2953,15 @@
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=The+View+Minsk",
     "cost": null,
-    "slug": "the-view"
+    "slug": "the-view",
+    "latitude": 53.907932287039,
+    "longitude": 27.550104636489,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 89.29,
+    "geocode_match": "проспект Победителей 7А, Минск",
+    "district": "Центральный",
+    "location_verified": false
   },
   {
     "n": "BAR:DOT XX1",
@@ -2503,7 +2980,15 @@
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=BAR%3ADOT+XX1+Minsk",
     "cost": null,
-    "slug": "bar-dot-xx1"
+    "slug": "bar-dot-xx1",
+    "latitude": 53.9088474,
+    "longitude": 27.5490067,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 96.43,
+    "geocode_match": "DoubleTree by Hilton",
+    "district": "Центральный",
+    "location_verified": true
   },
   {
     "n": "Ember",
@@ -2522,7 +3007,15 @@
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Ember+DoubleTree+Minsk",
     "cost": null,
-    "slug": "ember"
+    "slug": "ember",
+    "latitude": 53.9088474,
+    "longitude": 27.5490067,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 97.02,
+    "geocode_match": "DoubleTree by Hilton",
+    "district": "Центральный",
+    "location_verified": true
   },
   {
     "n": "Panorama",
@@ -2541,7 +3034,15 @@
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Panorama+Minsk",
     "cost": null,
-    "slug": "panorama"
+    "slug": "panorama",
+    "latitude": 53.9153042,
+    "longitude": 27.5504127,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 95.62,
+    "geocode_match": "Гостиница \"БЕЛАРУСЬ\"",
+    "district": "Центральный",
+    "location_verified": true
   },
   {
     "n": "Пена дней",
@@ -2563,7 +3064,8 @@
     "latitude": 53.9039272,
     "longitude": 27.5588057,
     "location_verified": true,
-    "slug": "пена-днеи"
+    "slug": "пена-днеи",
+    "district": "Центральный"
   },
   {
     "n": "Grand Cafe",
@@ -2585,7 +3087,8 @@
     "latitude": 53.896886,
     "longitude": 27.5626945,
     "location_verified": true,
-    "slug": "grand-cafe"
+    "slug": "grand-cafe",
+    "district": "Ленинский"
   },
   {
     "n": "Национальная библиотека Беларуси — смотровая площадка",
@@ -2604,7 +3107,15 @@
     "source": "Национальная библиотека Беларуси",
     "src": "https://www.nlb.by/",
     "cost": null,
-    "slug": "национальная-библиотека-беларуси-смотровая-площадка"
+    "slug": "национальная-библиотека-беларуси-смотровая-площадка",
+    "latitude": 53.9312335,
+    "longitude": 27.6460819,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 92.97,
+    "geocode_match": "Обзорная Площадка Национальной Библиотеки Беларуси",
+    "district": "Первомайский",
+    "location_verified": true
   },
   {
     "n": "Красный дворик",
@@ -2626,7 +3137,8 @@
     "latitude": 53.902666,
     "longitude": 27.5524126,
     "location_verified": true,
-    "slug": "красныи-дворик"
+    "slug": "красныи-дворик",
+    "district": "Центральный"
   },
   {
     "n": "Улица Октябрьская и арт-квартал",
@@ -2648,7 +3160,8 @@
     "latitude": 53.8908595,
     "longitude": 27.5725168,
     "location_verified": false,
-    "slug": "улица-октябрьская-и-арт-квартал"
+    "slug": "улица-октябрьская-и-арт-квартал",
+    "district": "Ленинский"
   },
   {
     "n": "Верхний город и площадь Свободы",
@@ -2670,7 +3183,8 @@
     "latitude": 53.9039997,
     "longitude": 27.5564203,
     "location_verified": false,
-    "slug": "верхнии-город-и-площадь-свободы"
+    "slug": "верхнии-город-и-площадь-свободы",
+    "district": "Центральный"
   },
   {
     "n": "Gambrinus",
@@ -2692,7 +3206,8 @@
     "slug": "gambrinus-minsk",
     "latitude": 53.9039505,
     "longitude": 27.5557763,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Васильки",
@@ -2711,7 +3226,15 @@
     "source": "Google Maps",
     "src": "https://eng.ullabel.by/minsk_restaurants",
     "cost": 999,
-    "slug": "vasilki-minsk"
+    "slug": "vasilki-minsk",
+    "latitude": 53.898209,
+    "longitude": 27.555013,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 98.46,
+    "geocode_match": "Васильки",
+    "district": "Ленинский",
+    "location_verified": true
   },
   {
     "n": "Wake Up Coffee",
@@ -2733,7 +3256,8 @@
     "slug": "wake-up-coffee-minsk",
     "latitude": 53.9176655,
     "longitude": 27.5782784,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Советский"
   },
   {
     "n": "Embargo",
@@ -2755,7 +3279,8 @@
     "slug": "embargo-minsk",
     "latitude": 53.9026159,
     "longitude": 27.5527015,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Owino",
@@ -2777,7 +3302,8 @@
     "slug": "owino-minsk",
     "latitude": 53.9137474,
     "longitude": 27.5804967,
-    "location_verified": false
+    "location_verified": false,
+    "district": "Советский"
   },
   {
     "n": "Герои",
@@ -2799,7 +3325,8 @@
     "slug": "geroi-bar-minsk",
     "latitude": 53.9103215,
     "longitude": 27.5795481,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Советский"
   },
   {
     "n": "Clever Irish Pub",
@@ -2821,7 +3348,8 @@
     "slug": "clever-irish-pub-minsk",
     "latitude": 53.9147675,
     "longitude": 27.5900034,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Советский"
   },
   {
     "n": "Камяница",
@@ -2843,7 +3371,8 @@
     "slug": "kamyanitsa-minsk",
     "latitude": 53.9004029,
     "longitude": 27.5749387,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Партизанский"
   },
   {
     "n": "Why Knot?",
@@ -2865,7 +3394,8 @@
     "slug": "why-knot-minsk",
     "latitude": 53.8957482,
     "longitude": 27.5540476,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Ленинский"
   },
   {
     "n": "Bootlegger Bar",
@@ -2887,7 +3417,8 @@
     "slug": "bootlegger-bar-minsk",
     "latitude": 53.9011544,
     "longitude": 27.5532729,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Бар Чернила",
@@ -2909,7 +3440,8 @@
     "slug": "chernila-bar-minsk",
     "latitude": 53.904365,
     "longitude": 27.5585905,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Gin&It",
@@ -2928,7 +3460,15 @@
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Gin+and+It+Minsk",
     "cost": 999,
-    "slug": "gin-and-it-minsk"
+    "slug": "gin-and-it-minsk",
+    "latitude": 53.899448082736,
+    "longitude": 27.557561596649,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 91.22,
+    "geocode_match": "проспект Независимости 18, Минск",
+    "district": "Ленинский",
+    "location_verified": true
   },
   {
     "n": "Банки-Бутылки",
@@ -2950,7 +3490,8 @@
     "slug": "banki-butylki-minsk",
     "latitude": 53.904365,
     "longitude": 27.5585905,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "SFB Minsk",
@@ -2972,7 +3513,8 @@
     "latitude": 53.9014225,
     "longitude": 27.5497448,
     "location_verified": true,
-    "slug": "sfb-minsk"
+    "slug": "sfb-minsk",
+    "district": "Центральный"
   },
   {
     "n": "The Coffee House",
@@ -2994,7 +3536,8 @@
     "slug": "the-coffee-house-minsk",
     "latitude": 53.8922159,
     "longitude": 27.5557644,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Октябрьский"
   },
   {
     "n": "На Пляже Tiki Bar",
@@ -3016,7 +3559,8 @@
     "slug": "na-plyazhe-tiki-minsk",
     "latitude": 53.9063274,
     "longitude": 27.5579965,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Wine&Pinsa",
@@ -3038,7 +3582,8 @@
     "slug": "wine-and-pinsa-minsk",
     "latitude": 53.9024036,
     "longitude": 27.5511276,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Malt & Hops",
@@ -3060,7 +3605,8 @@
     "slug": "malt-and-hops-minsk",
     "latitude": 53.9055854,
     "longitude": 27.5592978,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Bergamo",
@@ -3082,7 +3628,8 @@
     "slug": "bergamo-minsk",
     "latitude": 53.9259737,
     "longitude": 27.563979,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Советский"
   },
   {
     "n": "MoneMane",
@@ -3101,7 +3648,15 @@
     "source": "24RENT.BY",
     "src": "https://24rent.by/en/about_minsk.html",
     "cost": 999,
-    "slug": "monemane-minsk"
+    "slug": "monemane-minsk",
+    "latitude": 53.899448082736,
+    "longitude": 27.557561596649,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 89.05,
+    "geocode_match": "проспект Независимости 18, Минск",
+    "district": "Ленинский",
+    "location_verified": false
   },
   {
     "n": "MALEVICH",
@@ -3123,7 +3678,8 @@
     "slug": "malevich-minsk",
     "latitude": 53.8987438,
     "longitude": 27.5597749,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Ленинский"
   },
   {
     "n": "Fabriq",
@@ -3145,7 +3701,8 @@
     "slug": "fabriq-minsk",
     "latitude": 53.9049919,
     "longitude": 27.5523733,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "IL Patio",
@@ -3164,7 +3721,15 @@
     "source": "AILydian / OpenStreetMap",
     "src": "https://holiday.ailydian.com/dining/minsk",
     "cost": 999,
-    "slug": "il-patio-minsk"
+    "slug": "il-patio-minsk",
+    "latitude": 53.900875604665,
+    "longitude": 27.560276914183,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 89.74,
+    "geocode_match": "проспект Независимости 22, Минск",
+    "district": "Ленинский",
+    "location_verified": false
   },
   {
     "n": "Marbl",
@@ -3186,7 +3751,8 @@
     "latitude": 53.9042672,
     "longitude": 27.5553726,
     "location_verified": true,
-    "slug": "marbl"
+    "slug": "marbl",
+    "district": "Центральный"
   },
   {
     "n": "FIORI",
@@ -3208,7 +3774,8 @@
     "latitude": 53.9044844,
     "longitude": 27.555642,
     "location_verified": true,
-    "slug": "fiori"
+    "slug": "fiori",
+    "district": "Центральный"
   },
   {
     "n": "Osobnyak Gastropub",
@@ -3230,7 +3797,8 @@
     "latitude": 53.9059922,
     "longitude": 27.542808,
     "location_verified": false,
-    "slug": "osobnyak-gastropub"
+    "slug": "osobnyak-gastropub",
+    "district": "Центральный"
   },
   {
     "n": "Charlie Restaurant & Bar",
@@ -3252,7 +3820,8 @@
     "latitude": 53.9086471,
     "longitude": 27.5712907,
     "location_verified": true,
-    "slug": "charlie-restaurant-bar"
+    "slug": "charlie-restaurant-bar",
+    "district": "Центральный"
   },
   {
     "n": "Honky Tonk Piano Bar",
@@ -3274,7 +3843,8 @@
     "latitude": 53.904365,
     "longitude": 27.5585905,
     "location_verified": true,
-    "slug": "honky-tonk-piano-bar"
+    "slug": "honky-tonk-piano-bar",
+    "district": "Центральный"
   },
   {
     "n": "Na Dne",
@@ -3296,7 +3866,8 @@
     "latitude": 53.9063274,
     "longitude": 27.5579965,
     "location_verified": true,
-    "slug": "na-dne"
+    "slug": "na-dne",
+    "district": "Центральный"
   },
   {
     "n": "The ODI",
@@ -3315,7 +3886,15 @@
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=The+ODI+Minsk+Nezavisimosti+12",
     "cost": 999,
-    "slug": "the-odi"
+    "slug": "the-odi",
+    "latitude": 53.897379009937,
+    "longitude": 27.553363436625,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 90.46,
+    "geocode_match": "проспект Независимости 12, Минск",
+    "district": "Ленинский",
+    "location_verified": true
   },
   {
     "n": "Brioche Nemiga",
@@ -3334,7 +3913,15 @@
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Brioche+Nemiga+Minsk+Starozhovskaya+6",
     "cost": 999,
-    "slug": "brioche-nemiga"
+    "slug": "brioche-nemiga",
+    "latitude": 53.910399500239,
+    "longitude": 27.556962793487,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 97.17,
+    "geocode_match": "улица Сторожевская 6, Минск",
+    "district": "Центральный",
+    "location_verified": true
   },
   {
     "n": "FUNGI STUDIO",
@@ -3353,7 +3940,15 @@
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=FUNGI+STUDIO+Minsk+Starozhovskaya+8",
     "cost": 999,
-    "slug": "fungi-studio"
+    "slug": "fungi-studio",
+    "latitude": 53.912030492868,
+    "longitude": 27.556177409159,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 97.5,
+    "geocode_match": "улица Сторожевская 8, Минск",
+    "district": "Центральный",
+    "location_verified": true
   },
   {
     "n": "Falcon Club",
@@ -3375,7 +3970,8 @@
     "latitude": 53.9326556,
     "longitude": 27.5101916,
     "location_verified": false,
-    "slug": "falcon-club"
+    "slug": "falcon-club",
+    "district": "Центральный"
   },
   {
     "n": "Мандарын",
@@ -3397,7 +3993,8 @@
     "slug": "mandaryn",
     "latitude": 53.8859037,
     "longitude": 27.6782091,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Заводской"
   },
   {
     "n": "1067 Miensk Pub",
@@ -3419,7 +4016,8 @@
     "slug": "1067-miensk-pub-minsk",
     "latitude": 53.895542,
     "longitude": 27.5536166,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Ленинский"
   },
   {
     "n": "Coffee Embassy",
@@ -3441,7 +4039,8 @@
     "slug": "coffee-embassy-minsk",
     "latitude": 53.9009144,
     "longitude": 27.5268352,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Московский"
   },
   {
     "n": "Daily Dose",
@@ -3463,7 +4062,8 @@
     "slug": "daily-dose-minsk",
     "latitude": 53.9015304,
     "longitude": 27.5603587,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Go Greek",
@@ -3485,7 +4085,8 @@
     "slug": "go-greek-minsk",
     "latitude": 53.8908012,
     "longitude": 27.5733411,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Ленинский"
   },
   {
     "n": "Grunwald",
@@ -3507,7 +4108,8 @@
     "slug": "grunwald-minsk",
     "latitude": 53.8967989,
     "longitude": 27.5546549,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Ленинский"
   },
   {
     "n": "Insomnia Bar",
@@ -3529,7 +4131,8 @@
     "slug": "insomnia-bar-minsk",
     "latitude": 53.9045663,
     "longitude": 27.5573199,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Namaste",
@@ -3548,7 +4151,15 @@
     "source": "UltimateCity",
     "src": "https://ultimatecity.net/guides/minsk",
     "cost": 999,
-    "slug": "namaste-minsk"
+    "slug": "namaste-minsk",
+    "latitude": 53.861569591733,
+    "longitude": 27.485407324268,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "PointAddress",
+    "geocode_score": 85.75,
+    "geocode_match": "проспект Дзержинского 83, Минск",
+    "district": "Московский",
+    "location_verified": false
   },
   {
     "n": "Royal Oak Pub",
@@ -3570,7 +4181,8 @@
     "slug": "royal-oak-minsk",
     "latitude": 53.9141636,
     "longitude": 27.5657947,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Surf Coffee",
@@ -3592,7 +4204,8 @@
     "slug": "surfcoffee-minsk",
     "latitude": 53.8971311,
     "longitude": 27.5591478,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Ленинский"
   },
   {
     "n": "SVOI",
@@ -3611,7 +4224,15 @@
     "source": "Google Maps / официальный сайт",
     "src": "https://24rent.by/en/about_minsk.html",
     "cost": 999,
-    "slug": "svoi-minsk"
+    "slug": "svoi-minsk",
+    "latitude": 53.9008205,
+    "longitude": 27.5602072,
+    "geocode_source": "Esri World Geocoding",
+    "geocode_type": "POI",
+    "geocode_score": 98.39,
+    "geocode_match": "Svoi",
+    "district": "Ленинский",
+    "location_verified": true
   },
   {
     "n": "TNT Rock Club",
@@ -3633,7 +4254,8 @@
     "slug": "tnt-rock-club-minsk",
     "latitude": 53.9023592,
     "longitude": 27.5516592,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "TokiNY",
@@ -3655,7 +4277,8 @@
     "slug": "tokiny-minsk",
     "latitude": 53.9138002,
     "longitude": 27.5805529,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Советский"
   },
   {
     "n": "Umami",
@@ -3677,7 +4300,8 @@
     "slug": "umami-minsk",
     "latitude": 53.9020966,
     "longitude": 27.5504423,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Бульбашы",
@@ -3699,7 +4323,8 @@
     "slug": "bulbashi-minsk",
     "latitude": 53.904943,
     "longitude": 27.5580784,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   },
   {
     "n": "Верас i Колас",
@@ -3721,7 +4346,8 @@
     "slug": "veras-i-kolas-minsk",
     "latitude": 53.9264383,
     "longitude": 27.5906687,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Советский"
   },
   {
     "n": "Литвины",
@@ -3743,7 +4369,8 @@
     "slug": "litviny-sverdlova-minsk",
     "latitude": 53.8975814,
     "longitude": 27.5476011,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Московский"
   },
   {
     "n": "Мары",
@@ -3765,7 +4392,8 @@
     "slug": "mary-minsk",
     "latitude": 53.9037804,
     "longitude": 27.5464627,
-    "location_verified": false
+    "location_verified": false,
+    "district": "Центральный"
   },
   {
     "n": "Панский Драник",
@@ -3787,7 +4415,8 @@
     "slug": "pansky-dranik-minsk",
     "latitude": 53.8977283,
     "longitude": 27.5507784,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Московский"
   },
   {
     "n": "Раковский Бровар",
@@ -3809,6 +4438,7 @@
     "slug": "rakovsky-brovar-minsk",
     "latitude": 53.9042781,
     "longitude": 27.5487207,
-    "location_verified": true
+    "location_verified": true,
+    "district": "Центральный"
   }
 ]

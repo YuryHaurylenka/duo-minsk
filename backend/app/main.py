@@ -13,7 +13,7 @@ from app.config import get_settings
 from app.database import get_db
 from app.auth import AuthUser, require_user
 from app.models.entities import City, Place, Couple, CoupleMember, PlaceActivity, PersonalPlaceActivity, DuoEvent, DuoDatePlan, DuoPlaceUpdate
-from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, ActivitySyncItem, PlanCreate, PlanOut
+from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, ActivitySyncItem, PlanCreate, PlanOut, MatchSessionCreate, MatchVoteIn
 
 settings = get_settings()
 
@@ -230,3 +230,78 @@ def delete_plan(plan_id: UUID, user: AuthUser = Depends(require_user), db: Sessi
     db.commit()
     return None
 
+
+
+@app.post("/api/match/sessions", status_code=201)
+def create_match_session(payload: MatchSessionCreate, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    couple = get_couple(db, user)
+    member_count = db.scalar(select(func.count()).select_from(CoupleMember).where(CoupleMember.couple_id == couple.id)) or 0
+    if member_count < 2:
+        raise HTTPException(status_code=409, detail="Пригласите второго участника в пространство пары, чтобы начать совместный выбор")
+    city = require_active_city(db, payload.city_slug)
+    active_session = db.execute(text("""SELECT s.id, s.status, s.city_slug,
+        (SELECT count(*) FROM public.duo_match_candidates c WHERE c.session_id=s.id) AS candidate_count
+        FROM public.duo_match_sessions s WHERE s.couple_id=:couple AND s.city_slug=:city AND s.status='active'
+        ORDER BY s.created_at DESC LIMIT 1"""), {"couple": couple.id, "city": city.slug}).mappings().first()
+    if active_session:
+        return {"id": str(active_session["id"]), "status": active_session["status"],
+                "candidate_count": active_session["candidate_count"], "city_slug": active_session["city_slug"],
+                "resumed": True}
+    query = "SELECT slug FROM public.places WHERE city_slug = :city AND is_active IS TRUE"
+    params = {"city": city.slug, "limit": payload.limit}
+    if payload.category:
+        query += " AND category = :category"
+        params["category"] = payload.category
+    query += " ORDER BY random() LIMIT :limit"
+    slugs = db.execute(text(query), params).scalars().all()
+    if len(slugs) < 2:
+        raise HTTPException(status_code=422, detail="Недостаточно мест для совместного выбора")
+    session_id = uuid4()
+    db.execute(text("INSERT INTO public.duo_match_sessions (id, couple_id, city_slug, created_by) VALUES (:id, :couple, :city, :user)"), {"id": session_id, "couple": couple.id, "city": city.slug, "user": user.id})
+    for position, slug in enumerate(slugs):
+        db.execute(text("INSERT INTO public.duo_match_candidates (session_id, place_slug, position) VALUES (:session, :slug, :position)"), {"session": session_id, "slug": slug, "position": position})
+    db.commit()
+    return {"id": str(session_id), "status": "active", "candidate_count": len(slugs), "city_slug": city.slug, "resumed": False}
+
+
+def _match_session_payload(session_id: UUID, user: AuthUser, couple: Couple, db: Session):
+    session_row = db.execute(text("SELECT id, status, city_slug, created_at FROM public.duo_match_sessions WHERE id = :id AND couple_id = :couple"), {"id": session_id, "couple": couple.id}).mappings().first()
+    if not session_row:
+        raise HTTPException(status_code=404, detail="Раунд DUO Match не найден")
+    rows = db.execute(text("""
+        SELECT p.slug, p.name, p.category, p.description, p.address, p.rating, p.reviews, p.price_label, p.image_url, p.image_source_url, p.latitude, p.longitude, p.district, c.position,
+               bool_or(v.liked) FILTER (WHERE v.user_id = :user_id) AS my_vote,
+               bool_or(v.liked) FILTER (WHERE v.user_id <> :user_id) AS partner_vote,
+               count(v.user_id) AS votes_count
+        FROM public.duo_match_candidates c
+        JOIN public.places p ON p.slug = c.place_slug
+        LEFT JOIN public.duo_match_votes v ON v.session_id = c.session_id AND v.place_slug = c.place_slug
+        WHERE c.session_id = :session_id
+        GROUP BY p.slug, c.position
+        ORDER BY c.position
+    """), {"user_id": user.id, "session_id": session_id}).mappings().all()
+    candidates = [dict(row) for row in rows]
+    return {"session": dict(session_row), "candidates": candidates, "matches": [r for r in candidates if r["my_vote"] is True and r["partner_vote"] is True], "my_votes": sum(r["my_vote"] is not None for r in candidates), "partner_votes": sum(r["partner_vote"] is not None for r in candidates), "candidate_count": len(candidates)}
+
+
+@app.get("/api/match/sessions/{session_id}")
+def get_match_session(session_id: UUID, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    couple = get_couple(db, user)
+    return _match_session_payload(session_id, user, couple, db)
+
+
+@app.put("/api/match/sessions/{session_id}/votes")
+def vote_match_candidate(session_id: UUID, payload: MatchVoteIn, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    couple = get_couple(db, user)
+    exists = db.execute(text("SELECT 1 FROM public.duo_match_sessions s JOIN public.duo_match_candidates c ON c.session_id=s.id WHERE s.id=:session AND s.couple_id=:couple AND c.place_slug=:slug"), {"session": session_id, "couple": couple.id, "slug": payload.place_slug}).first()
+    if not exists:
+        raise HTTPException(status_code=404, detail="Место не входит в этот раунд")
+    db.execute(text("""INSERT INTO public.duo_match_votes (session_id, place_slug, user_id, liked) VALUES (:session, :slug, :user, :liked)
+        ON CONFLICT (session_id, place_slug, user_id) DO UPDATE SET liked=EXCLUDED.liked, updated_at=now()"""), {"session": session_id, "slug": payload.place_slug, "user": user.id, "liked": payload.liked})
+    db.execute(text("""UPDATE public.duo_match_sessions s SET status='completed'
+        WHERE s.id=:session AND (SELECT count(*) FROM public.duo_match_votes v WHERE v.session_id=s.id) =
+          2 * (SELECT count(*) FROM public.duo_match_candidates c WHERE c.session_id=s.id)
+        AND (SELECT count(DISTINCT user_id) FROM public.duo_match_votes v WHERE v.session_id=s.id) >= 2"""), {"session": session_id})
+    result = _match_session_payload(session_id, user, couple, db)
+    db.commit()
+    return result

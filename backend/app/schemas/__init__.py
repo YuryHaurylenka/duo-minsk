@@ -41,6 +41,9 @@ class PlaceOut(BaseModel):
     latitude: float | None = None
     longitude: float | None = None
     location_verified_at: datetime | None = None
+    district: str | None = None
+    image_url: str | None = None
+    image_source_url: str | None = None
 
 
 class EventOut(BaseModel):
@@ -120,3 +123,14 @@ class PlanOut(BaseModel):
     items: list[dict]
     notes: str
     created_at: datetime
+
+
+class MatchSessionCreate(BaseModel):
+    city_slug: str = Field(default="minsk", min_length=2, max_length=80)
+    category: str | None = Field(default=None, max_length=120)
+    limit: int = Field(default=24, ge=8, le=60)
+
+
+class MatchVoteIn(BaseModel):
+    place_slug: str = Field(min_length=1, max_length=180)
+    liked: bool

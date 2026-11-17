@@ -16,6 +16,8 @@
 
 Run the entire SQL file using a trusted PostgreSQL connection in Supabase SQL Editor or a privileged test connection. Do not run it using the public API key or a normal end-user session. The test is designed to roll back all fixture rows.
 
+GitHub Actions also supports this check when the repository secret `DUO_RLS_TEST_DATABASE_URL` is configured with a trusted connection to a dedicated staging database. The workflow skips the integration step when the secret is absent; never use a browser-facing or service-role API key as a database URL.
+
 ## Live verification (2026-11-17)
 
 - All 10 tables in `public` have RLS enabled.

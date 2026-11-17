@@ -13,7 +13,6 @@ __pycache__/
 .DS_Store
 .vercel/
 node_modules/
-public/assets/
 
 # Archived local patches and exported snapshots
 add-minsk-places.js

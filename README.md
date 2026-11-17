@@ -83,3 +83,7 @@ Minsk is the first city, not a claim of global coverage. Read docs/GO_TO_MARKET.
 - Vercel is linked to the GitHub repository and automatically deploys `main` to production.
 - GitHub Actions runs the backend test suite on pushes and pull requests.
 - Keep database migrations reviewed and explicit; do not place production secrets in GitHub or the browser.
+
+## Frontend
+
+The production UI is a React + Vite app. See [docs/FRONTEND.md](docs/FRONTEND.md) for the stack, local development, deployment pipeline, and data-integrity notes. Vercel builds the frontend with `npm ci && npm run build` while retaining the FastAPI API.

@@ -319,6 +319,23 @@ def test_places_are_scoped_to_requested_city(client, db):
     db.get.assert_called_once_with(City, "minsk")
 
 
+def test_places_include_coordinates_for_map(client, db):
+    db.get.return_value = city_fixture()
+    place = SimpleNamespace(
+        id=uuid4(), slug="map-cafe", city_slug="minsk", name="Map Cafe", category="Кофейни",
+        emoji="☕", description="Coffee", address="пр-т Независимости, 1, Минск", rating="—",
+        reviews="—", price_label="Уточнить", couple_price_label="Уточнить", level=1,
+        risk="good", tip="", website_url="", source_name="OSM", source_url="", cost=None,
+        latitude=53.9001, longitude=27.5601, location_verified_at=None,
+    )
+    db.scalars.return_value.all.return_value = [place]
+    response = client.get("/api/places?city=minsk")
+    assert response.status_code == 200
+    assert response.json()[0]["latitude"] == 53.9001
+    assert response.json()[0]["longitude"] == 27.5601
+    assert response.json()[0]["location_verified_at"] is None
+
+
 def test_places_reject_unknown_or_inactive_city(client, db):
     db.get.return_value = None
     response = client.get("/api/places?city=unknown-city")

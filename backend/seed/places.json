@@ -15,7 +15,11 @@
     "site": "https://gcor-vvs.by/",
     "source": "Yandex Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Дворец%20водного%20спорта%20Минск",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9187458,
+    "longitude": 27.607427,
+    "location_verified": true,
+    "slug": "дворец-водного-спорта"
   },
   {
     "n": "Бассейн САК «Трактор»",
@@ -33,7 +37,11 @@
     "site": "https://gcor-vvs.by/traktor/price",
     "source": "Yandex Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Бассейн%20Трактор%20Минск",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8874347,
+    "longitude": 27.6188348,
+    "location_verified": true,
+    "slug": "бассеин-сак-трактор"
   },
   {
     "n": "ВТК «Уручье»",
@@ -51,7 +59,11 @@
     "site": "https://gcor-vvs.by/",
     "source": "Yandex Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Водно-тренировочный%20комплекс%20Уручье%20Минск",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9494899,
+    "longitude": 27.7071676,
+    "location_verified": true,
+    "slug": "втк-уручье"
   },
   {
     "n": "Плавательный комплекс БГУФК",
@@ -69,7 +81,8 @@
     "site": "https://www.google.com/search?q=плавательный+комплекс+БГУФК+Минск",
     "source": "Yandex Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Плавательный%20комплекс%20БГУФК",
-    "cost": 999
+    "cost": 999,
+    "slug": "плавательныи-комплекс-бгуфк"
   },
   {
     "n": "Аквапарк «Лебяжий»",
@@ -87,7 +100,11 @@
     "site": "https://waterpark.by/",
     "source": "Top-Rated.Online",
     "src": "https://www.google.com/search?q=Аквапарк+Лебяжий+Минск+отзывы",
-    "cost": 48
+    "cost": 48,
+    "latitude": 53.9527518,
+    "longitude": 27.4522032,
+    "location_verified": true,
+    "slug": "аквапарк-лебяжии"
   },
   {
     "n": "Скалодром Plato",
@@ -105,7 +122,11 @@
     "site": "https://plato.by/",
     "source": "BestClimbingWalls",
     "src": "https://bestclimbingwalls.com/climbing-walls/plato-climbing-gym",
-    "cost": 64
+    "cost": 64,
+    "latitude": 53.9148535,
+    "longitude": 27.570798,
+    "location_verified": true,
+    "slug": "скалодром-plato"
   },
   {
     "n": "Скалодром «Трапеция»",
@@ -123,7 +144,11 @@
     "site": "https://www.google.com/search?q=скалодром+Трапеция+Минск",
     "source": "BestClimbingWalls",
     "src": "https://bestclimbingwalls.com/climbing-walls/trapezia",
-    "cost": 50
+    "cost": 50,
+    "latitude": 53.8859771,
+    "longitude": 27.5812612,
+    "location_verified": true,
+    "slug": "скалодром-трапеция"
   },
   {
     "n": "Скалодром «Динамо»",
@@ -141,7 +166,11 @@
     "site": "https://www.google.com/search?q=скалодром+Динамо+Минск",
     "source": "BestClimbingWalls",
     "src": "https://bestclimbingwalls.com/climbing-walls/skalodrom-dinamo",
-    "cost": 46
+    "cost": 46,
+    "latitude": 53.8966214,
+    "longitude": 27.5596779,
+    "location_verified": false,
+    "slug": "скалодром-динамо"
   },
   {
     "n": "Ледовый дворец Минской области",
@@ -159,7 +188,11 @@
     "site": "https://led.by/",
     "source": "Яндекс Карты",
     "src": "https://yandex.by/maps/org/ledovy_dvorets_sporta_minskoy_oblasti/1059314859/",
-    "cost": 10
+    "cost": 10,
+    "latitude": 53.907597,
+    "longitude": 27.4864928,
+    "location_verified": true,
+    "slug": "ледовыи-дворец-минскои-области"
   },
   {
     "n": "Каток ТЦ «Замок»",
@@ -177,7 +210,8 @@
     "site": "https://tczamok.by/",
     "source": "Яндекс Карты",
     "src": "https://yandex.by/maps/org/ledovy_katok/1260463552/",
-    "cost": 16
+    "cost": 16,
+    "slug": "каток-тц-замок"
   },
   {
     "n": "Чижовка-Арена",
@@ -195,7 +229,11 @@
     "site": "https://chizhovka-arena.by/",
     "source": "Яндекс Карты",
     "src": "https://yandex.by/maps/org/chyzhivka_arena/115813922327/",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8443924,
+    "longitude": 27.6286347,
+    "location_verified": true,
+    "slug": "чижовка-арена"
   },
   {
     "n": "F1 Каток у Дворца спорта",
@@ -213,7 +251,8 @@
     "site": "https://www.google.com/search?q=F1каток+Минск+цены",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=F1каток%20Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "f1-каток-у-дворца-спорта"
   },
   {
     "n": "SkyKart",
@@ -231,7 +270,8 @@
     "site": "https://skykart.by/",
     "source": "Kart-Map / сайт",
     "src": "https://www.kart-map.com/en/circuits/skykart",
-    "cost": 50
+    "cost": 50,
+    "slug": "skykart"
   },
   {
     "n": "Kartlend",
@@ -249,7 +289,11 @@
     "site": "https://www.google.com/search?q=Kartlend+Минск",
     "source": "Yandex Maps / Kart-Map",
     "src": "https://www.kart-map.com/en/circuits/karting-tsentr-kartlend",
-    "cost": 36
+    "cost": 36,
+    "latitude": 53.8912552,
+    "longitude": 27.4220979,
+    "location_verified": true,
+    "slug": "kartlend"
   },
   {
     "n": "Bowling Haus",
@@ -267,7 +311,8 @@
     "site": "https://bowlinghaus.by/",
     "source": "Яндекс Карты",
     "src": "https://yandex.com/maps/org/bowling_haus/1060010597/",
-    "cost": 45
+    "cost": 45,
+    "slug": "bowling-haus"
   },
   {
     "n": "Боулинг Madison / Barberry",
@@ -285,7 +330,11 @@
     "site": "https://www.google.com/search?q=Madison+Barberry+Минск+боулинг",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Madison%20Barberry%20Минск",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9075948,
+    "longitude": 27.5294684,
+    "location_verified": true,
+    "slug": "боулинг-madison-barberry"
   },
   {
     "n": "Спорт Парк",
@@ -303,7 +352,11 @@
     "site": "https://www.google.com/search?q=Спорт+Парк+Мясникова+37+Минск",
     "source": "Яндекс Карты",
     "src": "https://yandex.by/maps/157/minsk/category/bowling/184106360/filter/best_rating/",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8965719,
+    "longitude": 27.5431539,
+    "location_verified": true,
+    "slug": "спорт-парк"
   },
   {
     "n": "Боулинг на Герасименко, 51",
@@ -321,7 +374,11 @@
     "site": "https://yandex.by/maps/",
     "source": "Яндекс Карты",
     "src": "https://yandex.by/maps/157/minsk/category/bowling/184106360/filter/best_rating/",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8859037,
+    "longitude": 27.6782091,
+    "location_verified": true,
+    "slug": "боулинг-на-герасименко-51"
   },
   {
     "n": "Бильярдный клуб Start",
@@ -339,7 +396,11 @@
     "site": "https://startbilliard.by/",
     "source": "Яндекс Карты",
     "src": "https://yandex.com/maps/org/start/1040137914/",
-    "cost": 17
+    "cost": 17,
+    "latitude": 53.9391353,
+    "longitude": 27.6508336,
+    "location_verified": true,
+    "slug": "бильярдныи-клуб-start"
   },
   {
     "n": "VR LIFE",
@@ -357,7 +418,8 @@
     "site": "https://www.google.com/search?q=VR+LIFE+Минск+Притыцкого+29",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=VR%20LIFE%20Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "vr-life"
   },
   {
     "n": "VRG Hub",
@@ -375,7 +437,8 @@
     "site": "https://www.google.com/search?q=VRG+Hub+Минск",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=VRG%20Hub%20Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "vrg-hub"
   },
   {
     "n": "Elonium VR",
@@ -393,7 +456,11 @@
     "site": "https://www.google.com/search?q=Elonium+VR+Минск",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Elonium%20VR%20Минск",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9134765,
+    "longitude": 27.524879,
+    "location_verified": true,
+    "slug": "elonium-vr"
   },
   {
     "n": "Neurobox",
@@ -411,7 +478,8 @@
     "site": "https://www.google.com/search?q=Neurobox+Минск",
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
-    "cost": 999
+    "cost": 999,
+    "slug": "neurobox"
   },
   {
     "n": "Rooms of Magic",
@@ -429,7 +497,8 @@
     "site": "https://www.google.com/search?q=Rooms+of+Magic+Минск",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Rooms%20of%20Magic%20Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "rooms-of-magic"
   },
   {
     "n": "Pandora’s Box",
@@ -447,7 +516,8 @@
     "site": "https://www.google.com/search?q=Pandora+Box+Минск+квесты",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Pandora%27s%20Box%20Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "pandora-s-box"
   },
   {
     "n": "Квест «Проклятие Эмили»",
@@ -465,7 +535,8 @@
     "site": "https://www.google.com/search?q=Проклятие+Эмили+Минск",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Проклятие%20Эмили%20Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "квест-проклятие-эмили"
   },
   {
     "n": "Форт Боярд / FNAF",
@@ -483,7 +554,11 @@
     "site": "https://www.google.com/search?q=Форт+Боярд+FNAF+Минск+квест",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Форт%20Боярд%20FNAF%20Минск",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9199175,
+    "longitude": 27.5643444,
+    "location_verified": true,
+    "slug": "форт-боярд-fnaf"
   },
   {
     "n": "Квест «Пила»",
@@ -501,7 +576,8 @@
     "site": "https://www.google.com/search?q=квест+Пила+Минск",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Квест%20Пила%20Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "квест-пила"
   },
   {
     "n": "Квесты Pinkerton",
@@ -519,7 +595,8 @@
     "site": "https://www.google.com/search?q=Pinkerton+квесты+Минск",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Pinkerton%20Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "квесты-pinkerton"
   },
   {
     "n": "Квесты «Взаперти»",
@@ -537,7 +614,11 @@
     "site": "https://www.google.com/search?q=Взаперти+Минск+квесты",
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8962105,
+    "longitude": 27.5543788,
+    "location_verified": true,
+    "slug": "квесты-взаперти"
   },
   {
     "n": "Force Recon — квесты",
@@ -555,7 +636,11 @@
     "site": "https://www.google.com/search?q=Force+Recon+Минск",
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9215631,
+    "longitude": 27.5648041,
+    "location_verified": true,
+    "slug": "force-recon-квесты"
   },
   {
     "n": "Golf Park",
@@ -573,7 +658,11 @@
     "site": "https://www.google.com/search?q=Golf+Park+Минск+Богдановича+23",
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9096853,
+    "longitude": 27.557856,
+    "location_verified": true,
+    "slug": "golf-park"
   },
   {
     "n": "Клуб настольных игр People Meeple",
@@ -591,7 +680,11 @@
     "site": "https://www.google.com/search?q=People+Meeple+Минск",
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9112384,
+    "longitude": 27.5828267,
+    "location_verified": true,
+    "slug": "клуб-настольных-игр-people-meeple"
   },
   {
     "n": "Клуб VR U-ViW",
@@ -609,7 +702,8 @@
     "site": "https://www.google.com/search?q=U-ViW+Минск+VR",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=U-ViW%20Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "клуб-vr-u-viw"
   },
   {
     "n": "Лазертаг / парк 0,67",
@@ -627,7 +721,11 @@
     "site": "https://067.by/",
     "source": "Яндекс Карты",
     "src": "https://yandex.by/maps/org/active_recreation_park_0_67/62857015218/",
-    "cost": 60
+    "cost": 60,
+    "latitude": 53.8860251,
+    "longitude": 27.6207915,
+    "location_verified": true,
+    "slug": "лазертаг-парк-0-67"
   },
   {
     "n": "R-Park",
@@ -645,7 +743,8 @@
     "site": "https://r-park.by/",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=paintball+Minsk+Belarus",
-    "cost": 999
+    "cost": 999,
+    "slug": "r-park"
   },
   {
     "n": "Activity Park Colt",
@@ -663,7 +762,8 @@
     "site": "https://www.google.com/search?q=Activity+Park+Colt+Ратомка",
     "source": "Яндекс Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=paintball+Minsk+Belarus",
-    "cost": 999
+    "cost": 999,
+    "slug": "activity-park-colt"
   },
   {
     "n": "BATTLER",
@@ -681,7 +781,8 @@
     "site": "https://www.google.com/search?q=BATTLER+Минск+Лынькова",
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
-    "cost": 999
+    "cost": 999,
+    "slug": "battler"
   },
   {
     "n": "Прогулка по парку Победы",
@@ -699,7 +800,8 @@
     "site": "https://www.google.com/search?q=Парк+Победы+Минск",
     "source": "Top-Rated.Online",
     "src": "https://www.google.com/search?q=Парк+Победы+Минск+отзывы",
-    "cost": 0
+    "cost": 0,
+    "slug": "прогулка-по-парку-победы"
   },
   {
     "n": "Лошицкий парк",
@@ -717,7 +819,11 @@
     "site": "https://www.google.com/search?q=Лошицкий+парк+Минск",
     "source": "Top-Rated.Online",
     "src": "https://www.google.com/search?q=Лошицкий+парк+Минск+отзывы",
-    "cost": 0
+    "cost": 0,
+    "latitude": 53.8549157,
+    "longitude": 27.5814325,
+    "location_verified": false,
+    "slug": "лошицкии-парк"
   },
   {
     "n": "Парк Горького",
@@ -735,7 +841,11 @@
     "site": "https://www.google.com/search?q=Парк+Горького+Минск",
     "source": "Top-Rated.Online",
     "src": "https://www.google.com/search?q=Парк+Горького+Минск+отзывы",
-    "cost": 0
+    "cost": 0,
+    "latitude": 53.9042537,
+    "longitude": 27.574652,
+    "location_verified": true,
+    "slug": "парк-горького"
   },
   {
     "n": "Центральный ботанический сад",
@@ -753,7 +863,11 @@
     "site": "https://cbg.org.by/",
     "source": "Официальный сайт",
     "src": "https://www.google.com/search?q=Центральный+ботанический+сад+Минск+цены",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9149776,
+    "longitude": 27.6068493,
+    "location_verified": true,
+    "slug": "центральныи-ботаническии-сад"
   },
   {
     "n": "Прогулочный катер «Касатка»",
@@ -771,7 +885,11 @@
     "site": "https://www.google.com/search?q=Катер+Касатка+Минск",
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9225949,
+    "longitude": 27.5369616,
+    "location_verified": false,
+    "slug": "прогулочныи-катер-касатка"
   },
   {
     "n": "SUP-прогулка Red Croc",
@@ -789,7 +907,8 @@
     "site": "https://www.google.com/search?q=Red+Croc+SUP+Минск",
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
-    "cost": 999
+    "cost": 999,
+    "slug": "sup-прогулка-red-croc"
   },
   {
     "n": "Каяки Kajak",
@@ -807,7 +926,8 @@
     "site": "https://www.google.com/search?q=Kajak+Минск+байдарки",
     "source": "Zabava.by",
     "src": "https://zabava.by/razvlecheniya",
-    "cost": 999
+    "cost": 999,
+    "slug": "каяки-kajak"
   },
   {
     "n": "Hero Park",
@@ -825,7 +945,11 @@
     "site": "https://www.google.com/search?q=Hero+Park+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Hero%20Park%20%D1%83%D0%BB.%20%D0%9A%D0%BE%D1%80%D0%BE%D0%BB%D1%8F%2C%202%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9010413,
+    "longitude": 27.5458555,
+    "location_verified": true,
+    "slug": "hero-park"
   },
   {
     "n": "Верёвочный парк «Тарзания»",
@@ -843,7 +967,11 @@
     "site": "https://www.google.com/search?q=Тарзания+парк+Челюскинцев+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%92%D0%B5%D1%80%D1%91%D0%B2%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20%D0%BF%D0%B0%D1%80%D0%BA%20%C2%AB%D0%A2%D0%B0%D1%80%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F%C2%BB%20%D0%BF%D0%B0%D1%80%D0%BA%20%D0%A7%D0%B5%D0%BB%D1%8E%D1%81%D0%BA%D0%B8%D0%BD%D1%86%D0%B5%D0%B2%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9206985,
+    "longitude": 27.6177016,
+    "location_verified": false,
+    "slug": "веревочныи-парк-тарзания"
   },
   {
     "n": "Flash Park — Arena City",
@@ -861,7 +989,8 @@
     "site": "https://flashpark.by/",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Flash%20Park%20%E2%80%94%20Arena%20City%20%D0%BF%D1%80-%D1%82%20%D0%9F%D0%BE%D0%B1%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9%2C%2084%2C%20%D0%A2%D0%A0%D0%A6%20Arena%20City%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "flash-park-arena-city"
   },
   {
     "n": "Flash Park — Palazzo",
@@ -879,7 +1008,8 @@
     "site": "https://flashpark.by/",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Flash%20Park%20%E2%80%94%20Palazzo%20%D1%83%D0%BB.%20%D0%A2%D0%B8%D0%BC%D0%B8%D1%80%D1%8F%D0%B7%D0%B5%D0%B2%D0%B0%2C%2074%D0%90%2C%20%D0%A2%D0%A0%D0%A6%20Palazzo%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "flash-park-palazzo"
   },
   {
     "n": "Flash Park — Diamond City",
@@ -897,7 +1027,8 @@
     "site": "https://flashpark.by/",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Flash%20Park%20%E2%80%94%20Diamond%20City%20%D0%A2%D0%A0%D0%A6%20Diamond%20City%2C%20%D0%BF%D0%B5%D1%80%D0%B5%D1%81%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20%D1%83%D0%BB.%20%D0%93%D1%80%D0%BE%D0%BC%D0%BE%D0%B2%D0%B0%20%D0%B8%2028%20%D0%BA%D0%BC%20%D0%9C%D0%9A%D0%90%D0%94%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "flash-park-diamond-city"
   },
   {
     "n": "Flash Park — Евроопт",
@@ -915,7 +1046,8 @@
     "site": "https://flashpark.by/parks/europopt",
     "source": "Официальный сайт",
     "src": "https://www.google.com/maps/search/?api=1&query=Flash%20Park%20%E2%80%94%20%D0%95%D0%B2%D1%80%D0%BE%D0%BE%D0%BF%D1%82%20%D1%83%D0%BB.%20%D0%9A%D0%B0%D0%B7%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%2C%206%2C%20%D0%A2%D0%A0%D0%A6%20%D0%95%D0%B2%D1%80%D0%BE%D0%BE%D0%BF%D1%82%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 40
+    "cost": 40,
+    "slug": "flash-park-евроопт"
   },
   {
     "n": "Flash Park — Червенский",
@@ -933,7 +1065,11 @@
     "site": "https://flashpark.by/",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Flash%20Park%20%E2%80%94%20%D0%A7%D0%B5%D1%80%D0%B2%D0%B5%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%A2%D0%A0%D0%A6%20%C2%AB%D0%A7%D0%B5%D1%80%D0%B2%D0%B5%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%C2%BB%2C%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8846288,
+    "longitude": 27.5657779,
+    "location_verified": false,
+    "slug": "flash-park-червенскии"
   },
   {
     "n": "Батутная арена «Пружина»",
@@ -951,7 +1087,8 @@
     "site": "https://www.google.com/search?q=Пружина+батутная+арена+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%91%D0%B0%D1%82%D1%83%D1%82%D0%BD%D0%B0%D1%8F%20%D0%B0%D1%80%D0%B5%D0%BD%D0%B0%20%C2%AB%D0%9F%D1%80%D1%83%D0%B6%D0%B8%D0%BD%D0%B0%C2%BB%20%D1%83%D0%BB.%20%D0%A3%D0%BC%D0%B0%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%2C%2054%2C%20%D0%A2%D0%A6%20Globo%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "батутная-арена-пружина"
   },
   {
     "n": "Батутный парк «Мистерия XL»",
@@ -969,7 +1106,11 @@
     "site": "https://www.google.com/search?q=Мистерия+XL+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%91%D0%B0%D1%82%D1%83%D1%82%D0%BD%D1%8B%D0%B9%20%D0%BF%D0%B0%D1%80%D0%BA%20%C2%AB%D0%9C%D0%B8%D1%81%D1%82%D0%B5%D1%80%D0%B8%D1%8F%20XL%C2%BB%20%D1%83%D0%BB.%20%D0%9A%D0%B0%D1%80%D0%BB%D0%B0%20%D0%9B%D0%B8%D0%B1%D0%BA%D0%BD%D0%B5%D1%85%D1%82%D0%B0%2C%2070%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8980521,
+    "longitude": 27.5270149,
+    "location_verified": true,
+    "slug": "батутныи-парк-мистерия-xl"
   },
   {
     "n": "Батутный парк Sky Park",
@@ -987,7 +1128,11 @@
     "site": "https://www.google.com/search?q=Sky+Park+Минск+батуты",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%91%D0%B0%D1%82%D1%83%D1%82%D0%BD%D1%8B%D0%B9%20%D0%BF%D0%B0%D1%80%D0%BA%20Sky%20Park%20%D1%83%D0%BB.%20%D0%94%D0%BE%D0%BB%D0%B3%D0%BE%D0%B1%D1%80%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D1%8F%2C%2043%2F1%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8860251,
+    "longitude": 27.6207915,
+    "location_verified": true,
+    "slug": "батутныи-парк-sky-park"
   },
   {
     "n": "Батутный центр Fly City",
@@ -1005,7 +1150,11 @@
     "site": "https://www.google.com/search?q=Fly+City+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%91%D0%B0%D1%82%D1%83%D1%82%D0%BD%D1%8B%D0%B9%20%D1%86%D0%B5%D0%BD%D1%82%D1%80%20Fly%20City%20%D1%83%D0%BB.%20%D0%A1%D1%82%D0%B0%D0%B4%D0%B8%D0%BE%D0%BD%D0%BD%D0%B0%D1%8F%2C%203%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9367996,
+    "longitude": 27.5350162,
+    "location_verified": true,
+    "slug": "батутныи-центр-fly-city"
   },
   {
     "n": "Развлекательный центр Joy Jump",
@@ -1023,7 +1172,11 @@
     "site": "https://www.google.com/search?q=Joy+Jump+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A0%D0%B0%D0%B7%D0%B2%D0%BB%D0%B5%D0%BA%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%86%D0%B5%D0%BD%D1%82%D1%80%20Joy%20Jump%20%D1%83%D0%BB.%20%D0%9D%D1%91%D0%BC%D0%B0%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%2C%2067%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9240751,
+    "longitude": 27.428889,
+    "location_verified": true,
+    "slug": "развлекательныи-центр-joy-jump"
   },
   {
     "n": "Neon Park",
@@ -1041,7 +1194,8 @@
     "site": "https://www.google.com/search?q=Neon+Park+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Neon%20Park%20%D0%BF%D1%80-%D1%82%20%D0%9D%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%2C%203%2F2%2C%20%D0%A2%D0%A6%20%D0%A1%D1%82%D0%BE%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "neon-park"
   },
   {
     "n": "TELEPORT",
@@ -1059,7 +1213,8 @@
     "site": "https://www.google.com/search?q=TELEPORT+Минск+Galileo",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=TELEPORT%20%D1%83%D0%BB.%20%D0%91%D0%BE%D0%B1%D1%80%D1%83%D0%B9%D1%81%D0%BA%D0%B0%D1%8F%2C%206%2C%20%D0%A2%D0%A0%D0%A6%20Galileo%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "teleport"
   },
   {
     "n": "TikTok Park",
@@ -1077,7 +1232,8 @@
     "site": "https://www.google.com/search?q=TikTok+Park+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=TikTok%20Park%20%D0%BF%D1%80-%D1%82%20%D0%9D%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%2C%203%2F2%2C%20%D0%A2%D0%A6%20%D0%A1%D1%82%D0%BE%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "tiktok-park"
   },
   {
     "n": "Развлекательный центр «Титан»",
@@ -1095,7 +1251,8 @@
     "site": "https://www.google.com/search?q=Титан+развлекательный+центр+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A0%D0%B0%D0%B7%D0%B2%D0%BB%D0%B5%D0%BA%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%86%D0%B5%D0%BD%D1%82%D1%80%20%C2%AB%D0%A2%D0%B8%D1%82%D0%B0%D0%BD%C2%BB%20%D0%BF%D1%80-%D1%82%20%D0%94%D0%B7%D0%B5%D1%80%D0%B6%D0%B8%D0%BD%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%20104%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "развлекательныи-центр-титан"
   },
   {
     "n": "Бильярдный клуб «Билли Джойс»",
@@ -1113,7 +1270,11 @@
     "site": "https://www.google.com/search?q=Билли+Джойс+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%91%D0%B8%D0%BB%D1%8C%D1%8F%D1%80%D0%B4%D0%BD%D1%8B%D0%B9%20%D0%BA%D0%BB%D1%83%D0%B1%20%C2%AB%D0%91%D0%B8%D0%BB%D0%BB%D0%B8%20%D0%94%D0%B6%D0%BE%D0%B9%D1%81%C2%BB%20%D1%83%D0%BB.%20%D0%93%D1%83%D1%80%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%2043%D0%90%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8774955,
+    "longitude": 27.4962095,
+    "location_verified": true,
+    "slug": "бильярдныи-клуб-билли-джоис"
   },
   {
     "n": "Бильярдный клуб «Европа»",
@@ -1131,7 +1292,11 @@
     "site": "https://www.google.com/search?q=Бильярдный+клуб+Европа+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%91%D0%B8%D0%BB%D1%8C%D1%8F%D1%80%D0%B4%D0%BD%D1%8B%D0%B9%20%D0%BA%D0%BB%D1%83%D0%B1%20%C2%AB%D0%95%D0%B2%D1%80%D0%BE%D0%BF%D0%B0%C2%BB%20%D1%83%D0%BB.%20%D0%A1%D1%83%D1%80%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%2C%2057%D0%91%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9286469,
+    "longitude": 27.5827981,
+    "location_verified": true,
+    "slug": "бильярдныи-клуб-европа"
   },
   {
     "n": "Тир «Калибр»",
@@ -1149,7 +1314,8 @@
     "site": "https://www.google.com/search?q=Тир+Калибр+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A2%D0%B8%D1%80%20%C2%AB%D0%9A%D0%B0%D0%BB%D0%B8%D0%B1%D1%80%C2%BB%20%D1%83%D0%BB.%20%D0%A1%D1%83%D1%80%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%2C%2057%D0%91%2C%20%D0%BF%D0%B0%D0%B2.%20314%D0%90%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "тир-калибр"
   },
   {
     "n": "Тир «Снайпер»",
@@ -1167,7 +1333,11 @@
     "site": "https://www.google.com/search?q=Тир+Снайпер+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A2%D0%B8%D1%80%20%C2%AB%D0%A1%D0%BD%D0%B0%D0%B9%D0%BF%D0%B5%D1%80%C2%BB%20%D1%83%D0%BB.%20%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4%D1%81%D0%BA%D0%B0%D1%8F%2C%201%D0%90%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.893304,
+    "longitude": 27.5509913,
+    "location_verified": true,
+    "slug": "тир-снаипер"
   },
   {
     "n": "Конный центр в Ратомке",
@@ -1185,7 +1355,8 @@
     "site": "https://www.google.com/search?q=Конный+центр+Ратомка",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9A%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%86%D0%B5%D0%BD%D1%82%D1%80%20%D0%B2%20%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B5%20%D0%B0%D0%B3.%20%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0%2C%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "конныи-центр-в-ратомке"
   },
   {
     "n": "Конюшня в Тарасово",
@@ -1203,7 +1374,8 @@
     "site": "https://www.google.com/search?q=Конюшня+Тарасово+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9A%D0%BE%D0%BD%D1%8E%D1%88%D0%BD%D1%8F%20%D0%B2%20%D0%A2%D0%B0%D1%80%D0%B0%D1%81%D0%BE%D0%B2%D0%BE%20%D1%83%D0%BB.%20%D0%A2%D0%B5%D0%BD%D0%B8%D1%81%D1%82%D0%B0%D1%8F%2C%2027%2C%20%D0%B4.%20%D0%A2%D0%B0%D1%80%D0%B0%D1%81%D0%BE%D0%B2%D0%BE%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "конюшня-в-тарасово"
   },
   {
     "n": "Велопрокат Velodisko",
@@ -1221,7 +1393,11 @@
     "site": "https://www.google.com/search?q=Velodisko+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%92%D0%B5%D0%BB%D0%BE%D0%BF%D1%80%D0%BE%D0%BA%D0%B0%D1%82%20Velodisko%20%D1%83%D0%BB.%20%D0%9C%D0%B0%D1%8F%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%2011%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8833996,
+    "longitude": 27.5689701,
+    "location_verified": true,
+    "slug": "велопрокат-velodisko"
   },
   {
     "n": "Велопрокат KRUTI.BY",
@@ -1239,7 +1415,11 @@
     "site": "https://kruti.by/",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%92%D0%B5%D0%BB%D0%BE%D0%BF%D1%80%D0%BE%D0%BA%D0%B0%D1%82%20KRUTI.BY%20%D1%83%D0%BB.%20%D0%94%D0%B0%D1%83%D0%BC%D0%B0%D0%BD%D0%B0%2C%2013%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9194151,
+    "longitude": 27.5508942,
+    "location_verified": true,
+    "slug": "велопрокат-kruti-by"
   },
   {
     "n": "El Gato Dance Center",
@@ -1257,7 +1437,11 @@
     "site": "https://www.google.com/search?q=El+Gato+Dance+Center+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=El%20Gato%20Dance%20Center%20%D1%83%D0%BB.%20%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%B0%D1%80%D0%BC%D0%B5%D0%B9%D1%81%D0%BA%D0%B0%D1%8F%2C%2021%2F1%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8952843,
+    "longitude": 27.5753447,
+    "location_verified": false,
+    "slug": "el-gato-dance-center"
   },
   {
     "n": "Студия танцев KVARTAL",
@@ -1275,7 +1459,11 @@
     "site": "https://www.google.com/search?q=KVARTAL+Юлии+Шостак+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A1%D1%82%D1%83%D0%B4%D0%B8%D1%8F%20%D1%82%D0%B0%D0%BD%D1%86%D0%B5%D0%B2%20KVARTAL%20%D1%83%D0%BB.%20%D0%93%D0%B8%D0%BA%D0%B0%D0%BB%D0%BE%2C%205%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9147675,
+    "longitude": 27.5900034,
+    "location_verified": true,
+    "slug": "студия-танцев-kvartal"
   },
   {
     "n": "Гончарная школа «Колокол»",
@@ -1293,7 +1481,11 @@
     "site": "https://www.google.com/search?q=Школа+Колокол+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%93%D0%BE%D0%BD%D1%87%D0%B0%D1%80%D0%BD%D0%B0%D1%8F%20%D1%88%D0%BA%D0%BE%D0%BB%D0%B0%20%C2%AB%D0%9A%D0%BE%D0%BB%D0%BE%D0%BA%D0%BE%D0%BB%C2%BB%20%D1%83%D0%BB.%20%D0%A1%D1%82%D0%B0%D1%80%D0%BE%D0%B2%D0%B8%D0%BB%D0%B5%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%2C%20100%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.91948,
+    "longitude": 27.56266,
+    "location_verified": true,
+    "slug": "гончарная-школа-колокол"
   },
   {
     "n": "Дом художников Угриновичей",
@@ -1311,7 +1503,11 @@
     "site": "https://www.google.com/search?q=Дом+художников+Угриновичей+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%94%D0%BE%D0%BC%20%D1%85%D1%83%D0%B4%D0%BE%D0%B6%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%A3%D0%B3%D1%80%D0%B8%D0%BD%D0%BE%D0%B2%D0%B8%D1%87%D0%B5%D0%B9%20%D1%83%D0%BB.%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F%2C%2013%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.902106,
+    "longitude": 27.5547026,
+    "location_verified": true,
+    "slug": "дом-художников-угриновичеи"
   },
   {
     "n": "Художественная студия INDIGO",
@@ -1329,7 +1525,8 @@
     "site": "https://www.google.com/search?q=INDIGO+художественная+студия+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A5%D1%83%D0%B4%D0%BE%D0%B6%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F%20%D1%81%D1%82%D1%83%D0%B4%D0%B8%D1%8F%20INDIGO%20%D0%BF%D1%80-%D1%82%20%D0%9D%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%2C%2095%2C%20%D0%BA%D0%BE%D1%80%D0%BF.%2016%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "художественная-студия-indigo"
   },
   {
     "n": "Fantasy Room Minsk",
@@ -1347,7 +1544,11 @@
     "site": "https://www.google.com/search?q=Fantasy+Room+Minsk",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Fantasy%20Room%20Minsk%20%D1%83%D0%BB.%20%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B0%D1%80%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%2010%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8977283,
+    "longitude": 27.5507784,
+    "location_verified": true,
+    "slug": "fantasy-room-minsk"
   },
   {
     "n": "Mon chalet vert",
@@ -1365,7 +1566,11 @@
     "site": "https://www.google.com/search?q=Mon+chalet+vert+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Mon%20chalet%20vert%20%D1%83%D0%BB.%20%D0%90%D0%BB%D0%BE%D0%B8%D0%B7%D1%8B%20%D0%9F%D0%B0%D1%88%D0%BA%D0%B5%D0%B2%D0%B8%D1%87%2C%205%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9115583,
+    "longitude": 27.5616303,
+    "location_verified": true,
+    "slug": "mon-chalet-vert"
   },
   {
     "n": "Художественный комбинат UP",
@@ -1383,7 +1588,11 @@
     "site": "https://www.google.com/search?q=Художественный+комбинат+UP+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A5%D1%83%D0%B4%D0%BE%D0%B6%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9%20%D0%BA%D0%BE%D0%BC%D0%B1%D0%B8%D0%BD%D0%B0%D1%82%20UP%20%D1%83%D0%BB.%20%D0%9D%D0%B5%D0%BA%D1%80%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%2C%2011%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9316971,
+    "longitude": 27.5929978,
+    "location_verified": true,
+    "slug": "художественныи-комбинат-up"
   },
   {
     "n": "Национальный художественный музей",
@@ -1401,7 +1610,11 @@
     "site": "https://www.artmuseum.by/",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%85%D1%83%D0%B4%D0%BE%D0%B6%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9%20%D0%BC%D1%83%D0%B7%D0%B5%D0%B9%20%D1%83%D0%BB.%20%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0%2C%2020%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.898377,
+    "longitude": 27.5606454,
+    "location_verified": true,
+    "slug": "национальныи-художественныи-музеи"
   },
   {
     "n": "Галерея FARBA",
@@ -1419,7 +1632,8 @@
     "site": "https://www.google.com/search?q=FARBA+Gallery+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%93%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F%20FARBA%20%D0%BF%D1%80-%D1%82%20%D0%9D%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%2C%2047%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "галерея-farba"
   },
   {
     "n": "Галерея «Арт-Беларусь»",
@@ -1437,7 +1651,11 @@
     "site": "https://www.google.com/search?q=Галерея+Арт-Беларусь+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%93%D0%B0%D0%BB%D0%B5%D1%80%D0%B5%D1%8F%20%C2%AB%D0%90%D1%80%D1%82-%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C%C2%BB%20%D1%83%D0%BB.%20%D0%9A%D0%BE%D0%B7%D0%BB%D0%BE%D0%B2%D0%B0%2C%203%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9103215,
+    "longitude": 27.5795481,
+    "location_verified": true,
+    "slug": "галерея-арт-беларусь"
   },
   {
     "n": "Выставочный зал LIBRA",
@@ -1455,7 +1673,8 @@
     "site": "https://www.google.com/search?q=Выставочный+зал+LIBRA+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%92%D1%8B%D1%81%D1%82%D0%B0%D0%B2%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%B0%D0%BB%20LIBRA%20%D0%BF%D1%80-%D1%82%20%D0%9D%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%2C%2047%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "выставочныи-зал-libra"
   },
   {
     "n": "Музей-мастерская Заира Азгура",
@@ -1473,7 +1692,11 @@
     "site": "https://www.google.com/search?q=Музей+мастерская+Заира+Азгура",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9C%D1%83%D0%B7%D0%B5%D0%B9-%D0%BC%D0%B0%D1%81%D1%82%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F%20%D0%97%D0%B0%D0%B8%D1%80%D0%B0%20%D0%90%D0%B7%D0%B3%D1%83%D1%80%D0%B0%20%D1%83%D0%BB.%20%D0%90%D0%B7%D0%B3%D1%83%D1%80%D0%B0%2C%208%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8992882,
+    "longitude": 27.5784712,
+    "location_verified": true,
+    "slug": "музеи-мастерская-заира-азгура"
   },
   {
     "n": "Национальный исторический музей",
@@ -1491,7 +1714,11 @@
     "site": "https://www.google.com/search?q=Национальный+исторический+музей+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BC%D1%83%D0%B7%D0%B5%D0%B9%20%D1%83%D0%BB.%20%D0%9A%D0%B0%D1%80%D0%BB%D0%B0%20%D0%9C%D0%B0%D1%80%D0%BA%D1%81%D0%B0%2C%2012%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.896814,
+    "longitude": 27.5556159,
+    "location_verified": true,
+    "slug": "национальныи-историческии-музеи"
   },
   {
     "n": "Музей древнебелорусской культуры",
@@ -1509,7 +1736,11 @@
     "site": "https://www.google.com/search?q=Музей+древнебелорусской+культуры+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9C%D1%83%D0%B7%D0%B5%D0%B9%20%D0%B4%D1%80%D0%B5%D0%B2%D0%BD%D0%B5%D0%B1%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B9%20%D0%BA%D1%83%D0%BB%D1%8C%D1%82%D1%83%D1%80%D1%8B%20%D1%83%D0%BB.%20%D0%A1%D1%83%D1%80%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%2C%201%2F1%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9167554,
+    "longitude": 27.6026531,
+    "location_verified": true,
+    "slug": "музеи-древнебелорусскои-культуры"
   },
   {
     "n": "Музей миниатюр «Страна мини»",
@@ -1527,7 +1758,11 @@
     "site": "https://www.google.com/search?q=Страна+мини+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9C%D1%83%D0%B7%D0%B5%D0%B9%20%D0%BC%D0%B8%D0%BD%D0%B8%D0%B0%D1%82%D1%8E%D1%80%20%C2%AB%D0%A1%D1%82%D1%80%D0%B0%D0%BD%D0%B0%20%D0%BC%D0%B8%D0%BD%D0%B8%C2%BB%20%D0%BF%D1%80-%D1%82%20%D0%9D%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%2C%2025%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9031723,
+    "longitude": 27.5628432,
+    "location_verified": true,
+    "slug": "музеи-миниатюр-страна-мини"
   },
   {
     "n": "Музей истории Великой Отечественной войны",
@@ -1545,7 +1780,8 @@
     "site": "https://www.warmuseum.by/",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9C%D1%83%D0%B7%D0%B5%D0%B9%20%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D0%B8%20%D0%92%D0%B5%D0%BB%D0%B8%D0%BA%D0%BE%D0%B9%20%D0%9E%D1%82%D0%B5%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9%20%D0%B2%D0%BE%D0%B9%D0%BD%D1%8B%20%D0%BF%D1%80-%D1%82%20%D0%9F%D0%BE%D0%B1%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9%2C%208%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "музеи-истории-великои-отечественнои-воины"
   },
   {
     "n": "Музей истории Минска",
@@ -1563,7 +1799,11 @@
     "site": "https://www.google.com/search?q=Музей+истории+Минска",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9C%D1%83%D0%B7%D0%B5%D0%B9%20%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D0%B8%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%20%D0%BF%D0%BB.%20%D0%A1%D0%B2%D0%BE%D0%B1%D0%BE%D0%B4%D1%8B%2C%2015%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.903891,
+    "longitude": 27.553539,
+    "location_verified": true,
+    "slug": "музеи-истории-минска"
   },
   {
     "n": "Театр имени Янки Купалы",
@@ -1581,7 +1821,11 @@
     "site": "https://kupalauski.by/",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A2%D0%B5%D0%B0%D1%82%D1%80%20%D0%B8%D0%BC%D0%B5%D0%BD%D0%B8%20%D0%AF%D0%BD%D0%BA%D0%B8%20%D0%9A%D1%83%D0%BF%D0%B0%D0%BB%D1%8B%20%D1%83%D0%BB.%20%D0%AD%D0%BD%D0%B3%D0%B5%D0%BB%D1%8C%D1%81%D0%B0%2C%207%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9009059,
+    "longitude": 27.5627503,
+    "location_verified": true,
+    "slug": "театр-имени-янки-купалы"
   },
   {
     "n": "Большой театр Беларуси",
@@ -1599,7 +1843,11 @@
     "site": "https://bolshoibelarus.by/",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%91%D0%BE%D0%BB%D1%8C%D1%88%D0%BE%D0%B9%20%D1%82%D0%B5%D0%B0%D1%82%D1%80%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D0%B8%20%D0%BF%D0%BB.%20%D0%9F%D0%B0%D1%80%D0%B8%D0%B6%D1%81%D0%BA%D0%BE%D0%B9%20%D0%9A%D0%BE%D0%BC%D0%BC%D1%83%D0%BD%D1%8B%2C%201%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9094458,
+    "longitude": 27.561931,
+    "location_verified": false,
+    "slug": "большои-театр-беларуси"
   },
   {
     "n": "Кинотеатр «Москва»",
@@ -1617,7 +1865,11 @@
     "site": "https://www.google.com/search?q=Кинотеатр+Москва+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9A%D0%B8%D0%BD%D0%BE%D1%82%D0%B5%D0%B0%D1%82%D1%80%20%C2%AB%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%C2%BB%20%D0%BF%D1%80-%D1%82%20%D0%9F%D0%BE%D0%B1%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9%2C%2013%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9096809,
+    "longitude": 27.5475678,
+    "location_verified": true,
+    "slug": "кинотеатр-москва"
   },
   {
     "n": "Кинотеатр «Беларусь»",
@@ -1635,7 +1887,11 @@
     "site": "https://www.google.com/search?q=Кинотеатр+Беларусь+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9A%D0%B8%D0%BD%D0%BE%D1%82%D0%B5%D0%B0%D1%82%D1%80%20%C2%AB%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C%C2%BB%20%D1%83%D0%BB.%20%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20%D0%A1%D0%BB%D0%BE%D0%B1%D0%BE%D0%B4%D0%B0%2C%2028%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9050057,
+    "longitude": 27.5429121,
+    "location_verified": true,
+    "slug": "кинотеатр-беларусь"
   },
   {
     "n": "Минский планетарий",
@@ -1653,7 +1909,8 @@
     "site": "https://www.google.com/search?q=Минский+планетарий+афиша",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BF%D0%BB%D0%B0%D0%BD%D0%B5%D1%82%D0%B0%D1%80%D0%B8%D0%B9%20%D1%83%D0%BB.%20%D0%A4%D1%80%D1%83%D0%BD%D0%B7%D0%B5%2C%202%2C%20%D0%BF%D0%B0%D1%80%D0%BA%20%D0%93%D0%BE%D1%80%D1%8C%D0%BA%D0%BE%D0%B3%D0%BE%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "минскии-планетарии"
   },
   {
     "n": "Минская обсерватория",
@@ -1671,7 +1928,8 @@
     "site": "https://www.google.com/search?q=Обсерватория+Минск+парк+Горького",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D1%81%D0%B5%D1%80%D0%B2%D0%B0%D1%82%D0%BE%D1%80%D0%B8%D1%8F%20%D1%83%D0%BB.%20%D0%A4%D1%80%D1%83%D0%BD%D0%B7%D0%B5%2C%202%2C%20%D0%BF%D0%B0%D1%80%D0%BA%20%D0%93%D0%BE%D1%80%D1%8C%D0%BA%D0%BE%D0%B3%D0%BE%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "минская-обсерватория"
   },
   {
     "n": "Минский зоопарк",
@@ -1689,7 +1947,11 @@
     "site": "https://www.google.com/search?q=Минский+зоопарк",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA%20%D1%83%D0%BB.%20%D0%A2%D0%B0%D1%88%D0%BA%D0%B5%D0%BD%D1%82%D1%81%D0%BA%D0%B0%D1%8F%2C%2040%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8499373,
+    "longitude": 27.6355888,
+    "location_verified": true,
+    "slug": "минскии-зоопарк"
   },
   {
     "n": "Контактный зоопарк в ТЦ «Титан»",
@@ -1707,7 +1969,8 @@
     "site": "https://www.google.com/search?q=Контактный+зоопарк+Титан+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9A%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA%20%D0%B2%20%D0%A2%D0%A6%20%C2%AB%D0%A2%D0%B8%D1%82%D0%B0%D0%BD%C2%BB%20%D0%BF%D1%80-%D1%82%20%D0%94%D0%B7%D0%B5%D1%80%D0%B6%D0%B8%D0%BD%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%20104%2C%20%D0%A2%D0%A6%20%D0%A2%D0%B8%D1%82%D0%B0%D0%BD%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "контактныи-зоопарк-в-тц-титан"
   },
   {
     "n": "SPA Riviera",
@@ -1725,7 +1988,11 @@
     "site": "https://www.google.com/search?q=SPA+Riviera+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=SPA%20Riviera%20%D0%BF%D1%80-%D1%82%20%D0%9F%D0%BE%D0%B1%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9%2C%20110%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9390988,
+    "longitude": 27.4758706,
+    "location_verified": true,
+    "slug": "spa-riviera"
   },
   {
     "n": "Yestoday Sport Club",
@@ -1743,7 +2010,8 @@
     "site": "https://www.google.com/search?q=Yestoday+Sport+Club+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=Yestoday%20Sport%20Club%20%D1%83%D0%BB.%20%D0%95%D1%84%D1%80%D0%BE%D1%81%D0%B8%D0%BD%D1%8C%D0%B8%20%D0%9F%D0%BE%D0%BB%D0%BE%D1%86%D0%BA%D0%BE%D0%B9%2C%204%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "slug": "yestoday-sport-club"
   },
   {
     "n": "YOGA PLACE",
@@ -1761,7 +2029,11 @@
     "site": "https://www.google.com/search?q=YOGA+PLACE+Минск",
     "source": "Карты и каталоги",
     "src": "https://www.google.com/maps/search/?api=1&query=YOGA%20PLACE%20%D1%83%D0%BB.%20%D0%9E%D0%BA%D1%82%D1%8F%D0%B1%D1%80%D1%8C%D1%81%D0%BA%D0%B0%D1%8F%2C%2016%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.8891328,
+    "longitude": 27.5749759,
+    "location_verified": true,
+    "slug": "yoga-place"
   },
   {
     "n": "Остров слёз",
@@ -1779,7 +2051,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Остров+слёз+Минск",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%9E%D1%81%D1%82%D1%80%D0%BE%D0%B2%20%D1%81%D0%BB%D1%91%D0%B7%20%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B2%20%D0%A1%D0%BB%D1%91%D0%B7%2C%20%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%20%D0%A2%D1%80%D0%BE%D0%B8%D1%86%D0%BA%D0%BE%D0%B3%D0%BE%20%D0%BF%D1%80%D0%B5%D0%B4%D0%BC%D0%B5%D1%81%D1%82%D1%8C%D1%8F%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 0
+    "cost": 0,
+    "latitude": 53.9096403,
+    "longitude": 27.5545133,
+    "location_verified": false,
+    "slug": "остров-слез"
   },
   {
     "n": "Троицкое предместье",
@@ -1797,7 +2073,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Троицкое+предместье+Минск",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=%D0%A2%D1%80%D0%BE%D0%B8%D1%86%D0%BA%D0%BE%D0%B5%20%D0%BF%D1%80%D0%B5%D0%B4%D0%BC%D0%B5%D1%81%D1%82%D1%8C%D0%B5%20%D0%A2%D1%80%D0%BE%D0%B8%D1%86%D0%BA%D0%BE%D0%B5%20%D0%BF%D1%80%D0%B5%D0%B4%D0%BC%D0%B5%D1%81%D1%82%D1%8C%D0%B5%2C%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%20%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C",
-    "cost": 0
+    "cost": 0,
+    "latitude": 53.9083332,
+    "longitude": 27.5565713,
+    "location_verified": false,
+    "slug": "троицкое-предместье"
   },
   {
     "n": "ZABAVA — парк развлечений",
@@ -1815,7 +2095,8 @@
     "site": "https://zabavapark.by/",
     "source": "Официальный сайт",
     "src": "https://www.google.com/maps/search/?api=1&query=ZABAVA+Маяковского+6+Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "zabava-парк-развлечении"
   },
   {
     "n": "R-парк — лазертаг и троллей",
@@ -1833,7 +2114,8 @@
     "site": "https://r-park.by/",
     "source": "Официальный сайт",
     "src": "https://www.google.com/maps/search/?api=1&query=R-парк+Гонолес+Беларусь",
-    "cost": 999
+    "cost": 999,
+    "slug": "r-парк-лазертаг-и-троллеи"
   },
   {
     "n": "FlyAway — аэротруба",
@@ -1851,7 +2133,8 @@
     "site": "https://www.google.com/search?q=FlyAway+аэротруба+Минск",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=FlyAway+Diamond+City+Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "flyaway-аэротруба"
   },
   {
     "n": "Wakepark Ptich — вейкбординг",
@@ -1869,7 +2152,8 @@
     "site": "https://www.google.com/search?q=Wakepark+Ptich",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Wakepark+Ptich+Волковичи",
-    "cost": 999
+    "cost": 999,
+    "slug": "wakepark-ptich-веикбординг"
   },
   {
     "n": "U-ViW — клуб виртуальной реальности",
@@ -1887,7 +2171,8 @@
     "site": "https://www.google.com/search?q=U-ViW+Минск+VR",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=U-ViW+ТЦ+GLOBO+Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "u-viw-клуб-виртуальнои-реальности"
   },
   {
     "n": "Pandora's Box — квесты и перформансы",
@@ -1905,7 +2190,8 @@
     "site": "https://www.google.com/search?q=Pandoras+Box+квесты+Минск",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Pandora's+Box+Минск",
-    "cost": 60
+    "cost": 60,
+    "slug": "pandora-s-box-квесты-и-перформансы"
   },
   {
     "n": "iFLY Minsk — полёт в аэротрубе",
@@ -1923,7 +2209,8 @@
     "site": "https://www.google.com/search?q=iFLY+Minsk",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=iFLY+Minsk+Тимирязева+74А",
-    "cost": 999
+    "cost": 999,
+    "slug": "ifly-minsk-полет-в-аэротрубе"
   },
   {
     "n": "VR LIFE — виртуальная реальность",
@@ -1941,7 +2228,11 @@
     "site": "https://www.google.com/search?q=VR+LIFE+Минск+Притыцкого+29",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=VR+LIFE+Притыцкого+29+Минск",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9078612,
+    "longitude": 27.4845038,
+    "location_verified": true,
+    "slug": "vr-life-виртуальная-реальность"
   },
   {
     "n": "Pbaza — пейнтбол и лазертаг",
@@ -1959,7 +2250,8 @@
     "site": "https://www.google.com/search?q=Pbaza+пейнтбол+Минск",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Pbaza+Минск+пейнтбол",
-    "cost": 999
+    "cost": 999,
+    "slug": "pbaza-пеинтбол-и-лазертаг"
   },
   {
     "n": "F1-Картинг Веснянка",
@@ -1977,7 +2269,11 @@
     "site": "https://www.google.com/search?q=F1+Картинг+Веснянка",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=F1+Картинг+Веснянка+Минск",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9380758,
+    "longitude": 27.4439011,
+    "location_verified": true,
+    "slug": "f1-картинг-веснянка"
   },
   {
     "n": "Sherlock Coffee Hall",
@@ -1995,7 +2291,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Sherlock+Coffee+Hall+Minsk",
     "source": "Городской гид DUO",
     "src": "https://looni-dating.com/blog/kuda-shodit-na-pervoe-svidanie-v-minske",
-    "cost": null
+    "cost": null,
+    "latitude": 53.8938671,
+    "longitude": 27.5513392,
+    "location_verified": true,
+    "slug": "sherlock-coffee-hall"
   },
   {
     "n": "Zavtraki",
@@ -2013,7 +2313,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Zavtraki+Minsk",
     "source": "Городской гид DUO",
     "src": "https://looni-dating.com/blog/kuda-shodit-na-pervoe-svidanie-v-minske",
-    "cost": 80
+    "cost": 80,
+    "latitude": 53.904365,
+    "longitude": 27.5585905,
+    "location_verified": true,
+    "slug": "zavtraki"
   },
   {
     "n": "Tiden",
@@ -2031,7 +2335,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Tiden+Minsk",
     "source": "Городской гид DUO",
     "src": "https://looni-dating.com/blog/kuda-shodit-na-pervoe-svidanie-v-minske",
-    "cost": null
+    "cost": null,
+    "latitude": 53.9130907,
+    "longitude": 27.5675324,
+    "location_verified": true,
+    "slug": "tiden"
   },
   {
     "n": "Burgerlab",
@@ -2049,7 +2357,8 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Burgerlab+Minsk",
     "source": "Городской гид DUO",
     "src": "https://looni-dating.com/blog/kuda-shodit-na-pervoe-svidanie-v-minske",
-    "cost": 80
+    "cost": 80,
+    "slug": "burgerlab"
   },
   {
     "n": "Underdog",
@@ -2067,7 +2376,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Underdog+Minsk",
     "source": "Городской гид DUO",
     "src": "https://looni-dating.com/blog/kuda-shodit-na-pervoe-svidanie-v-minske",
-    "cost": 80
+    "cost": 80,
+    "latitude": 53.8901352,
+    "longitude": 27.5754642,
+    "location_verified": true,
+    "slug": "underdog"
   },
   {
     "n": "Кухмистр",
@@ -2085,7 +2398,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Kuhmistr+Minsk",
     "source": "Городской гид DUO",
     "src": "https://looni-dating.com/blog/kuda-shodit-na-pervoe-svidanie-v-minske",
-    "cost": 100
+    "cost": 100,
+    "latitude": 53.9014337,
+    "longitude": 27.565632,
+    "location_verified": true,
+    "slug": "кухмистр"
   },
   {
     "n": "Нола",
@@ -2103,7 +2420,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Nola+Minsk+Freedom+Square",
     "source": "Городской гид DUO",
     "src": "https://looni-dating.com/blog/kuda-shodit-na-pervoe-svidanie-v-minske",
-    "cost": null
+    "cost": null,
+    "latitude": 53.9042672,
+    "longitude": 27.5553726,
+    "location_verified": true,
+    "slug": "нола"
   },
   {
     "n": "Legendar",
@@ -2121,7 +2442,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Legendar+Minsk",
     "source": "Карты и городские гиды",
     "src": "https://looni-dating.com/blog/kuda-shodit-na-pervoe-svidanie-v-minske",
-    "cost": null
+    "cost": null,
+    "latitude": 53.9029786,
+    "longitude": 27.5523535,
+    "location_verified": true,
+    "slug": "legendar"
   },
   {
     "n": "Graf Cafe",
@@ -2139,7 +2464,8 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Graf+Cafe+National+Library+Minsk",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Graf+Cafe+Minsk",
-    "cost": null
+    "cost": null,
+    "slug": "graf-cafe"
   },
   {
     "n": "The View",
@@ -2157,7 +2483,8 @@
     "site": "https://www.google.com/maps/search/?api=1&query=The+View+Minsk",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=The+View+Minsk",
-    "cost": null
+    "cost": null,
+    "slug": "the-view"
   },
   {
     "n": "BAR:DOT XX1",
@@ -2175,7 +2502,8 @@
     "site": "https://www.google.com/maps/search/?api=1&query=BAR%3ADOT+XX1+Minsk",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=BAR%3ADOT+XX1+Minsk",
-    "cost": null
+    "cost": null,
+    "slug": "bar-dot-xx1"
   },
   {
     "n": "Ember",
@@ -2193,7 +2521,8 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Ember+DoubleTree+Minsk",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Ember+DoubleTree+Minsk",
-    "cost": null
+    "cost": null,
+    "slug": "ember"
   },
   {
     "n": "Panorama",
@@ -2211,7 +2540,8 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Panorama+Hotel+Belarus+Minsk",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Panorama+Minsk",
-    "cost": null
+    "cost": null,
+    "slug": "panorama"
   },
   {
     "n": "Пена дней",
@@ -2229,7 +2559,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Pena+Dney+Minsk",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Pena+Dney+Minsk",
-    "cost": null
+    "cost": null,
+    "latitude": 53.9039272,
+    "longitude": 27.5588057,
+    "location_verified": true,
+    "slug": "пена-днеи"
   },
   {
     "n": "Grand Cafe",
@@ -2247,7 +2581,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Grand+Cafe+Minsk",
     "source": "Карты",
     "src": "https://www.google.com/maps/search/?api=1&query=Grand+Cafe+Minsk",
-    "cost": null
+    "cost": null,
+    "latitude": 53.896886,
+    "longitude": 27.5626945,
+    "location_verified": true,
+    "slug": "grand-cafe"
   },
   {
     "n": "Национальная библиотека Беларуси — смотровая площадка",
@@ -2265,7 +2603,8 @@
     "site": "https://www.nlb.by/",
     "source": "Национальная библиотека Беларуси",
     "src": "https://www.nlb.by/",
-    "cost": null
+    "cost": null,
+    "slug": "национальная-библиотека-беларуси-смотровая-площадка"
   },
   {
     "n": "Красный дворик",
@@ -2283,7 +2622,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Red+Yard+Minsk",
     "source": "Городской гид",
     "src": "https://www.visit-belarus.com/en/visit-minsk/",
-    "cost": 0
+    "cost": 0,
+    "latitude": 53.902666,
+    "longitude": 27.5524126,
+    "location_verified": true,
+    "slug": "красныи-дворик"
   },
   {
     "n": "Улица Октябрьская и арт-квартал",
@@ -2301,7 +2644,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Oktyabrskaya+Street+Minsk",
     "source": "Городские гиды",
     "src": "https://www.visit-belarus.com/en/visit-minsk/",
-    "cost": 0
+    "cost": 0,
+    "latitude": 53.8908595,
+    "longitude": 27.5725168,
+    "location_verified": false,
+    "slug": "улица-октябрьская-и-арт-квартал"
   },
   {
     "n": "Верхний город и площадь Свободы",
@@ -2319,7 +2666,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Upper+Town+Minsk",
     "source": "Городские гиды",
     "src": "https://looni-dating.com/blog/kuda-shodit-na-pervoe-svidanie-v-minske",
-    "cost": 0
+    "cost": 0,
+    "latitude": 53.9039997,
+    "longitude": 27.5564203,
+    "location_verified": false,
+    "slug": "верхнии-город-и-площадь-свободы"
   },
   {
     "n": "Gambrinus",
@@ -2337,7 +2688,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Gambrinus+Minsk",
     "source": "Google Maps",
     "src": "https://wanderlog.com/list/geoCategory/6474/best-bars-in-minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "gambrinus-minsk",
+    "latitude": 53.9039505,
+    "longitude": 27.5557763,
+    "location_verified": true
   },
   {
     "n": "Васильки",
@@ -2355,7 +2710,8 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Васильки+Минск+проспект+Независимости+16",
     "source": "Google Maps",
     "src": "https://eng.ullabel.by/minsk_restaurants",
-    "cost": 999
+    "cost": 999,
+    "slug": "vasilki-minsk"
   },
   {
     "n": "Wake Up Coffee",
@@ -2373,7 +2729,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Wake+Up+Coffee+Minsk",
     "source": "Google Maps",
     "src": "https://worldcafemap.com/en/belarus/minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "wake-up-coffee-minsk",
+    "latitude": 53.9176655,
+    "longitude": 27.5782784,
+    "location_verified": true
   },
   {
     "n": "Embargo",
@@ -2391,7 +2751,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Embargo+bar+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Embargo+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "embargo-minsk",
+    "latitude": 53.9026159,
+    "longitude": 27.5527015,
+    "location_verified": true
   },
   {
     "n": "Owino",
@@ -2409,7 +2773,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Owino+Minsk",
     "source": "Google Maps",
     "src": "https://www.tripadvisor.com/Restaurants-g294448-Minsk_Minsk_Region.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "owino-minsk",
+    "latitude": 53.9137474,
+    "longitude": 27.5804967,
+    "location_verified": false
   },
   {
     "n": "Герои",
@@ -2427,7 +2795,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Герои+бар+Минск",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Герои+бар+Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "geroi-bar-minsk",
+    "latitude": 53.9103215,
+    "longitude": 27.5795481,
+    "location_verified": true
   },
   {
     "n": "Clever Irish Pub",
@@ -2445,7 +2817,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Clever+Irish+Pub+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Clever+Irish+Pub+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "clever-irish-pub-minsk",
+    "latitude": 53.9147675,
+    "longitude": 27.5900034,
+    "location_verified": true
   },
   {
     "n": "Камяница",
@@ -2463,7 +2839,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Камяница+ресторан+Минск",
     "source": "Google Maps",
     "src": "https://www.tripadvisor.com/Restaurants-g294448-Minsk_Minsk_Region.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "kamyanitsa-minsk",
+    "latitude": 53.9004029,
+    "longitude": 27.5749387,
+    "location_verified": true
   },
   {
     "n": "Why Knot?",
@@ -2481,7 +2861,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Why+Knot+Minsk",
     "source": "Google Maps",
     "src": "https://worldcafemap.com/en/belarus/minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "why-knot-minsk",
+    "latitude": 53.8957482,
+    "longitude": 27.5540476,
+    "location_verified": true
   },
   {
     "n": "Bootlegger Bar",
@@ -2499,7 +2883,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Bootlegger+Bar+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Bootlegger+Bar+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "bootlegger-bar-minsk",
+    "latitude": 53.9011544,
+    "longitude": 27.5532729,
+    "location_verified": true
   },
   {
     "n": "Бар Чернила",
@@ -2517,7 +2905,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Бар+Чернила+Минск",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Бар+Чернила+Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "chernila-bar-minsk",
+    "latitude": 53.904365,
+    "longitude": 27.5585905,
+    "location_verified": true
   },
   {
     "n": "Gin&It",
@@ -2535,7 +2927,8 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Gin+and+It+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Gin+and+It+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "gin-and-it-minsk"
   },
   {
     "n": "Банки-Бутылки",
@@ -2553,7 +2946,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Банки+Бутылки+Минск",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Банки+Бутылки+Минск",
-    "cost": 999
+    "cost": 999,
+    "slug": "banki-butylki-minsk",
+    "latitude": 53.904365,
+    "longitude": 27.5585905,
+    "location_verified": true
   },
   {
     "n": "SFB Minsk",
@@ -2571,7 +2968,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=SFB+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=SFB+Minsk",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9014225,
+    "longitude": 27.5497448,
+    "location_verified": true,
+    "slug": "sfb-minsk"
   },
   {
     "n": "The Coffee House",
@@ -2589,7 +2990,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=The+Coffee+House+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=The+Coffee+House+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "the-coffee-house-minsk",
+    "latitude": 53.8922159,
+    "longitude": 27.5557644,
+    "location_verified": true
   },
   {
     "n": "На Пляже Tiki Bar",
@@ -2607,7 +3012,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=На+Пляже+Tiki+Bar+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=На+Пляже+Tiki+Bar+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "na-plyazhe-tiki-minsk",
+    "latitude": 53.9063274,
+    "longitude": 27.5579965,
+    "location_verified": true
   },
   {
     "n": "Wine&Pinsa",
@@ -2625,7 +3034,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Wine+and+Pinsa+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Wine+and+Pinsa+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "wine-and-pinsa-minsk",
+    "latitude": 53.9024036,
+    "longitude": 27.5511276,
+    "location_verified": true
   },
   {
     "n": "Malt & Hops",
@@ -2643,7 +3056,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Malt+and+Hops+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Malt+and+Hops+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "malt-and-hops-minsk",
+    "latitude": 53.9055854,
+    "longitude": 27.5592978,
+    "location_verified": true
   },
   {
     "n": "Bergamo",
@@ -2661,7 +3078,11 @@
     "site": "https://bergamo.by/",
     "source": "24RENT.BY",
     "src": "https://24rent.by/en/about_minsk.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "bergamo-minsk",
+    "latitude": 53.9259737,
+    "longitude": 27.563979,
+    "location_verified": true
   },
   {
     "n": "MoneMane",
@@ -2679,7 +3100,8 @@
     "site": "https://www.google.com/maps/search/?api=1&query=MoneMane+Minsk",
     "source": "24RENT.BY",
     "src": "https://24rent.by/en/about_minsk.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "monemane-minsk"
   },
   {
     "n": "MALEVICH",
@@ -2697,7 +3119,11 @@
     "site": "https://malevichrest.by/",
     "source": "24RENT.BY",
     "src": "https://24rent.by/en/about_minsk.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "malevich-minsk",
+    "latitude": 53.8987438,
+    "longitude": 27.5597749,
+    "location_verified": true
   },
   {
     "n": "Fabriq",
@@ -2715,7 +3141,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Fabriq+Minsk",
     "source": "AILydian / OpenStreetMap",
     "src": "https://holiday.ailydian.com/dining/minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "fabriq-minsk",
+    "latitude": 53.9049919,
+    "longitude": 27.5523733,
+    "location_verified": true
   },
   {
     "n": "IL Patio",
@@ -2733,7 +3163,8 @@
     "site": "https://www.google.com/maps/search/?api=1&query=IL+Patio+Minsk",
     "source": "AILydian / OpenStreetMap",
     "src": "https://holiday.ailydian.com/dining/minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "il-patio-minsk"
   },
   {
     "n": "Marbl",
@@ -2751,7 +3182,11 @@
     "site": "",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Marbl+Minsk+Svobody+Square+4",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9042672,
+    "longitude": 27.5553726,
+    "location_verified": true,
+    "slug": "marbl"
   },
   {
     "n": "FIORI",
@@ -2769,7 +3204,11 @@
     "site": "",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=FIORI+Minsk+Svobody+Square+8",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9044844,
+    "longitude": 27.555642,
+    "location_verified": true,
+    "slug": "fiori"
   },
   {
     "n": "Osobnyak Gastropub",
@@ -2787,7 +3226,11 @@
     "site": "",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Osobnyak+Gastropub+Minsk+Melnikayte+2A",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9059922,
+    "longitude": 27.542808,
+    "location_verified": false,
+    "slug": "osobnyak-gastropub"
   },
   {
     "n": "Charlie Restaurant & Bar",
@@ -2805,7 +3248,11 @@
     "site": "",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Charlie+Restaurant+Minsk+Kommunisticheskaya+4",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9086471,
+    "longitude": 27.5712907,
+    "location_verified": true,
+    "slug": "charlie-restaurant-bar"
   },
   {
     "n": "Honky Tonk Piano Bar",
@@ -2823,7 +3270,11 @@
     "site": "",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Honky+Tonk+Piano+Bar+Minsk+Internatsionalnaya+25A",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.904365,
+    "longitude": 27.5585905,
+    "location_verified": true,
+    "slug": "honky-tonk-piano-bar"
   },
   {
     "n": "Na Dne",
@@ -2841,7 +3292,11 @@
     "site": "",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Na+Dne+Minsk+Zybickaya+6",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9063274,
+    "longitude": 27.5579965,
+    "location_verified": true,
+    "slug": "na-dne"
   },
   {
     "n": "The ODI",
@@ -2859,7 +3314,8 @@
     "site": "",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=The+ODI+Minsk+Nezavisimosti+12",
-    "cost": 999
+    "cost": 999,
+    "slug": "the-odi"
   },
   {
     "n": "Brioche Nemiga",
@@ -2877,7 +3333,8 @@
     "site": "",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Brioche+Nemiga+Minsk+Starozhovskaya+6",
-    "cost": 999
+    "cost": 999,
+    "slug": "brioche-nemiga"
   },
   {
     "n": "FUNGI STUDIO",
@@ -2895,7 +3352,8 @@
     "site": "",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=FUNGI+STUDIO+Minsk+Starozhovskaya+8",
-    "cost": 999
+    "cost": 999,
+    "slug": "fungi-studio"
   },
   {
     "n": "Falcon Club",
@@ -2913,7 +3371,11 @@
     "site": "",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Falcon+Club+Minsk+Pobediteley+20",
-    "cost": 999
+    "cost": 999,
+    "latitude": 53.9326556,
+    "longitude": 27.5101916,
+    "location_verified": false,
+    "slug": "falcon-club"
   },
   {
     "n": "Мандарын",
@@ -2931,7 +3393,11 @@
     "site": "",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Mandaryn+Minsk+Gerasimenko+51",
-    "cost": 999
+    "cost": 999,
+    "slug": "mandaryn",
+    "latitude": 53.8859037,
+    "longitude": 27.6782091,
+    "location_verified": true
   },
   {
     "n": "1067 Miensk Pub",
@@ -2949,7 +3415,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=1067+Miensk+Pub+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=1067+Miensk+Pub+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "1067-miensk-pub-minsk",
+    "latitude": 53.895542,
+    "longitude": 27.5536166,
+    "location_verified": true
   },
   {
     "n": "Coffee Embassy",
@@ -2967,7 +3437,11 @@
     "site": "https://embassy.by/",
     "source": "UltimateCity / WorldCafeMap",
     "src": "https://ultimatecity.net/guides/minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "coffee-embassy-minsk",
+    "latitude": 53.9009144,
+    "longitude": 27.5268352,
+    "location_verified": true
   },
   {
     "n": "Daily Dose",
@@ -2985,7 +3459,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Daily+Dose+Minsk",
     "source": "WorldCafeMap",
     "src": "https://worldcafemap.com/en/belarus/minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "daily-dose-minsk",
+    "latitude": 53.9015304,
+    "longitude": 27.5603587,
+    "location_verified": true
   },
   {
     "n": "Go Greek",
@@ -3003,7 +3481,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Go+Greek+Minsk",
     "source": "UltimateCity",
     "src": "https://ultimatecity.net/guides/minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "go-greek-minsk",
+    "latitude": 53.8908012,
+    "longitude": 27.5733411,
+    "location_verified": true
   },
   {
     "n": "Grunwald",
@@ -3021,7 +3503,11 @@
     "site": "https://grunvaldcafe.by/",
     "source": "24RENT.BY",
     "src": "https://24rent.by/en/about_minsk.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "grunwald-minsk",
+    "latitude": 53.8967989,
+    "longitude": 27.5546549,
+    "location_verified": true
   },
   {
     "n": "Insomnia Bar",
@@ -3039,7 +3525,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Insomnia+Bar+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Insomnia+Bar+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "insomnia-bar-minsk",
+    "latitude": 53.9045663,
+    "longitude": 27.5573199,
+    "location_verified": true
   },
   {
     "n": "Namaste",
@@ -3057,7 +3547,8 @@
     "site": "https://cafenamaste.by/",
     "source": "UltimateCity",
     "src": "https://ultimatecity.net/guides/minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "namaste-minsk"
   },
   {
     "n": "Royal Oak Pub",
@@ -3075,7 +3566,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Royal+Oak+Pub+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=Royal+Oak+Pub+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "royal-oak-minsk",
+    "latitude": 53.9141636,
+    "longitude": 27.5657947,
+    "location_verified": true
   },
   {
     "n": "Surf Coffee",
@@ -3093,7 +3588,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Surf+Coffee+Minsk",
     "source": "WorldCafeMap",
     "src": "https://worldcafemap.com/en/belarus/minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "surfcoffee-minsk",
+    "latitude": 53.8971311,
+    "longitude": 27.5591478,
+    "location_verified": true
   },
   {
     "n": "SVOI",
@@ -3111,7 +3610,8 @@
     "site": "https://restoransvoi.by/",
     "source": "Google Maps / официальный сайт",
     "src": "https://24rent.by/en/about_minsk.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "svoi-minsk"
   },
   {
     "n": "TNT Rock Club",
@@ -3129,7 +3629,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=TNT+Rock+Club+Minsk",
     "source": "Google Maps",
     "src": "https://www.google.com/maps/search/?api=1&query=TNT+Rock+Club+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "tnt-rock-club-minsk",
+    "latitude": 53.9023592,
+    "longitude": 27.5516592,
+    "location_verified": true
   },
   {
     "n": "TokiNY",
@@ -3147,7 +3651,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=TokiNY+Minsk",
     "source": "UltimateCity",
     "src": "https://ultimatecity.net/guides/minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "tokiny-minsk",
+    "latitude": 53.9138002,
+    "longitude": 27.5805529,
+    "location_verified": true
   },
   {
     "n": "Umami",
@@ -3165,7 +3673,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Umami+Minsk",
     "source": "UltimateCity",
     "src": "https://ultimatecity.net/guides/minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "umami-minsk",
+    "latitude": 53.9020966,
+    "longitude": 27.5504423,
+    "location_verified": true
   },
   {
     "n": "Бульбашы",
@@ -3183,7 +3695,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Бульбашы+Minsk",
     "source": "24RENT.BY / Google Maps",
     "src": "https://24rent.by/en/about_minsk.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "bulbashi-minsk",
+    "latitude": 53.904943,
+    "longitude": 27.5580784,
+    "location_verified": true
   },
   {
     "n": "Верас i Колас",
@@ -3201,7 +3717,11 @@
     "site": "https://verasikolas.by/",
     "source": "Google Maps / официальный сайт",
     "src": "https://www.google.com/maps/search/?api=1&query=Veras+i+Kolas+Minsk",
-    "cost": 999
+    "cost": 999,
+    "slug": "veras-i-kolas-minsk",
+    "latitude": 53.9264383,
+    "longitude": 27.5906687,
+    "location_verified": true
   },
   {
     "n": "Литвины",
@@ -3219,7 +3739,11 @@
     "site": "https://litviny.by/",
     "source": "24RENT.BY / Tripadvisor",
     "src": "https://24rent.by/en/about_minsk.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "litviny-sverdlova-minsk",
+    "latitude": 53.8975814,
+    "longitude": 27.5476011,
+    "location_verified": true
   },
   {
     "n": "Мары",
@@ -3237,7 +3761,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Мары+Minsk",
     "source": "Google Maps / 24RENT.BY",
     "src": "https://24rent.by/en/about_minsk.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "mary-minsk",
+    "latitude": 53.9037804,
+    "longitude": 27.5464627,
+    "location_verified": false
   },
   {
     "n": "Панский Драник",
@@ -3255,7 +3783,11 @@
     "site": "https://www.google.com/maps/search/?api=1&query=Панский+Драник+Minsk",
     "source": "24RENT.BY",
     "src": "https://24rent.by/en/about_minsk.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "pansky-dranik-minsk",
+    "latitude": 53.8977283,
+    "longitude": 27.5507784,
+    "location_verified": true
   },
   {
     "n": "Раковский Бровар",
@@ -3273,6 +3805,10 @@
     "site": "https://brovar.by/",
     "source": "24RENT.BY / Google Maps",
     "src": "https://24rent.by/en/about_minsk.html",
-    "cost": 999
+    "cost": 999,
+    "slug": "rakovsky-brovar-minsk",
+    "latitude": 53.9042781,
+    "longitude": 27.5487207,
+    "location_verified": true
   }
 ]

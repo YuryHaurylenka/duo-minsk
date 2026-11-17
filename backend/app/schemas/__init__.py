@@ -38,6 +38,9 @@ class PlaceOut(BaseModel):
     source_name: str
     source_url: str
     cost: Decimal | None
+    latitude: float | None = None
+    longitude: float | None = None
+    location_verified_at: datetime | None = None
 
 
 class EventOut(BaseModel):

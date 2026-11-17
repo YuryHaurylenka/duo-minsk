@@ -20,7 +20,7 @@
 - Private backend credentials: PostgreSQL login password and Supabase service-role material (not present in the browser or repository).
 
 ## Runtime routes
-- GET /api/health
+- GET /api/health (liveness), GET /api/health/ready (database readiness)
 - GET /api/cities
 - GET /api/places, GET /api/places/{slug}
 - GET /api/events, GET /api/updates

@@ -10,6 +10,10 @@ The FastAPI service is deployed from the repository root via main.py.
 
 See the root README and docs/ARCHITECTURE.md for current production topology.
 
+## Operations
+- `GET /api/health` is a lightweight process check.
+- `GET /api/health/ready` verifies the database connection and returns the active city count; use it for uptime/readiness monitoring.
+
 ## Discovery API
 - `GET /api/cities` returns active city metadata, including localized names, time zone, currency and default language.
 - `GET /api/places?city=minsk`, `GET /api/events?city=minsk`, and `GET /api/updates?city=minsk` are city-scoped. The city parameter defaults to `minsk`.

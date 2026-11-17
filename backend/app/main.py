@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import select, func, or_, text
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
 from app.config import get_settings
 from app.database import get_db
 from app.auth import AuthUser, require_user
@@ -45,6 +46,16 @@ def root():
 @app.get("/api/health")
 def health():
     return {"status": "ok", "service": "duo-api", "version": "2.0.0"}
+
+
+@app.get("/api/health/ready")
+def readiness(db: Session = Depends(get_db)):
+    try:
+        db.execute(text("SELECT 1"))
+        active_cities = db.scalar(select(func.count()).select_from(City).where(City.is_active.is_(True)))
+    except SQLAlchemyError:
+        raise HTTPException(status_code=503, detail="Database unavailable")
+    return {"status": "ready", "database": "ok", "active_cities": active_cities or 0}
 
 
 def require_active_city(db: Session, city_slug: str) -> City:

@@ -310,3 +310,20 @@ def test_updates_are_scoped_to_requested_city(client, db):
     response = client.get("/api/updates?city=minsk")
     assert response.status_code == 200
     assert response.json() == []
+
+
+
+def test_readiness_reports_database_and_active_cities(client, db):
+    db.scalar.return_value = 1
+    response = client.get("/api/health/ready")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ready", "database": "ok", "active_cities": 1}
+    db.execute.assert_called_once()
+
+
+def test_readiness_returns_503_when_database_is_unavailable(client, db):
+    from sqlalchemy.exc import SQLAlchemyError
+    db.execute.side_effect = SQLAlchemyError("database offline")
+    response = client.get("/api/health/ready")
+    assert response.status_code == 503
+    assert response.json()["detail"] == "Database unavailable"

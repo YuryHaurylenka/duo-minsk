@@ -30,7 +30,7 @@ DUO helps two people discover places and events, build date itineraries, keep a 
 
 ## API
 Public:
-- GET /api/health
+- GET /api/health, GET /api/health/ready
 - GET /api/cities
 - GET /api/places
 - GET /api/places/{slug}

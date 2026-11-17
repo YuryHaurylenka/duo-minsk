@@ -7,7 +7,7 @@
 - Couple tables (`couples`, `couple_members`, `duo_date_plans`, `place_activity`) are available only to `authenticated`, with row access constrained by the couple-membership RLS policies. A unique index guarantees one couple per user; invite joins lock the couple row before checking its two-member limit.
 - Event-ingestion control tables (`duo_event_sources`, `duo_event_sync_config`, `duo_event_sync_runs`) are not granted to `anon` or `authenticated`; the trusted ingestion runtime uses its privileged server-side credential.
 - `TRUNCATE`, `REFERENCES`, and `TRIGGER` are revoked from API roles across the exposed `public` schema.
-- The `is_couple_member` SECURITY DEFINER helper lives in the non-exposed `private` schema; only `authenticated` and `service_role` can use it. The two public SECURITY DEFINER RPCs remain intentionally callable only by `authenticated`.
+- All couple SECURITY DEFINER functions (`is_couple_member`, `create_couple`, `join_couple`) live in the non-exposed `private` schema. Only `authenticated` and `service_role` can execute them; the create/join functions are invoked through FastAPI, not exposed as PostgREST RPCs.
 - Default table, function, and sequence grants for objects created by `postgres` in `public` are restricted. New API-facing objects must receive explicit grants and RLS policies.
 
 ## Database tests
@@ -25,7 +25,7 @@ GitHub Actions also supports this check when the repository secret `DUO_RLS_TEST
 - No `anon` access remains on couple data or event-ingestion control tables.
 - `authenticated` no longer has `TRUNCATE`, `REFERENCES`, or `TRIGGER` privileges; it retains only the DML required by the API and couple policies.
 - The transaction-scoped multi-user isolation script completed successfully against the live database and rolled back all five synthetic users and all three fixture couples. It also checks that public city metadata is readable and private activity is keyed by place slug.
-- Supabase Security Advisor reports two expected `SECURITY DEFINER` RPCs (`create_couple`, `join_couple`). They are intentionally callable only by `authenticated`; both check `auth.uid()`, use an empty `search_path`, and have no `anon`/`PUBLIC` execute grant. The RLS helper was moved to the non-exposed `private` schema, removing it from the public RPC surface.
+- Supabase Security Advisor no longer reports exposed authenticated `SECURITY DEFINER` functions: all three couple functions are in the non-exposed `private` schema, use an empty `search_path`, and are executable only by `authenticated`/`service_role`.
 - Leaked-password protection remains a dashboard-level Auth setting and still needs to be enabled by an authorized project administrator.
 
 ## City expansion

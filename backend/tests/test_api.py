@@ -72,6 +72,7 @@ def test_create_couple_calls_database_rpc(client, db):
     response = client.post("/api/couples", json={"name": "  Our duo  "})
     assert response.status_code == 201
     assert response.json()["invite_code"] == "ABC123"
+    assert "private.create_couple" in str(db.execute.call_args.args[0])
     db.commit.assert_called_once()
 
 
@@ -90,6 +91,7 @@ def test_join_couple_normalizes_invite_code(client, db):
     response = client.post("/api/couples/join", json={"invite_code": " abc123 "})
     assert response.status_code == 200
     assert response.json()["role"] == "member"
+    assert "private.join_couple" in str(db.execute.call_args.args[0])
     assert db.execute.call_args.args[1] == {"code": "ABC123"}
 
 

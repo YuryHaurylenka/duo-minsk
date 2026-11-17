@@ -119,7 +119,7 @@ def create_couple(payload: CoupleCreate, user: AuthUser = Depends(require_user),
     if existing:
         raise HTTPException(status_code=409, detail="Вы уже состоите в паре")
     try:
-        row = db.execute(text("select * from public.create_couple(:name)"), {"name": payload.name.strip() or "Наша пара"}).mappings().one()
+        row = db.execute(text("select * from private.create_couple(:name)"), {"name": payload.name.strip() or "Наша пара"}).mappings().one()
         db.commit()
     except Exception as exc:
         db.rollback()
@@ -134,7 +134,7 @@ def join_couple(payload: CoupleJoin, user: AuthUser = Depends(require_user), db:
     if db.scalar(select(CoupleMember).where(CoupleMember.user_id == user.id)):
         raise HTTPException(status_code=409, detail="Вы уже состоите в паре")
     try:
-        row = db.execute(text("select * from public.join_couple(:code)"), {"code": payload.invite_code.strip().upper()}).mappings().one()
+        row = db.execute(text("select * from private.join_couple(:code)"), {"code": payload.invite_code.strip().upper()}).mappings().one()
     except Exception as exc:
         db.rollback()
         message = str(exc)

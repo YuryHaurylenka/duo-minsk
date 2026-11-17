@@ -7,7 +7,7 @@ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_indexes WHERE schemaname='public' AND indexname='couple_members_user_id_key') THEN
     RAISE EXCEPTION 'One-couple-per-user unique index is missing';
   END IF;
-  IF position('FOR UPDATE' IN pg_get_functiondef('public.join_couple(text)'::regprocedure)) = 0 THEN
+  IF position('FOR UPDATE' IN pg_get_functiondef('private.join_couple(text)'::regprocedure)) = 0 THEN
     RAISE EXCEPTION 'join_couple must lock the couple row before counting members';
   END IF;
   IF NOT has_table_privilege('anon', 'public.cities', 'SELECT') THEN
@@ -25,11 +25,14 @@ BEGIN
   IF has_table_privilege('authenticated', 'public.duo_event_sync_config', 'SELECT') THEN
     RAISE EXCEPTION 'authenticated must not read internal event sync config';
   END IF;
-  IF has_function_privilege('anon', 'public.create_couple(text)', 'EXECUTE') THEN
-    RAISE EXCEPTION 'anon must not execute create_couple';
+  IF has_function_privilege('anon', 'private.create_couple(text)', 'EXECUTE') THEN
+    RAISE EXCEPTION 'anon must not execute private.create_couple';
   END IF;
-  IF NOT has_function_privilege('authenticated', 'public.create_couple(text)', 'EXECUTE') THEN
-    RAISE EXCEPTION 'authenticated must be able to execute create_couple';
+  IF NOT has_function_privilege('authenticated', 'private.create_couple(text)', 'EXECUTE') THEN
+    RAISE EXCEPTION 'authenticated must be able to execute private.create_couple';
+  END IF;
+  IF to_regprocedure('public.create_couple(text)') IS NOT NULL OR to_regprocedure('public.join_couple(text)') IS NOT NULL THEN
+    RAISE EXCEPTION 'Couple RPCs must not remain in the exposed public schema';
   END IF;
 END $$;
 
@@ -145,7 +148,7 @@ DECLARE invite text; blocked boolean := false;
 BEGIN
   invite := current_setting('duo.test.invite_b');
   BEGIN
-    PERFORM * FROM public.join_couple(invite);
+    PERFORM * FROM private.join_couple(invite);
   EXCEPTION WHEN raise_exception THEN
     IF SQLERRM = 'User already belongs to another couple' THEN blocked := true; ELSE RAISE; END IF;
   END;
@@ -159,7 +162,7 @@ DO $$
 DECLARE invite text; member_count integer; blocked boolean := false;
 BEGIN
   invite := current_setting('duo.test.invite_c');
-  PERFORM * FROM public.join_couple(invite);
+  PERFORM * FROM private.join_couple(invite);
   SELECT count(*) INTO member_count FROM public.couple_members WHERE couple_id=current_setting('duo.test.couple_c')::uuid;
   IF member_count <> 2 THEN RAISE EXCEPTION 'Expected two members after valid invite, found %', member_count; END IF;
 END $$;
@@ -171,7 +174,7 @@ DECLARE invite text; blocked boolean := false;
 BEGIN
   invite := current_setting('duo.test.invite_c');
   BEGIN
-    PERFORM * FROM public.join_couple(invite);
+    PERFORM * FROM private.join_couple(invite);
   EXCEPTION WHEN raise_exception THEN
     IF SQLERRM = 'В паре уже два участника' THEN blocked := true; ELSE RAISE; END IF;
   END;

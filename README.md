@@ -61,6 +61,7 @@ Authenticated:
 - Runtime DB role duo_api is NOINHERIT and NOBYPASSRLS; request handlers switch to anon or authenticated transaction-locally.
 - PostgreSQL RLS policies protect couple-scoped records; public API roles use least-privilege table grants and cannot TRUNCATE application tables.
 - Multi-city API foundation: `/api/cities` lists active cities; pass `?city=minsk` to places, events and updates. Minsk is currently the only active city; additional cities are not advertised before their data is verified.
+- Couple SECURITY DEFINER functions are isolated in the non-exposed `private` schema; FastAPI calls them only after JWT verification.
 - Transaction-scoped multi-user RLS and couple-invite isolation checks live in `supabase/tests/database/rls_isolation.sql`; see `docs/SECURITY.md`.
 - No Supabase service-role key is present in the client.
 - Never commit .env files.

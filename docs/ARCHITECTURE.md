@@ -9,6 +9,7 @@
 - The API switches transaction-locally to anon for public endpoints and to authenticated after JWT validation, setting Supabase request claims so existing RLS policies continue to apply.
 - Public discovery is city-scoped through `cities.slug`; places, events, updates, event sources and sync runs carry `city_slug`. Only active cities are returned by `/api/cities`.
 - Couple activity is keyed by `place_slug` rather than venue name, preventing same-name collisions when more cities are added.
+- Couple SECURITY DEFINER functions live in the non-exposed `private` schema; FastAPI calls them only after JWT verification. They are not exposed as PostgREST RPC endpoints.
 - Public API roles have least-privilege grants: read-only public catalog access, no access to event-sync control tables, and no TRUNCATE/REFERENCES/TRIGGER privileges. Future objects created by postgres receive no broad API-role grants by default.
 - The Supabase publishable key is used only by the browser Auth SDK; it is not a secret.
 - The existing Supabase Edge Function continues to refresh the event catalog on its scheduled cadence.
@@ -20,6 +21,7 @@
 
 ## Runtime routes
 - GET /api/health
+- GET /api/cities
 - GET /api/places, GET /api/places/{slug}
 - GET /api/events, GET /api/updates
 - Authenticated: /api/me, /api/couples, /api/couples/join, /api/activity, /api/plans

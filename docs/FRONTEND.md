@@ -41,3 +41,17 @@ Vercel keeps the FastAPI framework for API functions and runs `npm ci && npm run
 - Couple activity and plans are loaded through authenticated FastAPI endpoints and refreshed with Supabase Realtime.
 - Analytics are derived from saved activity. They are not synthetic sample metrics.
 - Current place-card photos are category-level editorial imagery unless a place provides its own `image_url`; they should not be presented as verified venue photographs.
+
+## Quality checks (2026-11-18)
+
+- `npm run build` succeeds with Vite 7.3.8.
+- `npm audit --omit=dev` reports no vulnerabilities in production dependencies.
+- Backend test suite: 31 passed.
+- Catalog QA: 110 active places, 64 upcoming/active events, and 7 city updates were checked for missing names/descriptions/addresses, malformed URLs, replacement characters, and repeated whitespace. Repeated whitespace is normalized before display.
+- API smoke checks: health, readiness, cities, places, events, and updates return HTTP 200; unauthenticated `/api/me` returns HTTP 401 as expected.
+
+### Development-toolchain advisory
+
+The full development dependency audit still reports the upstream picomatch ReDoS advisory (GHSA-fc5q-39xc-vjpf) through Vite's build-time glob dependencies. As of 2026-11-18, the npm registry still serves picomatch 4.0.7 and has no 4.0.8 release; the upstream fix discussion remains open. This dependency is not part of the deployed browser bundle. The Vite development server is bound to loopback (`127.0.0.1`) and should not be exposed to untrusted networks. Re-run the full audit and upgrade picomatch as soon as an official fixed release is available.
+
+References: [GitHub advisory](https://github.com/advisories/GHSA-fc5q-39xc-vjpf), [upstream issue](https://github.com/micromatch/picomatch/issues/247).

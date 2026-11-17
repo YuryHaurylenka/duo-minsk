@@ -20,7 +20,7 @@ GitHub Actions also supports this check when the repository secret `DUO_RLS_TEST
 
 ## Live verification (2026-11-17)
 
-- All 10 tables in `public` have RLS enabled.
+- All 11 tables in `public` have RLS enabled.
 - Public catalog read access remains available to `anon` and `authenticated`.
 - No `anon` access remains on couple data or event-ingestion control tables.
 - `authenticated` no longer has `TRUNCATE`, `REFERENCES`, or `TRIGGER` privileges; it retains only the DML required by the API and couple policies.

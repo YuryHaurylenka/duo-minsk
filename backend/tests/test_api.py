@@ -456,3 +456,21 @@ def test_readiness_returns_503_when_database_is_unavailable(client, db):
     response = client.get("/api/health/ready")
     assert response.status_code == 503
     assert response.json()["detail"] == "Database unavailable"
+
+
+def test_activity_sync_updates_only_fields_supplied_by_client(client, db):
+    db.scalar.return_value = membership()
+    db.get.return_value = couple()
+    db.scalars.return_value.all.return_value = [Place(slug=PLACE_SLUG, name="Test Cafe")]
+    response = client.put("/api/activity", json=[
+        {"place_slug": PLACE_SLUG, "is_favorite": True}
+    ])
+    assert response.status_code == 204
+    statement = db.execute.call_args.args[0]
+    assert {key for key, _ in statement._post_values_clause.update_values_to_set} == {"is_favorite", "updated_at", "updated_by"}
+
+
+def test_activity_sync_rejects_empty_patch(client, db):
+    response = client.put("/api/activity", json=[{"place_slug": PLACE_SLUG}])
+    assert response.status_code == 422
+    db.execute.assert_not_called()

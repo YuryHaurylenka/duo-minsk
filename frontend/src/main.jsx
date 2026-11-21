@@ -161,12 +161,19 @@ useEffect(()=>{if(!session){setProfile(null);setPlans([]);return}let cancelled=f
   const event=pickFresh(eventPool,'events:'+city+':'+planDate+':'+planStartTime,1)[0]||null;
   const eventCost=event?.price_min==null?null:Number(event.price_min)*people;
   const remaining=budgetLimit===null?null:Math.max(0,budgetLimit-(eventCost||0));
-  const affordable=candidatePool.filter(p=>{
-   const cost=costForPlace(p);
-   return budgetLimit===null||cost!==null&&cost<=remaining;
-  });
-  const desiredPlaces=durationHours>=4?3:2;
-  const chosen=pickFresh(affordable,'places:'+city+':'+mood+':'+budget+':'+durationHours,desiredPlaces);
+  const desiredPlaces=event?(durationHours>=3?1:0):(durationHours>=4?3:2);
+  const chosen=[];
+  let remainingBudget=remaining;
+  for(let i=0;i<desiredPlaces;i++){
+   const candidates=candidatePool.filter(p=>{
+    const cost=costForPlace(p);
+    return budgetLimit===null||cost!==null&&cost<=remainingBudget;
+   });
+   const next=pickFresh(candidates,'places:'+city+':'+mood+':'+budget+':'+durationHours+':'+i,1)[0];
+   if(!next)break;
+   chosen.push(next);
+   if(budgetLimit!==null)remainingBudget-=costForPlace(next);
+  }
   const ordered=[];
   const pending=[...chosen];
   if(pending.length){
@@ -197,10 +204,11 @@ useEffect(()=>{if(!session){setProfile(null);setPlans([]);return}let cancelled=f
    items.push({kind:'Событие',title:cleanText(event.title),description:(cleanText(event.venue||event.address)||'Городское событие')+' · '+(event.price_min==null?'цена уточняется':'от '+money(event.price_min,event.currency)+' / чел.'),url:event.ticket_url||event.source_url,event_id:event.id,city_slug:city,time:hh+':'+mm,duration_minutes:90,estimated_cost:eventCost===null?null:Number(eventCost.toFixed(2)),cost_label:eventCost===null?'цена уточняется':'≈ '+money(eventCost,event.currency||'BYN')});
   }
   items.sort((a,b)=>a.time.localeCompare(b.time));
-  const estimatedTotal=items.every(item=>item.estimated_cost!==null)?Number(items.reduce((sum,item)=>sum+item.estimated_cost,0).toFixed(2)):null;
+  const estimatedTotal=items.length&&items.every(item=>item.estimated_cost!==null)?Number(items.reduce((sum,item)=>sum+item.estimated_cost,0).toFixed(2)):null;
   const notes=[];
   if(budgetLimit!==null&&items.some(item=>item.estimated_cost===null))notes.push('Варианты с неизвестной стоимостью не включены в расчёт бюджета.');
   if(!preferenceMatched.length&&preferences.interests.length)notes.push('Не нашлось точного совпадения с интересами, поэтому добавлены безопасные варианты по выбранному настроению.');
+  if(people!==2&&chosen.length)notes.push('Стоимость для вашей компании пересчитана ориентировочно от цены на двоих. Уточните итоговую сумму у заведения.');
   if(chosen.some(p=>p.latitude==null||p.longitude==null))notes.push('Для части мест координаты не указаны. Порядок маршрута приблизительный, время в пути не рассчитывается.');
   else if(chosen.length>1)notes.push('Места упорядочены по близости друг к другу. Время в пути не рассчитывается.');
   if(!items.length)notes.push('Не удалось подобрать варианты под эти условия. Увеличьте бюджет, измените время или выберите другое настроение.');

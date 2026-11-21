@@ -368,6 +368,34 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
     assert "unsafe-place" not in [item["slug"] for item in payload["items"]]
 
 
+
+def test_recommendation_feedback_is_private_and_idempotent():
+    db = MagicMock()
+    db.scalar.return_value = "shared-cafe"
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).post("/api/recommendations/shared-cafe/dismiss")
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 204
+    db.execute.assert_called_once()
+    db.commit.assert_called_once()
+
+
+def test_recommendation_feedback_rejects_unknown_place():
+    db = MagicMock()
+    db.scalar.return_value = None
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).post("/api/recommendations/not-a-place/dismiss")
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 404
+    db.execute.assert_not_called()
+
+
 def test_recommendations_reject_unknown_interest_categories():
     db = MagicMock()
     app.dependency_overrides[get_db] = lambda: db

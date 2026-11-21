@@ -476,7 +476,7 @@ def sync_activity(items: list[ActivitySyncItem], user: AuthUser = Depends(requir
 @app.get("/api/plans", response_model=list[PlanOut])
 def list_plans(user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
     couple = get_couple(db, user)
-    return db.scalars(select(DuoDatePlan).where(DuoDatePlan.couple_id == couple.id).order_by(DuoDatePlan.plan_date.asc()).limit(50)).all()
+    return db.scalars(select(DuoDatePlan).where(DuoDatePlan.couple_id == couple.id).order_by((DuoDatePlan.plan_date < date.today()).asc(), DuoDatePlan.plan_date.asc(), DuoDatePlan.created_at.desc()).limit(50)).all()
 
 
 @app.post("/api/plans", response_model=PlanOut, status_code=201)

@@ -147,6 +147,7 @@ class DuoDatePlan(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
     couple_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), index=True)
     created_by: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True))
+    updated_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True)
     plan_date: Mapped[date] = mapped_column(Date)
     title: Mapped[str] = mapped_column(Text)
     mood: Mapped[str] = mapped_column(Text)

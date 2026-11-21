@@ -1,4 +1,5 @@
 from contextlib import asynccontextmanager
+import json
 from datetime import date, datetime, time, timedelta, timezone
 from zoneinfo import ZoneInfo
 from decimal import Decimal
@@ -13,7 +14,7 @@ from app.config import get_settings
 from app.database import get_db
 from app.auth import AuthUser, require_user
 from app.models.entities import City, Place, Couple, CoupleMember, PlaceActivity, PersonalPlaceActivity, DuoEvent, DuoDatePlan, DuoPlaceUpdate
-from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, ActivitySyncItem, PlanCreate, PlanOut, MatchSessionCreate, MatchVoteIn
+from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, CouplePreferencesIn, ActivitySyncItem, PlanCreate, PlanOut, MatchSessionCreate, MatchVoteIn
 
 settings = get_settings()
 
@@ -122,6 +123,34 @@ def me(user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
         return {"id": str(user.id), "email": user.email, "couple": None}
     couple = db.get(Couple, member.couple_id)
     return {"id": str(user.id), "email": user.email, "couple": {"id": str(couple.id), "name": couple.name, "invite_code": couple.invite_code, "role": member.role}}
+
+
+
+@app.get("/api/couples/preferences")
+def get_couple_preferences(user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    """Return each partner's own discovery preferences without exposing account data."""
+    couple = get_couple(db, user)
+    row = db.execute(text("SELECT preferences FROM public.couples WHERE id = :couple"), {"couple": couple.id}).mappings().one()
+    members = (row["preferences"] or {}).get("members", {})
+    mine = members.get(str(user.id))
+    partner = next((value for key, value in members.items() if key != str(user.id)), None)
+    return {"mine": mine, "partner": partner}
+
+
+@app.put("/api/couples/preferences")
+def update_couple_preferences(payload: CouplePreferencesIn, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    """Persist only the authenticated member's discovery preferences."""
+    couple = get_couple(db, user)
+    preferences_json = json.dumps(payload.model_dump())
+    db.execute(
+        text("UPDATE public.couples SET preferences = jsonb_set(COALESCE(preferences, '{\"members\": {}}'::jsonb), ARRAY['members', CAST(:user_id AS text)], CAST(:preferences AS jsonb), true) WHERE id = :couple"),
+        {"user_id": user.id, "preferences": preferences_json, "couple": couple.id},
+    )
+    db.commit()
+    row = db.execute(text("SELECT preferences FROM public.couples WHERE id = :couple"), {"couple": couple.id}).mappings().one()
+    members = (row["preferences"] or {}).get("members", {})
+    partner = next((value for key, value in members.items() if key != str(user.id)), None)
+    return {"mine": payload.model_dump(), "partner": partner}
 
 
 @app.post("/api/couples", response_model=CoupleOut, status_code=201)

@@ -218,3 +218,72 @@ def test_couple_analytics_returns_shared_activity_and_match_history():
     assert payload["common_interests"] == [{"name": "Кофейни", "value": 2}]
     assert payload["match_stats"]["mutual_matches"] == 5
     assert payload["match_history"][0]["status"] == "completed"
+
+
+
+def test_couple_preferences_are_scoped_to_current_member_and_partner():
+    db = MagicMock()
+    db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
+    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                                 created_at=datetime.now(timezone.utc))
+    result = MagicMock()
+    result.mappings.return_value.one.return_value = {
+        "preferences": {
+            "members": {
+                str(USER_ID): {"interests": ["Кофейни"], "avoid": []},
+                str(uuid4()): {"interests": ["Культура"], "avoid": ["Бары и пабы"]},
+            }
+        }
+    }
+    db.execute.return_value = result
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).get("/api/couples/preferences")
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 200
+    assert response.json()["mine"] == {"interests": ["Кофейни"], "avoid": []}
+    assert response.json()["partner"]["interests"] == ["Культура"]
+
+
+def test_couple_preferences_update_only_current_member():
+    db = MagicMock()
+    db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
+    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                                 created_at=datetime.now(timezone.utc))
+    updated = MagicMock()
+    updated.mappings.return_value.one.return_value = {
+        "preferences": {"members": {str(USER_ID): {"interests": ["Рестораны"], "avoid": []}}}
+    }
+    db.execute.side_effect = [MagicMock(), updated]
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).put(
+            "/api/couples/preferences",
+            json={"interests": ["Рестораны"], "avoid": []},
+        )
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 200
+    assert response.json() == {"mine": {"interests": ["Рестораны"], "avoid": []}, "partner": None}
+    assert db.commit.called
+
+
+def test_couple_preferences_reject_unknown_categories():
+    db = MagicMock()
+    db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
+    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                                 created_at=datetime.now(timezone.utc))
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).put(
+            "/api/couples/preferences",
+            json={"interests": ["Secret"], "avoid": []},
+        )
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 422
+    db.execute.assert_not_called()

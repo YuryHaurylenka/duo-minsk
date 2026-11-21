@@ -495,14 +495,23 @@ def create_plan(payload: PlanCreate, user: AuthUser = Depends(require_user), db:
 def update_plan(plan_id: UUID, payload: PlanUpdate, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
     """Update a saved itinerary shared by the authenticated couple."""
     couple = get_couple(db, user)
-    plan = db.scalar(select(DuoDatePlan).where(DuoDatePlan.id == plan_id, DuoDatePlan.couple_id == couple.id))
+    # Lock the row so two partners cannot pass the version check concurrently.
+    plan = db.scalar(select(DuoDatePlan).where(
+        DuoDatePlan.id == plan_id, DuoDatePlan.couple_id == couple.id
+    ).with_for_update())
     if not plan:
         raise HTTPException(status_code=404, detail="План не найден")
     changes = payload.model_dump(exclude_unset=True)
+    expected_updated_at = changes.pop("expected_updated_at", None)
     if not changes:
         raise HTTPException(status_code=422, detail="Нет изменений для сохранения")
     if any(value is None for value in changes.values()):
         raise HTTPException(status_code=422, detail="Поля плана не могут быть пустыми")
+    if expected_updated_at is not None and expected_updated_at != plan.updated_at:
+        raise HTTPException(
+            status_code=409,
+            detail="План уже изменён другим участником. Обновите данные и повторите изменения.",
+        )
     for field, value in changes.items():
         setattr(plan, field, value)
     plan.updated_at = datetime.now(timezone.utc)

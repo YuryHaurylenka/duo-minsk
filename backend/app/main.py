@@ -271,8 +271,13 @@ def _match_session_payload(session_id: UUID, user: AuthUser, couple: Couple, db:
     rows = db.execute(text("""
         SELECT p.slug, p.name, p.category, p.description, p.address, p.rating, p.reviews, p.price_label, p.image_url, p.image_source_url, p.latitude, p.longitude, p.district, c.position,
                bool_or(v.liked) FILTER (WHERE v.user_id = :user_id) AS my_vote,
-               bool_or(v.liked) FILTER (WHERE v.user_id <> :user_id) AS partner_vote,
-               count(v.user_id) AS votes_count
+               CASE
+                   WHEN bool_or(v.liked) FILTER (WHERE v.user_id = :user_id) IS TRUE
+                    AND bool_or(v.liked) FILTER (WHERE v.user_id <> :user_id) IS TRUE
+                   THEN TRUE
+                   ELSE NULL
+               END AS partner_vote,
+               count(v.user_id) FILTER (WHERE v.user_id <> :user_id) > 0 AS partner_has_voted
         FROM public.duo_match_candidates c
         JOIN public.places p ON p.slug = c.place_slug
         LEFT JOIN public.duo_match_votes v ON v.session_id = c.session_id AND v.place_slug = c.place_slug
@@ -281,7 +286,7 @@ def _match_session_payload(session_id: UUID, user: AuthUser, couple: Couple, db:
         ORDER BY c.position
     """), {"user_id": user.id, "session_id": session_id}).mappings().all()
     candidates = [dict(row) for row in rows]
-    return {"session": dict(session_row), "candidates": candidates, "matches": [r for r in candidates if r["my_vote"] is True and r["partner_vote"] is True], "my_votes": sum(r["my_vote"] is not None for r in candidates), "partner_votes": sum(r["partner_vote"] is not None for r in candidates), "candidate_count": len(candidates)}
+    return {"session": dict(session_row), "candidates": candidates, "matches": [r for r in candidates if r["my_vote"] is True and r["partner_vote"] is True], "my_votes": sum(r["my_vote"] is not None for r in candidates), "partner_votes": sum(bool(r["partner_has_voted"]) for r in candidates), "candidate_count": len(candidates)}
 
 
 @app.get("/api/match/sessions/{session_id}")

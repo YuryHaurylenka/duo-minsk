@@ -324,10 +324,11 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
     db.execute.side_effect = [preferences, matches]
     activity_rows = MagicMock()
     activity_rows.scalars.return_value.all.return_value = [
-        SimpleNamespace(place_slug="shared-cafe", is_favorite=True, visited_at=None, rating=5)
+        SimpleNamespace(place_slug="old-cafe", is_favorite=True, visited_at=None, rating=5)
     ]
     places_rows = MagicMock()
     places_rows.scalars.return_value.all.return_value = [
+        _recommendation_place("old-cafe", "Old Coffee", "Кофейни", "4.8"),
         _recommendation_place("shared-cafe", "Common Coffee", "Кофейни", "4.8"),
         _recommendation_place("bar-place", "Cocktail Bar", "Пабы и бары", "4.9"),
         _recommendation_place("game-place", "Game Room", "Игры", "4.2"),
@@ -348,6 +349,8 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
     assert payload["items"][0]["slug"] == "shared-cafe"
     assert "Интересно обоим" in payload["items"][0]["reasons"]
     assert "Вы оба выбрали это в DUO Match" in payload["items"][0]["reasons"]
+    assert "Вам нравятся места этой категории" in payload["items"][0]["reasons"]
+    assert "old-cafe" not in [item["slug"] for item in payload["items"]]
     assert "bar-place" not in [item["slug"] for item in payload["items"]]
 
 

@@ -211,9 +211,29 @@ def test_update_plan_persists_reordered_items_for_current_couple(client, db):
     assert response.status_code == 200
     assert [item["place"] for item in response.json()["items"]] == ["second", "first"]
     assert response.json()["notes"] == "Meet at 18:00"
+    assert response.json()["updated_at"] is not None
     db.commit.assert_called_once()
     db.refresh.assert_called_once_with(plan)
 
+
+
+def test_update_plan_rejects_stale_version(client, db):
+    current_version = datetime(2026, 11, 21, 18, 0, tzinfo=timezone.utc)
+    plan = SimpleNamespace(
+        id=uuid4(), plan_date=date(2026, 12, 1), title="Latest title", mood="romantic",
+        budget=Decimal("75.50"), items=[{"place": "latest"}], notes="",
+        created_at=current_version, updated_at=current_version,
+    )
+    db.scalar.side_effect = [membership(), plan]
+    db.get.return_value = couple()
+    response = client.patch(f"/api/plans/{plan.id}", json={
+        "expected_updated_at": "2026-11-21T17:59:00Z",
+        "title": "Stale overwrite",
+    })
+    assert response.status_code == 409
+    assert "изменён другим участником" in response.json()["detail"]
+    assert plan.title == "Latest title"
+    db.commit.assert_not_called()
 
 def test_update_plan_is_scoped_to_current_couple(client, db):
     db.scalar.side_effect = [membership(), None]

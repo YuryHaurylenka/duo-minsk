@@ -206,6 +206,7 @@ def test_update_plan_persists_reordered_items_for_current_couple(client, db):
     db.scalar.side_effect = [membership(), plan]
     db.get.return_value = couple()
     response = client.patch(f"/api/plans/{plan.id}", json={
+        "expected_updated_at": plan.updated_at.isoformat(),
         "items": [{"place": "second"}, {"place": "first"}], "notes": "Meet at 18:00"
     })
     assert response.status_code == 200
@@ -238,9 +239,18 @@ def test_update_plan_rejects_stale_version(client, db):
 def test_update_plan_is_scoped_to_current_couple(client, db):
     db.scalar.side_effect = [membership(), None]
     db.get.return_value = couple()
-    response = client.patch(f"/api/plans/{uuid4()}", json={"title": "Not ours"})
+    response = client.patch(f"/api/plans/{uuid4()}", json={
+        "expected_updated_at": datetime.now(timezone.utc).isoformat(), "title": "Not ours"
+    })
     assert response.status_code == 404
     db.commit.assert_not_called()
+
+
+def test_update_plan_requires_version_token(client, db):
+    response = client.patch(f"/api/plans/{uuid4()}", json={"title": "Missing version"})
+    assert response.status_code == 422
+    assert "expected_updated_at" in str(response.json()["detail"])
+    db.scalar.assert_not_called()
 
 
 def test_update_plan_rejects_empty_patch(client, db):

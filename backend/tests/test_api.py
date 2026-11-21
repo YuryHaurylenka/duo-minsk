@@ -197,6 +197,41 @@ def test_create_plan_persists_for_current_couple(client, db):
     db.commit.assert_called_once()
 
 
+def test_update_plan_persists_reordered_items_for_current_couple(client, db):
+    plan = SimpleNamespace(
+        id=uuid4(), plan_date=date(2026, 12, 1), title="Dinner", mood="romantic",
+        budget=Decimal("75.50"), items=[{"place": "first"}], notes="",
+        created_at=datetime.now(timezone.utc), updated_at=datetime.now(timezone.utc),
+    )
+    db.scalar.side_effect = [membership(), plan]
+    db.get.return_value = couple()
+    response = client.patch(f"/api/plans/{plan.id}", json={
+        "items": [{"place": "second"}, {"place": "first"}], "notes": "Meet at 18:00"
+    })
+    assert response.status_code == 200
+    assert [item["place"] for item in response.json()["items"]] == ["second", "first"]
+    assert response.json()["notes"] == "Meet at 18:00"
+    db.commit.assert_called_once()
+    db.refresh.assert_called_once_with(plan)
+
+
+def test_update_plan_is_scoped_to_current_couple(client, db):
+    db.scalar.side_effect = [membership(), None]
+    db.get.return_value = couple()
+    response = client.patch(f"/api/plans/{uuid4()}", json={"title": "Not ours"})
+    assert response.status_code == 404
+    db.commit.assert_not_called()
+
+
+def test_update_plan_rejects_empty_patch(client, db):
+    plan = SimpleNamespace(id=uuid4())
+    db.scalar.side_effect = [membership(), plan]
+    db.get.return_value = couple()
+    response = client.patch(f"/api/plans/{plan.id}", json={})
+    assert response.status_code == 422
+    db.commit.assert_not_called()
+
+
 def test_create_plan_rejects_invalid_budget(client, db):
     response = client.post("/api/plans", json={
         "plan_date": "2026-12-01", "title": "Dinner", "budget": -1

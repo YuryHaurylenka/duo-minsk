@@ -14,7 +14,7 @@ from app.config import get_settings
 from app.database import get_db
 from app.auth import AuthUser, require_user
 from app.models.entities import City, Place, Couple, CoupleMember, PlaceActivity, PersonalPlaceActivity, RecommendationFeedback, DuoEvent, DuoDatePlan, DuoPlaceUpdate
-from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, CouplePreferencesIn, RecommendationRequest, ActivitySyncItem, PlanCreate, PlanOut, MatchSessionCreate, MatchVoteIn
+from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, CouplePreferencesIn, RecommendationRequest, ActivitySyncItem, PlanCreate, PlanUpdate, PlanOut, MatchSessionCreate, MatchVoteIn
 
 settings = get_settings()
 
@@ -488,6 +488,26 @@ def create_plan(payload: PlanCreate, user: AuthUser = Depends(require_user), db:
     db.flush()
     db.refresh(plan)
     db.commit()
+    return plan
+
+
+@app.patch("/api/plans/{plan_id}", response_model=PlanOut)
+def update_plan(plan_id: UUID, payload: PlanUpdate, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    """Update a saved itinerary shared by the authenticated couple."""
+    couple = get_couple(db, user)
+    plan = db.scalar(select(DuoDatePlan).where(DuoDatePlan.id == plan_id, DuoDatePlan.couple_id == couple.id))
+    if not plan:
+        raise HTTPException(status_code=404, detail="План не найден")
+    changes = payload.model_dump(exclude_unset=True)
+    if not changes:
+        raise HTTPException(status_code=422, detail="Нет изменений для сохранения")
+    if any(value is None for value in changes.values()):
+        raise HTTPException(status_code=422, detail="Поля плана не могут быть пустыми")
+    for field, value in changes.items():
+        setattr(plan, field, value)
+    plan.updated_at = datetime.now(timezone.utc)
+    db.commit()
+    db.refresh(plan)
     return plan
 
 

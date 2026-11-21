@@ -126,6 +126,15 @@ class PlanCreate(BaseModel):
     notes: str = Field(default="", max_length=4000)
 
 
+class PlanUpdate(BaseModel):
+    plan_date: date | None = None
+    title: str | None = Field(default=None, min_length=1, max_length=180)
+    mood: str | None = Field(default=None, max_length=40)
+    budget: Decimal | None = Field(default=None, ge=0)
+    items: list[dict] | None = Field(default=None, max_length=12)
+    notes: str | None = Field(default=None, max_length=4000)
+
+
 class PlanOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: UUID

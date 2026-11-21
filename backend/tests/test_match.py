@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from decimal import Decimal
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 from uuid import uuid4
@@ -8,7 +9,7 @@ from fastapi.testclient import TestClient
 from app.auth import AuthUser, require_user
 from app.database import get_db
 from app.main import app
-from app.models.entities import Couple, CoupleMember
+from app.models.entities import Couple, CoupleMember, Place
 
 USER_ID = uuid4()
 COUPLE_ID = uuid4()
@@ -303,8 +304,8 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
     db = MagicMock()
     partner_id = uuid4()
     db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
-    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
-                                 created_at=datetime.now(timezone.utc))
+    db.get.side_effect = [SimpleNamespace(slug="minsk", is_active=True), Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                                 created_at=datetime.now(timezone.utc))]
     preferences = MagicMock()
     preferences.mappings.return_value.one.return_value = {
         "preferences": {

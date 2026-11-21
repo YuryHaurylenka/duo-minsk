@@ -176,15 +176,20 @@ useEffect(()=>{if(!session){setProfile(null);setPlans([]);return}let cancelled=f
    },180);
   };
   setRealtimeStatus('connecting');
-  let lastPartnerActivityEvent='';
+  const seenRealtimeEvents=new Set();
+  const shouldNotifyForEvent=key=>{
+   if(seenRealtimeEvents.has(key))return false;
+   seenRealtimeEvents.add(key);
+   if(seenRealtimeEvents.size>100)seenRealtimeEvents.delete(seenRealtimeEvents.values().next().value);
+   return true;
+  };
   const handleActivityChange=payload=>{
    refreshSharedData();
    const changed=payload?.new;
    const currentUserId=session?.user?.id;
    if(!changed?.id||!changed?.updated_by||!currentUserId||changed.updated_by===currentUserId)return;
-   const eventKey=[payload.eventType,changed.id,changed.updated_at,payload.commit_timestamp].join(':');
-   if(eventKey===lastPartnerActivityEvent)return;
-   lastPartnerActivityEvent=eventKey;
+   const eventKey=['activity',payload.eventType,changed.id,changed.updated_at||payload.commit_timestamp].join(':');
+   if(!shouldNotifyForEvent(eventKey))return;
    const placeName=changed.place_name||'Место';
    notify('Партнёр обновил общую активность: '+placeName);
   };
@@ -193,9 +198,8 @@ useEffect(()=>{if(!session){setProfile(null);setPlans([]);return}let cancelled=f
    const changed=payload?.new?.id?payload.new:payload?.old;
    const currentUserId=session?.user?.id;
    if(!changed?.id||!changed?.updated_by||!currentUserId||changed.updated_by===currentUserId||payload.eventType==='DELETE')return;
-   const eventKey=['plan',payload.eventType,changed.id,changed.updated_at].join(':');
-   if(eventKey===lastPartnerActivityEvent)return;
-   lastPartnerActivityEvent=eventKey;
+   const eventKey=['plan',payload.eventType,changed.id,changed.updated_at||payload.commit_timestamp].join(':');
+   if(!shouldNotifyForEvent(eventKey))return;
    const title=changed.title||'совместный план';
    notify((payload.eventType==='INSERT'?'Партнёр создал план: ':'Партнёр изменил план: ')+title);
   };

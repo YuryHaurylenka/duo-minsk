@@ -2,7 +2,7 @@ from datetime import date, datetime
 from decimal import Decimal
 from uuid import UUID
 from typing import Literal
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class CityOut(BaseModel):
@@ -111,10 +111,16 @@ class RecommendationRequest(BaseModel):
 
 class ActivitySyncItem(BaseModel):
     place_slug: str = Field(min_length=1, max_length=180)
-    is_favorite: bool = False
-    visited: bool = False
+    is_favorite: bool | None = None
+    visited: bool | None = None
     rating: int | None = Field(default=None, ge=1, le=5)
-    note: str = Field(default="", max_length=2000)
+    note: str | None = Field(default=None, max_length=2000)
+
+    @model_validator(mode="after")
+    def require_activity_change(self):
+        if not ({"is_favorite", "visited", "rating", "note"} & self.model_fields_set):
+            raise ValueError("Не указано поле активности для изменения")
+        return self
 
 
 class PlanCreate(BaseModel):

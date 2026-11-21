@@ -176,8 +176,20 @@ useEffect(()=>{if(!session){setProfile(null);setPlans([]);return}let cancelled=f
    },180);
   };
   setRealtimeStatus('connecting');
+  let lastPartnerActivityEvent='';
+  const handleActivityChange=payload=>{
+   refreshSharedData();
+   const changed=payload?.new;
+   const currentUserId=session?.user?.id;
+   if(!changed?.id||!changed?.updated_by||!currentUserId||changed.updated_by===currentUserId)return;
+   const eventKey=[payload.eventType,changed.id,changed.updated_at,payload.commit_timestamp].join(':');
+   if(eventKey===lastPartnerActivityEvent)return;
+   lastPartnerActivityEvent=eventKey;
+   const placeName=changed.place_name||'Место';
+   notify('Партнёр обновил общую активность: '+placeName);
+  };
   const channel=supabase.channel('duo-live-'+coupleId)
-   .on('postgres_changes',{event:'*',schema:'public',table:'place_activity',filter:'couple_id=eq.'+coupleId},refreshSharedData)
+   .on('postgres_changes',{event:'*',schema:'public',table:'place_activity',filter:'couple_id=eq.'+coupleId},handleActivityChange)
    .on('postgres_changes',{event:'*',schema:'public',table:'duo_date_plans',filter:'couple_id=eq.'+coupleId},refreshSharedData)
    .subscribe(status=>{
     if(cancelled)return;

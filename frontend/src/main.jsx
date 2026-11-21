@@ -99,19 +99,46 @@ function MapExplorer({places,onSelect}){
  </section>
 }
 function MatchScreen({profile,city,api,notify,onLogin,onOpenCouple}){
- const [sessionId,setSessionId]=useState(null);const [data,setData]=useState(null);const [busy,setBusy]=useState(false);const [error,setError]=useState('');
+ const [sessionId,setSessionId]=useState(null);const [data,setData]=useState(null);const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [realtimeStatus,setRealtimeStatus]=useState('connecting');
  const current=data?.candidates?.find(item=>item.my_vote===null||item.my_vote===undefined);const matches=data?.matches||[];
  const start=async()=>{setBusy(true);setError('');try{const created=await api('/match/sessions',{method:'POST',body:{city_slug:city,limit:24}});const result=await api('/match/sessions/'+created.id);setSessionId(created.id);setData(result)}catch(e){setError(e.message||'Не удалось начать раунд')}finally{setBusy(false)}};
  const refresh=async()=>{if(!sessionId)return;setBusy(true);try{setData(await api('/match/sessions/'+sessionId))}catch(e){setError(e.message)}finally{setBusy(false)}};
  const vote=async liked=>{if(!current)return;setBusy(true);setError('');try{const result=await api('/match/sessions/'+sessionId+'/votes',{method:'PUT',body:{place_slug:current.slug,liked}});setData(result)}catch(e){setError(e.message||'Не удалось сохранить выбор')}finally{setBusy(false)}};
  useEffect(()=>{if(!profile?.couple||!city)return;let cancelled=false;const resume=async()=>{try{const active=await api('/match/sessions/active?city_slug='+encodeURIComponent(city));if(!active.active||cancelled)return;const result=await api('/match/sessions/'+active.id);if(!cancelled){setSessionId(active.id);setData(result)}}catch(e){if(!cancelled)setError(e.message||'Не удалось восстановить раунд')}};resume();return()=>{cancelled=true}},[profile?.couple?.id,city]);
- useEffect(()=>{if(!sessionId||data?.session?.status!=='active'||busy)return;let cancelled=false;const sync=async()=>{try{const latest=await api('/match/sessions/'+sessionId);if(!cancelled)setData(latest)}catch(e){if(!cancelled)setError(e.message||'Не удалось обновить прогресс')}};const timer=setInterval(sync,12000);return()=>{cancelled=true;clearInterval(timer)}},[sessionId,data?.session?.status,busy]);
+ useEffect(()=>{
+  if(!sessionId||data?.session?.status!=='active'){setRealtimeStatus('idle');return}
+  let cancelled=false,refreshTimer=null,fallbackTimer=null,refreshing=false,refreshQueued=false;
+  const sync=async()=>{
+   if(cancelled)return;
+   if(refreshing){refreshQueued=true;return}
+   refreshing=true;
+   try{const latest=await api('/match/sessions/'+sessionId);if(!cancelled)setData(latest)}
+   catch(e){if(!cancelled)console.warn('DUO Match refresh failed',e)}
+   finally{refreshing=false;if(refreshQueued&&!cancelled){refreshQueued=false;sync()}}
+  };
+  const scheduleSync=()=>{
+   if(refreshTimer)clearTimeout(refreshTimer);
+   refreshTimer=setTimeout(sync,120);
+  };
+  setRealtimeStatus('connecting');
+  const channel=supabase.channel('duo-match-live-'+sessionId)
+   .on('postgres_changes',{event:'UPDATE',schema:'public',table:'duo_match_sessions',filter:'id=eq.'+sessionId},scheduleSync)
+   .subscribe(status=>{
+    if(cancelled)return;
+    if(status==='SUBSCRIBED'){setRealtimeStatus('connected');sync()}
+    else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){setRealtimeStatus('reconnecting');console.warn('DUO Match Realtime status:',status)}
+    else if(status==='CLOSED')setRealtimeStatus('reconnecting');
+   });
+  fallbackTimer=setInterval(sync,30000);
+  return()=>{cancelled=true;if(refreshTimer)clearTimeout(refreshTimer);if(fallbackTimer)clearInterval(fallbackTimer);setRealtimeStatus('idle');supabase.removeChannel(channel)};
+ },[sessionId,data?.session?.status]);
 
  if(!profile)return <section className="match-welcome"><div className="match-welcome-art"><span>♡</span><i/><i/><i/></div><span className="overline">DUO MATCH · ДЛЯ ДВОИХ</span><h2>Два мнения.<br/><em>Одно совпадение.</em></h2><p>Войдите в аккаунт, создайте пространство пары и пригласите второго человека. Затем каждый независимо отметит места, которые ему нравятся.</p><button className="button-primary" onClick={onLogin}>Войти в DUO <ArrowUpRight size={16}/></button></section>;
  if(!profile.couple)return <section className="match-welcome"><div className="match-welcome-art"><span>♡</span><i/><i/><i/></div><span className="overline">DUO MATCH · СОВМЕСТНЫЙ ВЫБОР</span><h2>Найдите место,<br/><em>которое нравится обоим.</em></h2><p>Сначала создайте пространство пары в разделе «Наша пара» и пригласите партнёра по коду. Ваши голоса останутся приватными до совпадения.</p><button className="button-primary" onClick={onOpenCouple}>Создать пространство пары <ArrowUpRight size={16}/></button></section>;
  return <section className="match-page"><div className="match-heading"><div><span className="overline">A LITTLE GAME FOR TWO</span><h2>Выбираем <em>вместе.</em></h2><p>Листайте места независимо друг от друга. Совпадения появятся, когда оба поставят лайк одному месту.</p></div><div className="match-status"><span className="live-dot"/> PRIVATE COUPLE SPACE</div></div>
  {!data?<div className="match-start-panel"><div className="match-orbit"><Heart size={34}/><span>✳</span></div><div><h3>Ваш следующий общий выбор начинается здесь.</h3><p>Подготовим 24 случайных места из каталога Минска. Вы и партнёр голосуете в удобное время, результаты синхронизируются.</p><button className="button-primary" disabled={busy} onClick={start}><Sparkles size={16}/> {busy?'Готовим подборку…':'Начать DUO Match'} <ArrowUpRight size={16}/></button></div></div>:<>
  <div className="match-progress"><div><span>ВАШ ВЫБОР</span><b>{data.my_votes} / {data.candidate_count}</b></div><div className="match-progress-track"><i style={{width:(data.candidate_count?data.my_votes/data.candidate_count*100:0)+'%'}}/></div><div><span>ПАРТНЁР</span><b>{data.partner_votes} / {data.candidate_count}</b></div></div>
+ <div className={'match-live-status '+realtimeStatus} role="status" aria-live="polite"><i/>{realtimeStatus==='connected'?'Голоса синхронизируются мгновенно':realtimeStatus==='reconnecting'?'Восстанавливаем связь…':'Подключаем синхронизацию'}</div>
  {current?<div className="match-card-wrap"><div className="match-card"><div className="match-card-image"><ImageCover src={current.image_url} category={current.category} source={current.image_source_url}/><span className="match-card-category">{cleanText(current.category)}</span><span className="match-card-number">{String(data.my_votes+1).padStart(2,'0')} / {String(data.candidate_count).padStart(2,'0')}</span></div><div className="match-card-content"><span className="overline">А ВАМ НРАВИТСЯ ЭТО МЕСТО?</span><h3>{cleanText(current.name)}</h3><p>{cleanText(current.description)||'Место из каталога DUO. Откройте карточку, чтобы узнать подробности.'}</p><div className="match-card-meta">{current.rating&&<span><Star size={13}/> {current.rating}</span>}{current.price_label&&<span>{cleanText(current.price_label)}</span>}{current.district&&<span><MapPin size={13}/> {cleanText(current.district)}</span>}</div><small className="match-card-address">{cleanText(current.address)||'Минск, Беларусь'}</small><div className="match-vote-actions"><button className="match-pass" disabled={busy} onClick={()=>vote(false)}><ThumbsDown size={17}/> Не моё</button><button className="match-like" disabled={busy} onClick={()=>vote(true)}><Heart size={18}/> Нравится</button></div></div></div><div className="match-private-note"><span>✳</span> Ваш выбор не виден партнёру до совпадения. Можно голосовать с разных устройств.</div></div>:<div className="match-results"><div className="match-results-icon"><Heart size={30}/></div><span className="overline">ВАШИ ГОЛОСА СОБРАНЫ</span><h3>{data.session.status==='completed'?'Вот что понравилось вам обоим.':'Осталось дождаться партнёра.'}</h3><p>{data.session.status==='completed'?'Совпавшие места уже можно добавить в избранное или запланировать посещение.':'Партнёр ещё не закончил свой выбор. Обновите результаты чуть позже — совпадения появятся автоматически.'}</p><div className="match-results-summary"><div><b>{data.my_votes}</b><small>ваших решений</small></div><div><b>{data.partner_votes}</b><small>решений партнёра</small></div><div><b>{matches.length}</b><small>совпадений</small></div></div>{matches.length>0&&<div className="match-hit-list">{matches.map(item=><div className="match-hit" key={item.slug}><div><b>{cleanText(item.name)}</b><small>{cleanText(item.category)} · {cleanText(item.address)}</small></div><span><Heart size={14} fill="currentColor"/> MATCH</span></div>)}</div>}<div className="match-result-actions"><button className="button-ghost" onClick={refresh} disabled={busy}><RefreshCw size={15}/> Обновить результаты</button><button className="button-primary" onClick={start} disabled={busy}><Sparkles size={15}/> Новый раунд</button></div></div>}
  </>}{error&&<div className="match-error" role="alert">{error}</div>}</section>
 }

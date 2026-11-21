@@ -50,13 +50,31 @@ function EntryExperience({onExplore,onMap,onPlan}){
  </motion.div>
 }
 function FitMapBounds({points}){const map=useMap();useEffect(()=>{const resize=()=>map.invalidateSize({pan:false});const frame=requestAnimationFrame(resize);const timer=setTimeout(resize,180);if(points.length>1)map.fitBounds(points,{padding:[48,48],maxZoom:14});else if(points.length===1)map.setView(points[0],15);return()=>{cancelAnimationFrame(frame);clearTimeout(timer)}},[map,points]);return null}
+function buildDirectionsUrl(items){
+ const destinations=items.map(item=>{
+  const lat=Number(item.latitude),lng=Number(item.longitude);
+  if(item.latitude!==null&&item.latitude!==undefined&&item.longitude!==null&&item.longitude!==undefined&&Number.isFinite(lat)&&Number.isFinite(lng)&&Math.abs(lat)<=90&&Math.abs(lng)<=180)return lat+','+lng;
+  const title=cleanText(item.title||item.name)||'';
+  const address=cleanText(item.address||item.description)||'';
+  return [title,address].filter(Boolean).join(', ');
+ }).filter(Boolean);
+ if(!destinations.length)return null;
+ const params=new URLSearchParams({api:'1',travelmode:'walking'});
+ if(destinations.length===1)params.set('destination',destinations[0]);
+ else{
+  params.set('origin',destinations[0]);
+  params.set('destination',destinations.at(-1));
+  if(destinations.length>2)params.set('waypoints',destinations.slice(1,-1).join('|'));
+ }
+ return 'https://www.google.com/maps/dir/?'+params.toString();
+}
 function PlannerRouteMap({items}){
  const stops=items.filter(item=>item.latitude!==null&&item.latitude!==undefined&&item.longitude!==null&&item.longitude!==undefined&&Number.isFinite(Number(item.latitude))&&Number.isFinite(Number(item.longitude))&&Math.abs(Number(item.latitude))<=90&&Math.abs(Number(item.longitude))<=180).map((item,index)=>({item,index,point:[Number(item.latitude),Number(item.longitude)]}));
- if(!stops.length)return <div className="planner-map-empty"><MapPin size={16}/><span>Для этих мест пока нет точных координат. Карта появится, когда адреса будут уточнены.</span></div>;
  const points=stops.map(stop=>stop.point);
- const directionsUrl='https://www.google.com/maps/dir/'+points.map(point=>point.join(',')).join('/');
+ const directionsUrl=buildDirectionsUrl(items);
+ if(!stops.length)return <div className="planner-map-empty"><MapPin size={16}/><span>Точные координаты пока есть не у всех точек. Адреса и названия остановок можно открыть в навигаторе.</span>{directionsUrl&&<a href={directionsUrl} target="_blank" rel="noreferrer">Построить маршрут в Google Maps <ArrowUpRight size={13}/></a>}</div>;
  return <section className="planner-route">
-  <div className="planner-route-head"><div><span>ВАШ МАРШРУТ</span><b>{stops.length} {stops.length===1?'точка':'точки'} на карте</b></div><a href={directionsUrl} target="_blank" rel="noreferrer">Открыть навигацию <ArrowUpRight size={13}/></a></div>
+  <div className="planner-route-head"><div><span>ВАШ МАРШРУТ</span><b>{stops.length} {stops.length===1?'точка':'точки'} на карте</b></div>{directionsUrl&&<a href={directionsUrl} target="_blank" rel="noreferrer">Открыть навигацию <ArrowUpRight size={13}/></a>}</div>
   <div className="planner-route-map"><MapContainer center={points[0]} zoom={13} minZoom={3} maxZoom={19} scrollWheelZoom={false} zoomControl={true} preferCanvas={true} className="duo-route-leaflet"><FitMapBounds points={points}/><TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" maxZoom={19}/>{points.length>1&&<Polyline positions={points} pathOptions={{color:'#b8e75c',weight:4,opacity:.82,dashArray:'7 8'}}/>}{stops.map((stop,index)=><CircleMarker key={stop.item.place_slug||stop.item.event_id||index} center={stop.point} radius={9} pathOptions={{color:'#11170b',weight:2,fillColor:'#c8f36b',fillOpacity:1}}><Popup><div className="map-popup"><b>{index+1}. {cleanText(stop.item.title)}</b><span>{stop.item.time||''} · {stop.item.kind}</span></div></Popup></CircleMarker>)}</MapContainer></div>
   <p className="planner-route-note">Схема расположения точек, не автомобильный маршрут. Дорогу и время в пути построит навигатор.</p>
  </section>;

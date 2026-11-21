@@ -11,6 +11,10 @@ BEGIN
     RAISE EXCEPTION 'join_couple must lock the couple row before counting members';
   END IF;
 
+  IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'duo_api')
+     AND NOT pg_has_role('duo_api', 'duo_match_backend', 'MEMBER') THEN
+    RAISE EXCEPTION 'duo_api must be able to SET ROLE duo_match_backend for Match API requests';
+  END IF;
   IF NOT pg_has_role('duo_match_backend', 'authenticated', 'MEMBER') THEN
     RAISE EXCEPTION 'Match backend role must inherit authenticated access for shared app tables';
   END IF;

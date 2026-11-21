@@ -14,4 +14,5 @@ $$;
 -- The backend explicitly switches to anon for public requests and authenticated
 -- for verified user requests. This preserves the existing PostgreSQL RLS rules.
 GRANT anon, authenticated TO duo_api;
+GRANT duo_match_backend TO duo_api;
 GRANT CONNECT ON DATABASE postgres TO duo_api;

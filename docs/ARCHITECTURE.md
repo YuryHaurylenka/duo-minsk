@@ -6,7 +6,7 @@
 - PostgreSQL remains in Supabase Frankfurt.
 - Supabase Auth provides identity; FastAPI validates JWTs using the project's JWKS endpoint.
 - Runtime DB access uses the dedicated duo_api login with NOINHERIT and NOBYPASSRLS.
-- The API switches transaction-locally to anon for public endpoints and to authenticated after JWT validation, setting Supabase request claims so existing RLS policies continue to apply.
+- The API switches transaction-locally to `anon` for public endpoints and to `authenticated` after JWT validation for normal private endpoints, setting Supabase request claims so RLS applies. Match endpoints switch to the dedicated non-login `duo_match_backend` role, which does not bypass RLS.
 - Public discovery is city-scoped through `cities.slug`; places, events, updates, event sources and sync runs carry `city_slug`. Only active cities are returned by `/api/cities`.
 - Couple activity is keyed by `place_slug` rather than venue name, preventing same-name collisions when more cities are added.
 - Couple SECURITY DEFINER functions live in the non-exposed `private` schema; FastAPI calls them only after JWT verification. They are not exposed as PostgREST RPC endpoints.
@@ -17,6 +17,7 @@
 ## Data boundaries
 - Public: active places, scheduled events, editorial city updates.
 - Couple-private: memberships, shared activity, saved date plans.
+- Match-private: sessions, candidates and votes are accessed by FastAPI through `duo_match_backend`; browser clients receive only couple-scoped session metadata for Realtime and cannot query raw votes.
 - Private backend credentials: PostgreSQL login password and Supabase service-role material (not present in the browser or repository).
 
 ## Runtime routes

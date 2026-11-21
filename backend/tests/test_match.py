@@ -334,7 +334,9 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
         _recommendation_place("shared-cafe", "Common Coffee", "Кофейни", "4.8"),
         _recommendation_place("bar-place", "Cocktail Bar", "Пабы и бары", "4.9"),
         _recommendation_place("game-place", "Game Room", "Игры", "4.2"),
+        _recommendation_place("unsafe-place", "Unsafe Attraction", "Игры", "4.9"),
     ]
+    places_rows.all.return_value[-1].risk = "avoid"
     def scalars_for_recommendations(statement):
         statement_text = str(statement).lower()
         if "place_activity" in statement_text:
@@ -363,6 +365,7 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
     assert "old-cafe" not in [item["slug"] for item in payload["items"]]
     assert "bar-place" not in [item["slug"] for item in payload["items"]]
     assert "game-place" in [item["slug"] for item in payload["items"]]
+    assert "unsafe-place" not in [item["slug"] for item in payload["items"]]
 
 
 def test_recommendations_reject_unknown_interest_categories():

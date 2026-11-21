@@ -301,7 +301,7 @@ def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends
     for place in places:
         category = _recommendation_category(place.category)
         activity = activity_by_slug.get(place.slug)
-        if category in avoided or (activity and (activity.is_favorite or activity.visited_at)):
+        if category in avoided or place.risk == "avoid" or place.level > 3 or (activity and (activity.is_favorite or activity.visited_at)):
             continue
         score = 0
         reasons = []

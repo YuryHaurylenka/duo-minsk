@@ -501,6 +501,8 @@ def update_plan(plan_id: UUID, payload: PlanUpdate, user: AuthUser = Depends(req
     changes = payload.model_dump(exclude_unset=True)
     if not changes:
         raise HTTPException(status_code=422, detail="Нет изменений для сохранения")
+    if any(value is None for value in changes.values()):
+        raise HTTPException(status_code=422, detail="Поля плана не могут быть пустыми")
     for field, value in changes.items():
         setattr(plan, field, value)
     plan.updated_at = datetime.now(timezone.utc)

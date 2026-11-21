@@ -149,17 +149,18 @@ useEffect(()=>{if(!session){setProfile(null);setPlans([]);return}let cancelled=f
   const themed=safePlaces.filter(p=>keywords.length===0||keywords.some(k=>(p.category||'').toLowerCase().includes(k)));
   const preferenceMatched=themed.filter(p=>preferences.interests.length===0||preferences.interests.includes(categoryGroup(p.category)));
   const candidatePool=preferenceMatched.length?preferenceMatched:(themed.length?themed:safePlaces);
-  const costForPlace=p=>p.cost==null?null:Number(p.cost)*(people/2);
+  const costForPlace=p=>p.cost==null||!Number.isFinite(Number(p.cost))?null:Number(p.cost)*(people/2);
   const eventPool=events.filter(e=>{
    if(e.status!=='scheduled'||dateKey(e.starts_at)!==planDate)return false;
    const parts=new Intl.DateTimeFormat('en-GB',{timeZone:cityTimezone,hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(e.starts_at));
    const eventMinutes=Number(parts.find(x=>x.type==='hour')?.value||0)*60+Number(parts.find(x=>x.type==='minute')?.value||0);
-   if(eventMinutes<startMinutes||eventMinutes>=endMinutes)return false;
+   if(eventMinutes<startMinutes||eventMinutes+90>endMinutes||(eventMinutes-startMinutes<60&&endMinutes-(eventMinutes+90)<60))return false;
    const eventCost=e.price_min==null?null:Number(e.price_min)*people;
    return budgetLimit===null||eventCost!==null&&eventCost<=budgetLimit;
   });
   const event=pickFresh(eventPool,'events:'+city+':'+planDate+':'+planStartTime,1)[0]||null;
-  const eventCost=event?.price_min==null?null:Number(event.price_min)*people;
+  const eventCost=event?.price_min==null||!Number.isFinite(Number(event.price_min))?null:Number(event.price_min)*people;
+  const eventTimeMinutes=event?(()=>{const parts=new Intl.DateTimeFormat('en-GB',{timeZone:cityTimezone,hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(event.starts_at));return Number(parts.find(x=>x.type==='hour')?.value||0)*60+Number(parts.find(x=>x.type==='minute')?.value||0)})():null;
   const remaining=budgetLimit===null?null:Math.max(0,budgetLimit-(eventCost||0));
   const desiredPlaces=event?(durationHours>=3?1:0):(durationHours>=4?3:2);
   const chosen=[];
@@ -193,7 +194,7 @@ useEffect(()=>{if(!session){setProfile(null);setPlans([]);return}let cancelled=f
   }
   const items=ordered.map((p,i)=>{
    const slotMinutes=Math.round((durationHours*60)/(ordered.length||1));
-   const minute=startMinutes+i*slotMinutes;
+   const minute=event?(eventTimeMinutes-startMinutes>=60?startMinutes:eventTimeMinutes+90):startMinutes+i*slotMinutes;
    const hh=String(Math.floor(minute/60)%24).padStart(2,'0'),mm=String(minute%60).padStart(2,'0');
    const estimated=costForPlace(p);
    return {kind:'Место',title:cleanText(p.name),description:(cleanText(p.description)||'')+' · '+(cleanText(people===2?(p.couple_price_label||p.price_label):p.price_label)||'стоимость уточняется'),url:p.website_url,place_slug:p.slug,city_slug:city,time:hh+':'+mm,duration_minutes:Math.min(75,slotMinutes),estimated_cost:estimated===null?null:Number(estimated.toFixed(2)),cost_label:estimated===null?'цена уточняется':'≈ '+money(estimated,'BYN')};

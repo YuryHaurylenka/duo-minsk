@@ -3,9 +3,11 @@
 ## Access model
 
 - `duo_api` is the private runtime login (`NOINHERIT`, `NOBYPASSRLS`). It is never shipped to the browser.
+- `duo_match_backend` is a non-login, `NOBYPASSRLS` role that `duo_api` can assume only for Match API requests. It inherits the authenticated access model for other shared tables and has explicit couple-scoped RLS policies for Match data.
 - Public catalog roles (`anon`, `authenticated`) have read-only access to active `cities` and to `places`, `duo_events`, and `duo_place_updates` scoped by city. City rows are visible only while `is_active = true`.
 - Couple tables (`couples`, `couple_members`, `duo_date_plans`, `place_activity`) are available only to `authenticated`, with row access constrained by the couple-membership RLS policies. A unique index guarantees one couple per user; invite joins lock the couple row before checking its two-member limit.
 - Event-ingestion control tables (`duo_event_sources`, `duo_event_sync_config`, `duo_event_sync_runs`) are not granted to `anon` or `authenticated`; the trusted ingestion runtime uses its privileged server-side credential.
+- Match browser access is read-only: `authenticated` can only SELECT couple-scoped session metadata for Realtime. It has no direct grants on Match candidates or votes. The FastAPI-only `duo_match_backend` role handles Match reads/writes; raw partner votes are never exposed through the browser Data API.
 - `TRUNCATE`, `REFERENCES`, and `TRIGGER` are revoked from API roles across the exposed `public` schema.
 - All couple SECURITY DEFINER functions (`is_couple_member`, `create_couple`, `join_couple`) live in the non-exposed `private` schema. Only `authenticated` and `service_role` can execute them; the create/join functions are invoked through FastAPI, not exposed as PostgREST RPCs.
 - Default table, function, and sequence grants for objects created by `postgres` in `public` are restricted. New API-facing objects must receive explicit grants and RLS policies.
@@ -18,12 +20,13 @@ Run the entire SQL file using a trusted PostgreSQL connection in Supabase SQL Ed
 
 GitHub Actions also supports this check when the repository secret `DUO_RLS_TEST_DATABASE_URL` is configured with a trusted connection to a dedicated staging database. The workflow skips the integration step when the secret is absent; never use a browser-facing or service-role API key as a database URL.
 
-## Live verification (2026-11-17)
+## Live verification (2026-11-21)
 
 - All 11 tables in `public` have RLS enabled.
 - Public catalog read access remains available to `anon` and `authenticated`.
 - No `anon` access remains on couple data or event-ingestion control tables.
-- `authenticated` no longer has `TRUNCATE`, `REFERENCES`, or `TRIGGER` privileges; it retains only the DML required by the API and couple policies.
+- `authenticated` no longer has `TRUNCATE`, `REFERENCES`, or `TRIGGER` privileges. Match access is restricted to SELECT on session metadata; candidates and votes have no direct authenticated grants.
+- The live `duo_match_backend` role is non-login, inherits `authenticated`, and does not bypass RLS. The `duo_api` runtime login can assume it for Match endpoints.
 - The transaction-scoped multi-user isolation script completed successfully against the live database and rolled back all five synthetic users and all three fixture couples. It also checks that public city metadata is readable and private activity is keyed by place slug.
 - Supabase Security Advisor no longer reports exposed authenticated `SECURITY DEFINER` functions: all three couple functions are in the non-exposed `private` schema, use an empty `search_path`, and are executable only by `authenticated`/`service_role`.
 - Leaked-password protection remains a dashboard-level Auth setting and still needs to be enabled by an authorized project administrator.

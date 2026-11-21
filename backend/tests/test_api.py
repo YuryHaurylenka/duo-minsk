@@ -220,7 +220,6 @@ def test_update_plan_persists_reordered_items_for_current_couple(client, db):
 
 
 def test_update_plan_records_authenticated_editor(client, db):
-    editor_id = uuid4()
     plan = SimpleNamespace(
         id=uuid4(), plan_date=date(2026, 12, 1), title="Dinner", mood="romantic",
         budget=Decimal("75.50"), items=[], notes="",

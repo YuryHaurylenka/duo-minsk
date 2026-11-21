@@ -467,7 +467,7 @@ def test_activity_sync_updates_only_fields_supplied_by_client(client, db):
     ])
     assert response.status_code == 204
     statement = db.execute.call_args.args[0]
-    assert {key.key for key, _ in statement._post_values_clause.update_values_to_set} == {"is_favorite", "updated_at", "updated_by"}
+    assert {key for key, _ in statement._post_values_clause.update_values_to_set} == {"is_favorite", "updated_at", "updated_by"}
 
 
 def test_activity_sync_rejects_empty_patch(client, db):

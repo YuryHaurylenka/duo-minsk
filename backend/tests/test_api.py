@@ -186,11 +186,13 @@ def test_create_plan_persists_for_current_couple(client, db):
     db.get.return_value = couple()
     response = client.post("/api/plans", json={
         "plan_date": "2026-12-01", "title": "Dinner", "mood": "romantic",
-        "budget": "75.50", "items": [{"place": PLACE_SLUG}], "notes": "Book a table"
+        "budget": "75.50", "items": [{"place": PLACE_SLUG, "time": "18:00", "duration_minutes": 60, "estimated_cost": 75.5}], "notes": "Book a table"
     })
     assert response.status_code == 201
     assert response.json()["title"] == "Dinner"
     assert response.json()["budget"] == "75.50"
+    assert response.json()["items"][0]["time"] == "18:00"
+    assert response.json()["items"][0]["duration_minutes"] == 60
     db.add.assert_called_once()
     db.commit.assert_called_once()
 

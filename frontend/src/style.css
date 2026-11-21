@@ -152,3 +152,16 @@ body,#root{font-family:var(--font-body)}
 .personal-recommendations{margin:34px 0 38px}.recommendation-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.recommendation-item{min-width:0}.recommendation-reason{padding:10px 3px 0;color:var(--muted)}.recommendation-reason span{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--lime);font-weight:800}.recommendation-reason p{font-size:10px;line-height:1.55;margin:5px 0 0}.recommendations-loading{grid-column:1/-1;padding:22px;border:1px solid var(--line);border-radius:14px;color:var(--muted);font-size:12px;background:var(--panel)}@media(max-width:1100px){.recommendation-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.recommendation-grid{grid-template-columns:1fr}.personal-recommendations{margin:26px 0}}
 
 .recommendation-dismiss{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:5px 0;border:0;background:transparent;color:var(--muted);font:inherit;font-size:10px;cursor:pointer;transition:color .2s ease}.recommendation-dismiss:hover{color:var(--text)}.recommendation-dismiss span{font-size:14px;line-height:1}
+
+.planner-extra-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:12px}
+.planner-extra-grid .field{min-width:0}
+.planner-extra-grid input[type=time]{width:100%;height:44px;background:#20261e;border:1px solid #384333;border-radius:10px;color:#f2f5eb;padding:0 12px;color-scheme:dark}
+.planner-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:18px 0;padding:13px;background:#11170f;border:1px solid #384333;border-radius:12px}
+.planner-summary span{min-width:0}
+.planner-summary small,.planner-summary b{display:block}
+.planner-summary small{font-size:8px;letter-spacing:.1em;color:var(--muted);margin-bottom:5px}
+.planner-summary b{font-size:13px;color:#f2f5eb;overflow-wrap:anywhere}
+.plan-line{align-items:flex-start}
+.plan-line>div{flex:1;min-width:0}
+.plan-line>strong{font-size:10px;color:var(--lime);white-space:nowrap}
+@media(max-width:700px){.planner-extra-grid{grid-template-columns:1fr}.planner-summary{gap:5px;padding:10px}.planner-summary b{font-size:11px}.plan-line>strong{font-size:9px}}

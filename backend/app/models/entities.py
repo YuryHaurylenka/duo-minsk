@@ -110,7 +110,7 @@ class RecommendationFeedback(Base):
     __tablename__ = "recommendation_feedback"
     __table_args__ = (UniqueConstraint("user_id", "place_slug", name="recommendation_feedback_user_place_key"), {"schema": "public"})
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("auth.users.id", ondelete="CASCADE"))
+    user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), index=True)
     place_slug: Mapped[str] = mapped_column(String(180), ForeignKey("public.places.slug", ondelete="CASCADE"))
     action: Mapped[str] = mapped_column(String(20), default="dismiss")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

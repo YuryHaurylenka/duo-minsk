@@ -542,11 +542,25 @@ def update_plan(plan_id: UUID, payload: PlanUpdate, user: AuthUser = Depends(req
 
 
 @app.delete("/api/plans/{plan_id}", status_code=204)
-def delete_plan(plan_id: UUID, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+def delete_plan(
+    plan_id: UUID,
+    expected_updated_at: datetime,
+    user: AuthUser = Depends(require_user),
+    db: Session = Depends(get_db),
+):
+    """Delete a shared plan only when the client holds its latest version."""
     couple = get_couple(db, user)
-    plan = db.scalar(select(DuoDatePlan).where(DuoDatePlan.id == plan_id, DuoDatePlan.couple_id == couple.id))
+    plan = db.scalar(select(DuoDatePlan).where(
+        DuoDatePlan.id == plan_id,
+        DuoDatePlan.couple_id == couple.id,
+    ).with_for_update())
     if not plan:
         raise HTTPException(status_code=404, detail="План не найден")
+    if expected_updated_at != plan.updated_at:
+        raise HTTPException(
+            status_code=409,
+            detail="План уже изменён другим участником. Обновите данные и повторите удаление.",
+        )
     db.delete(plan)
     db.commit()
     return None

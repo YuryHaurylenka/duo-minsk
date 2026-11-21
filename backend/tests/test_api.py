@@ -296,10 +296,14 @@ def test_delete_plan_is_scoped_to_current_couple(client, db):
 
 
 def test_delete_plan_deletes_matching_plan(client, db):
-    plan = SimpleNamespace(id=uuid4())
+    version = datetime.now(timezone.utc)
+    plan = SimpleNamespace(id=uuid4(), updated_at=version)
     db.scalar.side_effect = [membership(), plan]
     db.get.return_value = couple()
-    response = client.delete(f"/api/plans/{plan.id}")
+    response = client.delete(
+        f"/api/plans/{plan.id}",
+        params={"expected_updated_at": version.isoformat()},
+    )
     assert response.status_code == 204
     db.delete.assert_called_once_with(plan)
     db.commit.assert_called_once()
@@ -474,3 +478,46 @@ def test_activity_sync_rejects_empty_patch(client, db):
     response = client.put("/api/activity", json=[{"place_slug": PLACE_SLUG}])
     assert response.status_code == 422
     db.execute.assert_not_called()
+
+
+def test_delete_plan_requires_current_version(client, db):
+    current_version = datetime(2026, 11, 21, 18, 0, tzinfo=timezone.utc)
+    plan = SimpleNamespace(id=uuid4(), updated_at=current_version)
+    db.scalar.side_effect = [membership(), plan]
+    response = client.delete(
+        f"/api/plans/{plan.id}",
+        params={"expected_updated_at": "2026-11-21T17:59:00Z"},
+    )
+    assert response.status_code == 409
+    assert "изменён другим участником" in response.json()["detail"]
+    db.delete.assert_not_called()
+    db.commit.assert_not_called()
+
+
+def test_delete_plan_with_current_version(client, db):
+    current_version = datetime(2026, 11, 21, 18, 0, tzinfo=timezone.utc)
+    plan = SimpleNamespace(id=uuid4(), updated_at=current_version)
+    db.scalar.side_effect = [membership(), plan]
+    response = client.delete(
+        f"/api/plans/{plan.id}",
+        params={"expected_updated_at": current_version.isoformat()},
+    )
+    assert response.status_code == 204
+    db.delete.assert_called_once_with(plan)
+    db.commit.assert_called_once()
+
+
+def test_delete_plan_requires_version_token(client, db):
+    response = client.delete(f"/api/plans/{uuid4()}")
+    assert response.status_code == 422
+    db.delete.assert_not_called()
+
+
+def test_delete_plan_is_scoped_to_current_couple(client, db):
+    db.scalar.side_effect = [membership(), None]
+    response = client.delete(
+        f"/api/plans/{uuid4()}",
+        params={"expected_updated_at": datetime.now(timezone.utc).isoformat()},
+    )
+    assert response.status_code == 404
+    db.delete.assert_not_called()

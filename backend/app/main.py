@@ -503,6 +503,8 @@ def update_plan(plan_id: UUID, payload: PlanUpdate, user: AuthUser = Depends(req
         raise HTTPException(status_code=404, detail="План не найден")
     changes = payload.model_dump(exclude_unset=True)
     expected_updated_at = changes.pop("expected_updated_at", None)
+    if expected_updated_at is None:
+        raise HTTPException(status_code=422, detail="Не передана версия плана. Обновите страницу и повторите попытку.")
     if not changes:
         raise HTTPException(status_code=422, detail="Нет изменений для сохранения")
     if any(value is None for value in changes.values()):

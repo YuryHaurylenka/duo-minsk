@@ -449,6 +449,9 @@ def get_couple_analytics(user: AuthUser = Depends(require_user), db: Session = D
 
 @app.put("/api/activity", status_code=204)
 def sync_activity(items: list[ActivitySyncItem], user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    place_slugs = [item.place_slug for item in items]
+    if len(place_slugs) != len(set(place_slugs)):
+        raise HTTPException(status_code=422, detail="В запросе не должно быть повторяющихся мест")
     member = db.scalar(select(CoupleMember).where(CoupleMember.user_id == user.id).limit(1))
     slugs = [item.place_slug for item in items]
     places = db.scalars(select(Place).where(Place.slug.in_(slugs))).all() if slugs else []

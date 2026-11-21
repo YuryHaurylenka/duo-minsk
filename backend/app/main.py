@@ -620,6 +620,10 @@ def vote_match_candidate(session_id: UUID, payload: MatchVoteIn, user: AuthUser 
         raise HTTPException(status_code=404, detail="Место не входит в этот раунд")
     db.execute(text("""INSERT INTO public.duo_match_votes (session_id, place_slug, user_id, liked) VALUES (:session, :slug, :user, :liked)
         ON CONFLICT (session_id, place_slug, user_id) DO UPDATE SET liked=EXCLUDED.liked, updated_at=now()"""), {"session": session_id, "slug": payload.place_slug, "user": user.id, "liked": payload.liked})
+    # Publish a safe session-row update. Vote values stay private to the API response.
+    db.execute(text("""UPDATE public.duo_match_sessions
+        SET activity_version = activity_version + 1
+        WHERE id = :session AND couple_id = :couple"""), {"session": session_id, "couple": couple.id})
     db.execute(text("""UPDATE public.duo_match_sessions s SET status='completed'
         WHERE s.id=:session AND (SELECT count(*) FROM public.duo_match_votes v WHERE v.session_id=s.id) =
           2 * (SELECT count(*) FROM public.duo_match_candidates c WHERE c.session_id=s.id)

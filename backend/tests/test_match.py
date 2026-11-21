@@ -324,11 +324,11 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
     matches.scalars.return_value.all.return_value = ["shared-cafe"]
     db.execute.side_effect = [preferences, matches]
     activity_rows = MagicMock()
-    activity_rows.scalars.return_value.all.return_value = [
+    activity_rows.all.return_value = [
         SimpleNamespace(place_slug="old-cafe", is_favorite=True, visited_at=None, rating=5)
     ]
     places_rows = MagicMock()
-    places_rows.scalars.return_value.all.return_value = [
+    places_rows.all.return_value = [
         _recommendation_place("old-cafe", "Old Coffee", "Кофейни", "4.8"),
         _recommendation_place("shared-cafe", "Common Coffee", "Кофейни", "4.8"),
         _recommendation_place("bar-place", "Cocktail Bar", "Пабы и бары", "4.9"),

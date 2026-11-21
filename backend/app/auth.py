@@ -58,3 +58,13 @@ def get_current_user(
 
 def require_user(user: AuthUser = Depends(get_current_user)) -> AuthUser:
     return user
+
+
+def require_match_user(
+    user: AuthUser = Depends(require_user),
+    db: Session = Depends(get_db),
+) -> AuthUser:
+    """Switch authenticated Match API requests to the backend-only database role."""
+    db.execute(text("RESET ROLE"))
+    db.execute(text("SET LOCAL ROLE duo_match_backend"))
+    return user

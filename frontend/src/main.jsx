@@ -188,9 +188,20 @@ useEffect(()=>{if(!session){setProfile(null);setPlans([]);return}let cancelled=f
    const placeName=changed.place_name||'Место';
    notify('Партнёр обновил общую активность: '+placeName);
   };
+  const handlePlanChange=payload=>{
+   refreshSharedData();
+   const changed=payload?.new?.id?payload.new:payload?.old;
+   const currentUserId=session?.user?.id;
+   if(!changed?.id||!changed?.updated_by||!currentUserId||changed.updated_by===currentUserId||payload.eventType==='DELETE')return;
+   const eventKey=['plan',payload.eventType,changed.id,changed.updated_at].join(':');
+   if(eventKey===lastPartnerActivityEvent)return;
+   lastPartnerActivityEvent=eventKey;
+   const title=changed.title||'совместный план';
+   notify((payload.eventType==='INSERT'?'Партнёр создал план: ':'Партнёр изменил план: ')+title);
+  };
   const channel=supabase.channel('duo-live-'+coupleId)
    .on('postgres_changes',{event:'*',schema:'public',table:'place_activity',filter:'couple_id=eq.'+coupleId},handleActivityChange)
-   .on('postgres_changes',{event:'*',schema:'public',table:'duo_date_plans',filter:'couple_id=eq.'+coupleId},refreshSharedData)
+   .on('postgres_changes',{event:'*',schema:'public',table:'duo_date_plans',filter:'couple_id=eq.'+coupleId},handlePlanChange)
    .subscribe(status=>{
     if(cancelled)return;
     if(status==='SUBSCRIBED'){setRealtimeStatus('connected');refreshSharedData()}

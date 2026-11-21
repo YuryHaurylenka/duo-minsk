@@ -483,7 +483,7 @@ def list_plans(user: AuthUser = Depends(require_user), db: Session = Depends(get
 def create_plan(payload: PlanCreate, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
     couple = get_couple(db, user)
     now = datetime.now(timezone.utc)
-    plan = DuoDatePlan(id=uuid4(), couple_id=couple.id, created_by=user.id, plan_date=payload.plan_date, title=payload.title, mood=payload.mood, budget=payload.budget, items=payload.items, notes=payload.notes, created_at=now, updated_at=now)
+    plan = DuoDatePlan(id=uuid4(), couple_id=couple.id, created_by=user.id, updated_by=user.id, plan_date=payload.plan_date, title=payload.title, mood=payload.mood, budget=payload.budget, items=payload.items, notes=payload.notes, created_at=now, updated_at=now)
     db.add(plan)
     db.flush()
     db.refresh(plan)
@@ -516,6 +516,7 @@ def update_plan(plan_id: UUID, payload: PlanUpdate, user: AuthUser = Depends(req
         )
     for field, value in changes.items():
         setattr(plan, field, value)
+    plan.updated_by = user.id
     plan.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(plan)

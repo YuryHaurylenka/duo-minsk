@@ -112,7 +112,7 @@ BEGIN
     UPDATE public.duo_date_plans
       SET updated_by = current_setting('duo.test.user_b')::uuid
       WHERE couple_id = current_setting('duo.test.couple_a')::uuid;
-    RAISE EXCEPTION 'User A forged another user's plan editor identity';
+    RAISE EXCEPTION 'User A forged another member plan editor identity';
   EXCEPTION WHEN insufficient_privilege THEN NULL;
   END;
 

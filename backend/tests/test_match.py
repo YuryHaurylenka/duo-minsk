@@ -315,6 +315,7 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
             "members": {
                 str(USER_ID): {"interests": ["Кофейни"], "avoid": []},
                 str(partner_id): {"interests": ["Кофейни"], "avoid": ["Бары и пабы"]},
+                str(uuid4()): {"interests": [], "avoid": ["Активности"]},
             }
         },
         "member_ids": [str(USER_ID), str(partner_id)],
@@ -352,6 +353,7 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
     assert "Вам нравятся места этой категории" in payload["items"][0]["reasons"]
     assert "old-cafe" not in [item["slug"] for item in payload["items"]]
     assert "bar-place" not in [item["slug"] for item in payload["items"]]
+    assert "game-place" in [item["slug"] for item in payload["items"]]
 
 
 def test_recommendations_reject_unknown_interest_categories():

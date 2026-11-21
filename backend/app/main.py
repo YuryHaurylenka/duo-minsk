@@ -284,11 +284,24 @@ def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends
     places = db.scalars(
         select(Place).where(Place.city_slug == city.slug, Place.is_active.is_(True))
     ).all()
+    places_by_slug = {place.slug: place for place in places}
+    liked_categories = set()
+    disliked_categories = set()
+    for item in activities:
+        related_place = places_by_slug.get(item.place_slug)
+        if not related_place:
+            continue
+        related_category = _recommendation_category(related_place.category)
+        if item.is_favorite or (item.rating is not None and item.rating >= 4):
+            liked_categories.add(related_category)
+        elif item.rating is not None and item.rating <= 2:
+            disliked_categories.add(related_category)
 
     ranked = []
     for place in places:
         category = _recommendation_category(place.category)
-        if category in avoided:
+        activity = activity_by_slug.get(place.slug)
+        if category in avoided or (activity and (activity.is_favorite or activity.visited_at)):
             continue
         score = 0
         reasons = []
@@ -309,24 +322,15 @@ def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends
             if external_rating >= 4.5:
                 reasons.append("Высокая оценка гостей")
 
-        activity = activity_by_slug.get(place.slug)
-        if activity:
-            if activity.is_favorite:
-                score += 12
-                reasons.append("Вы добавили похожее место в избранное")
-            if activity.visited_at:
-                score -= 18
-            if activity.rating is not None:
-                if activity.rating >= 4:
-                    score += 10
-                    reasons.append("Похоже на места, которые вам понравились")
-                elif activity.rating <= 2:
-                    score -= 14
+        if category in liked_categories:
+            score += 12
+            reasons.append("Вам нравятся места этой категории")
+        elif category in disliked_categories:
+            score -= 10
         if place.slug in mutual_likes:
             score += 18
             reasons.append("Вы оба выбрали это в DUO Match")
-        if not activity or not activity.visited_at:
-            score += 4
+        score += 4
 
         if not reasons:
             reasons.append("Идея для нового открытия")

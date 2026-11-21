@@ -126,14 +126,28 @@ def me(user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
 
 
 
+def _load_couple_preferences(db: Session, couple_id: UUID, user_id: UUID):
+    row = db.execute(text("""
+        SELECT preferences,
+               ARRAY(SELECT user_id::text FROM public.couple_members WHERE couple_id = :couple) AS member_ids
+        FROM public.couples
+        WHERE id = :couple
+    """), {"couple": couple_id}).mappings().one()
+    members = (row["preferences"] or {}).get("members", {})
+    active_member_ids = set(row["member_ids"] or [])
+    mine = members.get(str(user_id))
+    partner = next(
+        (members[member_id] for member_id in active_member_ids if member_id != str(user_id) and member_id in members),
+        None,
+    )
+    return members, mine, partner
+
+
 @app.get("/api/couples/preferences")
 def get_couple_preferences(user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
     """Return each partner's own discovery preferences without exposing account data."""
     couple = get_couple(db, user)
-    row = db.execute(text("SELECT preferences FROM public.couples WHERE id = :couple"), {"couple": couple.id}).mappings().one()
-    members = (row["preferences"] or {}).get("members", {})
-    mine = members.get(str(user.id))
-    partner = next((value for key, value in members.items() if key != str(user.id)), None)
+    members, mine, partner = _load_couple_preferences(db, couple.id, user.id)
     return {"mine": mine, "partner": partner}
 
 
@@ -147,9 +161,7 @@ def update_couple_preferences(payload: CouplePreferencesIn, user: AuthUser = Dep
         {"user_id": user.id, "preferences": preferences_json, "couple": couple.id},
     )
     db.commit()
-    row = db.execute(text("SELECT preferences FROM public.couples WHERE id = :couple"), {"couple": couple.id}).mappings().one()
-    members = (row["preferences"] or {}).get("members", {})
-    partner = next((value for key, value in members.items() if key != str(user.id)), None)
+    _, _, partner = _load_couple_preferences(db, couple.id, user.id)
     return {"mine": payload.model_dump(), "partner": partner}
 
 
@@ -234,19 +246,12 @@ def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends
         couple = db.get(Couple, member.couple_id)
         if not couple:
             raise HTTPException(status_code=404, detail="Пространство пары не найдено")
-        stored = db.execute(
-            text("SELECT preferences FROM public.couples WHERE id = :couple"),
-            {"couple": couple.id},
-        ).mappings().one()
-        members_preferences = (stored["preferences"] or {}).get("members", {})
-        own_preferences = members_preferences.get(str(user.id)) or {
+        _, stored_own_preferences, stored_partner_preferences = _load_couple_preferences(db, couple.id, user.id)
+        own_preferences = stored_own_preferences or {
             "interests": payload.interests,
             "avoid": payload.avoid,
         }
-        partner_preferences = next(
-            (value for key, value in members_preferences.items() if key != str(user.id)),
-            {},
-        )
+        partner_preferences = stored_partner_preferences or {}
         preference_sets = [own_preferences, partner_preferences]
         activities = db.scalars(
             select(PlaceActivity).where(PlaceActivity.couple_id == member.couple_id)

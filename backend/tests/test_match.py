@@ -287,3 +287,72 @@ def test_couple_preferences_reject_unknown_categories():
         app.dependency_overrides.clear()
     assert response.status_code == 422
     db.execute.assert_not_called()
+
+
+def _recommendation_place(slug, name, category, rating):
+    return Place(
+        id=uuid4(), slug=slug, city_slug="minsk", name=name, category=category,
+        emoji="✨", description="A good place", address="Minsk", rating=rating,
+        reviews="100", price_label="20 BYN", couple_price_label="40 BYN",
+        level=1, risk="good", tip="", website_url="", source_name="", source_url="",
+        cost=Decimal("20"),
+    )
+
+
+def test_recommendations_combine_both_partners_preferences_and_activity():
+    db = MagicMock()
+    partner_id = uuid4()
+    db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
+    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                                 created_at=datetime.now(timezone.utc))
+    preferences = MagicMock()
+    preferences.mappings.return_value.one.return_value = {
+        "preferences": {
+            "members": {
+                str(USER_ID): {"interests": ["Кофейни"], "avoid": []},
+                str(partner_id): {"interests": ["Кофейни"], "avoid": ["Бары и пабы"]},
+            }
+        }
+    }
+    matches = MagicMock()
+    matches.scalars.return_value.all.return_value = ["shared-cafe"]
+    db.execute.side_effect = [preferences, matches]
+    activity_rows = MagicMock()
+    activity_rows.scalars.return_value.all.return_value = [
+        SimpleNamespace(place_slug="shared-cafe", is_favorite=True, visited_at=None, rating=5)
+    ]
+    places_rows = MagicMock()
+    places_rows.scalars.return_value.all.return_value = [
+        _recommendation_place("shared-cafe", "Common Coffee", "Кофейни", "4.8"),
+        _recommendation_place("bar-place", "Cocktail Bar", "Пабы и бары", "4.9"),
+        _recommendation_place("game-place", "Game Room", "Игры", "4.2"),
+    ]
+    db.scalars.side_effect = [activity_rows, places_rows]
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).post(
+            "/api/recommendations",
+            json={"city_slug": "minsk", "interests": [], "avoid": [], "limit": 6},
+        )
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["context"]["is_couple"] is True
+    assert payload["items"][0]["slug"] == "shared-cafe"
+    assert "Интересно обоим" in payload["items"][0]["reasons"]
+    assert "Вы оба выбрали это в DUO Match" in payload["items"][0]["reasons"]
+    assert "bar-place" not in [item["slug"] for item in payload["items"]]
+
+
+def test_recommendations_reject_unknown_interest_categories():
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).post(
+            "/api/recommendations",
+            json={"city_slug": "minsk", "interests": ["Secret"], "avoid": [], "limit": 6},
+        )
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 422

@@ -108,6 +108,14 @@ BEGIN
   GET DIAGNOSTICS affected = ROW_COUNT;
   IF affected <> 0 THEN RAISE EXCEPTION 'User A modified % plans belonging to User B', affected; END IF;
 
+  BEGIN
+    UPDATE public.duo_date_plans
+      SET updated_by = current_setting('duo.test.user_b')::uuid
+      WHERE couple_id = current_setting('duo.test.couple_a')::uuid;
+    RAISE EXCEPTION 'User A forged another user's plan editor identity';
+  EXCEPTION WHEN insufficient_privilege THEN NULL;
+  END;
+
   DELETE FROM public.place_activity WHERE couple_id = current_setting('duo.test.couple_b')::uuid;
   GET DIAGNOSTICS affected = ROW_COUNT;
   IF affected <> 0 THEN RAISE EXCEPTION 'User A deleted % activity rows belonging to User B', affected; END IF;

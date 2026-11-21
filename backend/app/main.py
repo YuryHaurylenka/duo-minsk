@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 from app.config import get_settings
 from app.database import get_db
-from app.auth import AuthUser, require_user
+from app.auth import AuthUser, require_user, require_match_user
 from app.models.entities import City, Place, Couple, CoupleMember, PlaceActivity, PersonalPlaceActivity, RecommendationFeedback, DuoEvent, DuoDatePlan, DuoPlaceUpdate
 from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, CouplePreferencesIn, RecommendationRequest, ActivitySyncItem, PlanCreate, PlanUpdate, PlanOut, MatchSessionCreate, MatchVoteIn
 
@@ -568,7 +568,7 @@ def delete_plan(
 
 
 @app.post("/api/match/sessions", status_code=201)
-def create_match_session(payload: MatchSessionCreate, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+def create_match_session(payload: MatchSessionCreate, user: AuthUser = Depends(require_match_user), db: Session = Depends(get_db)):
     couple = get_couple(db, user)
     member_count = db.scalar(select(func.count()).select_from(CoupleMember).where(CoupleMember.couple_id == couple.id)) or 0
     if member_count < 2:
@@ -625,7 +625,7 @@ def _match_session_payload(session_id: UUID, user: AuthUser, couple: Couple, db:
 
 
 @app.get("/api/match/sessions/active")
-def get_active_match_session(city_slug: str = Query(..., min_length=2, max_length=80), user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+def get_active_match_session(city_slug: str = Query(..., min_length=2, max_length=80), user: AuthUser = Depends(require_match_user), db: Session = Depends(get_db)):
     couple = get_couple(db, user)
     city = require_active_city(db, city_slug)
     active_session = db.execute(text("""SELECT id, status, city_slug
@@ -639,13 +639,13 @@ def get_active_match_session(city_slug: str = Query(..., min_length=2, max_lengt
 
 
 @app.get("/api/match/sessions/{session_id}")
-def get_match_session(session_id: UUID, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+def get_match_session(session_id: UUID, user: AuthUser = Depends(require_match_user), db: Session = Depends(get_db)):
     couple = get_couple(db, user)
     return _match_session_payload(session_id, user, couple, db)
 
 
 @app.put("/api/match/sessions/{session_id}/votes")
-def vote_match_candidate(session_id: UUID, payload: MatchVoteIn, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+def vote_match_candidate(session_id: UUID, payload: MatchVoteIn, user: AuthUser = Depends(require_match_user), db: Session = Depends(get_db)):
     couple = get_couple(db, user)
     exists = db.execute(text("SELECT 1 FROM public.duo_match_sessions s JOIN public.duo_match_candidates c ON c.session_id=s.id WHERE s.id=:session AND s.couple_id=:couple AND c.place_slug=:slug"), {"session": session_id, "couple": couple.id, "slug": payload.place_slug}).first()
     if not exists:

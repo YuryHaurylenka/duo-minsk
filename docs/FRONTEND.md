@@ -24,6 +24,15 @@ Vite proxies `/api` requests to `http://127.0.0.1:8000`. The dev server binds to
 
 Vercel keeps the FastAPI framework for API functions and runs `npm ci && npm run build` before deployment. Vite writes the SPA entry point and hashed static assets to `public/`; the existing Python API remains in `main.py` and `backend/`.
 
+## Continuous integration
+
+Every push and pull request targeting `main` runs two independent checks:
+
+- **Backend tests:** install the pinned Python dependencies and run the Pytest suite.
+- **Frontend production build:** install the lockfile-exact npm dependencies with `npm ci` and run `npm run build`.
+
+PostgreSQL RLS isolation tests run when the optional `DUO_RLS_TEST_DATABASE_URL` GitHub secret is configured. The frontend build job does not need production credentials.
+
 ## Current interface areas
 
 - Discovery: curated categories, city updates, events and place cards

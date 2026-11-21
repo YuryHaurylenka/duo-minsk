@@ -190,7 +190,9 @@ def test_create_plan_persists_for_current_couple(client, db):
     })
     assert response.status_code == 201
     assert response.json()["title"] == "Dinner"
-    assert response.json()["budget"] == "75.50"\n    assert response.json()["items"][0]["time"] == "18:00"\n    assert response.json()["items"][0]["duration_minutes"] == 60
+    assert response.json()["budget"] == "75.50"
+    assert response.json()["items"][0]["time"] == "18:00"
+    assert response.json()["items"][0]["duration_minutes"] == 60
     db.add.assert_called_once()
     db.commit.assert_called_once()
 

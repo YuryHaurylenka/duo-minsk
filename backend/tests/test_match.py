@@ -228,13 +228,15 @@ def test_couple_preferences_are_scoped_to_current_member_and_partner():
     db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
                                  created_at=datetime.now(timezone.utc))
     result = MagicMock()
+    partner_id = uuid4()
     result.mappings.return_value.one.return_value = {
         "preferences": {
             "members": {
                 str(USER_ID): {"interests": ["Кофейни"], "avoid": []},
-                str(uuid4()): {"interests": ["Культура"], "avoid": ["Бары и пабы"]},
+                str(partner_id): {"interests": ["Культура"], "avoid": ["Бары и пабы"]},
             }
-        }
+        },
+        "member_ids": [str(USER_ID), str(partner_id)],
     }
     db.execute.return_value = result
     app.dependency_overrides[get_db] = lambda: db
@@ -255,7 +257,8 @@ def test_couple_preferences_update_only_current_member():
                                  created_at=datetime.now(timezone.utc))
     updated = MagicMock()
     updated.mappings.return_value.one.return_value = {
-        "preferences": {"members": {str(USER_ID): {"interests": ["Рестораны"], "avoid": []}}}
+        "preferences": {"members": {str(USER_ID): {"interests": ["Рестораны"], "avoid": []}}},
+        "member_ids": [str(USER_ID)],
     }
     db.execute.side_effect = [MagicMock(), updated]
     app.dependency_overrides[get_db] = lambda: db
@@ -313,7 +316,8 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
                 str(USER_ID): {"interests": ["Кофейни"], "avoid": []},
                 str(partner_id): {"interests": ["Кофейни"], "avoid": ["Бары и пабы"]},
             }
-        }
+        },
+        "member_ids": [str(USER_ID), str(partner_id)],
     }
     matches = MagicMock()
     matches.scalars.return_value.all.return_value = ["shared-cafe"]
@@ -348,6 +352,8 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
 
 
 def test_recommendations_reject_unknown_interest_categories():
+    db = MagicMock()
+    app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).post(

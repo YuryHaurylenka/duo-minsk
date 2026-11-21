@@ -147,6 +147,7 @@ class PlanOut(BaseModel):
     notes: str
     created_at: datetime
     updated_at: datetime
+    updated_by: UUID | None = None
 
 
 class MatchSessionCreate(BaseModel):

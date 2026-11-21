@@ -458,15 +458,33 @@ def sync_activity(items: list[ActivitySyncItem], user: AuthUser = Depends(requir
         place_name = names.get(item.place_slug)
         if not place_name:
             continue
+        changes = item.model_dump(exclude_unset=True, exclude={"place_slug"})
+        values = {
+            "id": uuid4(),
+            "place_slug": item.place_slug,
+            "place_name": place_name,
+            "is_favorite": changes.get("is_favorite", False),
+            "visited_at": now if changes.get("visited") is True else None,
+            "rating": changes.get("rating"),
+            "note": changes.get("note", ""),
+            "updated_at": now,
+        }
+        update_values = {"updated_at": now}
+        for field, value in changes.items():
+            column = "visited_at" if field == "visited" else field
+            update_values[column] = (now if value else None) if field == "visited" else value
         if member:
-            stmt = insert(PlaceActivity).values(id=uuid4(), couple_id=member.couple_id, place_slug=item.place_slug, place_name=place_name, is_favorite=item.is_favorite, visited_at=now if item.visited else None, rating=item.rating, note=item.note, updated_by=user.id, updated_at=now).on_conflict_do_update(
+            values.update({"couple_id": member.couple_id, "updated_by": user.id})
+            update_values["updated_by"] = user.id
+            stmt = insert(PlaceActivity).values(**values).on_conflict_do_update(
                 constraint="place_activity_couple_id_place_slug_key",
-                set_={"is_favorite": item.is_favorite, "visited_at": now if item.visited else None, "rating": item.rating, "note": item.note, "updated_by": user.id, "updated_at": now},
+                set_=update_values,
             )
         else:
-            stmt = insert(PersonalPlaceActivity).values(id=uuid4(), user_id=user.id, place_slug=item.place_slug, place_name=place_name, is_favorite=item.is_favorite, visited_at=now if item.visited else None, rating=item.rating, note=item.note, updated_at=now).on_conflict_do_update(
+            values["user_id"] = user.id
+            stmt = insert(PersonalPlaceActivity).values(**values).on_conflict_do_update(
                 constraint="personal_place_activity_user_place_key",
-                set_={"is_favorite": item.is_favorite, "visited_at": now if item.visited else None, "rating": item.rating, "note": item.note, "updated_at": now},
+                set_=update_values,
             )
         db.execute(stmt)
     db.commit()

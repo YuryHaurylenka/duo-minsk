@@ -141,3 +141,41 @@ def test_match_payload_reveals_only_mutual_likes():
     assert len(result["matches"]) == 1
     assert result["matches"][0]["slug"] == "quiet-cafe"
     assert result["partner_votes"] == 1
+
+def test_match_active_session_lookup_returns_current_couple_round():
+    session_id = uuid4()
+    db = MagicMock()
+    db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
+    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                                 created_at=datetime.now(timezone.utc))
+    city = SimpleNamespace(slug="minsk", is_active=True)
+    active = {"id": session_id, "status": "active", "city_slug": "minsk"}
+    result = MagicMock()
+    result.mappings.return_value.first.return_value = active
+    db.execute.return_value = result
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).get("/api/match/sessions/active?city_slug=minsk")
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 200
+    assert response.json() == {"active": True, "id": str(session_id), "status": "active", "city_slug": "minsk"}
+
+
+def test_match_active_session_lookup_returns_empty_when_round_missing():
+    db = MagicMock()
+    db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
+    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                                 created_at=datetime.now(timezone.utc))
+    result = MagicMock()
+    result.mappings.return_value.first.return_value = None
+    db.execute.return_value = result
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).get("/api/match/sessions/active?city_slug=minsk")
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 200
+    assert response.json() == {"active": False}

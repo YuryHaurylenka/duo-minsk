@@ -77,3 +77,67 @@ def test_match_start_resumes_active_session_for_partner():
     assert response.json()["id"] == str(session_id)
     assert response.json()["resumed"] is True
     db.commit.assert_not_called()
+
+
+def test_match_payload_hides_partner_likes_until_mutual_match():
+    from app.main import _match_session_payload
+
+    session_id = uuid4()
+    candidate = {
+        "slug": "quiet-cafe",
+        "name": "Quiet Cafe",
+        "my_vote": False,
+        "partner_vote": None,
+        "partner_has_voted": True,
+    }
+    db = MagicMock()
+    session_result = MagicMock()
+    session_result.mappings.return_value.first.return_value = {
+        "id": session_id, "status": "active", "city_slug": "minsk",
+        "created_at": datetime.now(timezone.utc),
+    }
+    candidates_result = MagicMock()
+    candidates_result.mappings.return_value.all.return_value = [candidate]
+    db.execute.side_effect = [session_result, candidates_result]
+    couple = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                    created_at=datetime.now(timezone.utc))
+
+    result = _match_session_payload(session_id, AuthUser(id=USER_ID, email="test@example.com"), couple, db)
+
+    assert result["candidates"][0]["my_vote"] is False
+    assert result["candidates"][0]["partner_vote"] is None
+    assert result["partner_votes"] == 1
+    assert result["matches"] == []
+    query = str(db.execute.call_args_list[1].args[0])
+    assert "CASE" in query
+    assert "partner_has_voted" in query
+
+
+def test_match_payload_reveals_only_mutual_likes():
+    from app.main import _match_session_payload
+
+    session_id = uuid4()
+    candidate = {
+        "slug": "quiet-cafe",
+        "name": "Quiet Cafe",
+        "my_vote": True,
+        "partner_vote": True,
+        "partner_has_voted": True,
+    }
+    db = MagicMock()
+    session_result = MagicMock()
+    session_result.mappings.return_value.first.return_value = {
+        "id": session_id, "status": "active", "city_slug": "minsk",
+        "created_at": datetime.now(timezone.utc),
+    }
+    candidates_result = MagicMock()
+    candidates_result.mappings.return_value.all.return_value = [candidate]
+    db.execute.side_effect = [session_result, candidates_result]
+    couple = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                    created_at=datetime.now(timezone.utc))
+
+    result = _match_session_payload(session_id, AuthUser(id=USER_ID, email="test@example.com"), couple, db)
+
+    assert len(result["matches"]) == 1
+    assert result["matches"][0]["slug"] == "quiet-cafe"
+    assert result["partner_votes"] == 1

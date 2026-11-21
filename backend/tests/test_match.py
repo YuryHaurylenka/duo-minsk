@@ -337,10 +337,14 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
         _recommendation_place("unsafe-place", "Unsafe Attraction", "Игры", "4.9"),
     ]
     places_rows.all.return_value[-1].risk = "avoid"
+    dismissed_rows = MagicMock()
+    dismissed_rows.all.return_value = ["game-place"]
     def scalars_for_recommendations(statement):
         statement_text = str(statement).lower()
         if "place_activity" in statement_text:
             return activity_rows
+        if "recommendation_feedback" in statement_text:
+            return dismissed_rows
         if "places" in statement_text:
             return places_rows
         raise AssertionError(f"Unexpected recommendation query: {statement_text}")
@@ -364,7 +368,7 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
     assert "Вам нравятся места этой категории" in payload["items"][0]["reasons"]
     assert "old-cafe" not in [item["slug"] for item in payload["items"]]
     assert "bar-place" not in [item["slug"] for item in payload["items"]]
-    assert "game-place" in [item["slug"] for item in payload["items"]]
+    assert "game-place" not in [item["slug"] for item in payload["items"]]
     assert "unsafe-place" not in [item["slug"] for item in payload["items"]]
 
 

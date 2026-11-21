@@ -7,7 +7,7 @@ from uuid import uuid4
 import pytest
 from fastapi.testclient import TestClient
 
-from app.auth import AuthUser, get_current_user, require_user
+from app.auth import AuthUser, get_current_user, require_user, require_match_user
 from app.database import get_db
 from app.main import app
 from app.models.entities import City, Couple, CoupleMember, DuoDatePlan, Place
@@ -27,6 +27,7 @@ def db():
 def client(db):
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     with TestClient(app) as test_client:
         yield test_client
     app.dependency_overrides.clear()
@@ -521,3 +522,11 @@ def test_delete_plan_is_scoped_to_current_couple(client, db):
     )
     assert response.status_code == 404
     db.delete.assert_not_called()
+
+
+def test_match_backend_dependency_switches_to_dedicated_role():
+    db = MagicMock()
+    user = AuthUser(id=USER_ID, email="test@example.com")
+    assert require_match_user(user=user, db=db) is user
+    statements = [str(call.args[0]) for call in db.execute.call_args_list]
+    assert statements == ["RESET ROLE", "SET LOCAL ROLE duo_match_backend"]

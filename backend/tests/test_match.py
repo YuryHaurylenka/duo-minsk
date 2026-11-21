@@ -6,7 +6,7 @@ from uuid import uuid4
 
 from fastapi.testclient import TestClient
 
-from app.auth import AuthUser, require_user
+from app.auth import AuthUser, require_user, require_match_user
 from app.database import get_db
 from app.main import app
 from app.models.entities import Couple, CoupleMember, Place
@@ -22,6 +22,7 @@ def test_match_requires_second_member():
                                  created_at=datetime.now(timezone.utc))
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).post("/api/match/sessions", json={"city_slug": "minsk"})
     finally:
@@ -46,6 +47,7 @@ def test_match_session_rejects_too_few_candidates():
     db.execute.side_effect = [active_result, places_result]
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).post("/api/match/sessions", json={"city_slug": "minsk", "limit": 8})
     finally:
@@ -70,6 +72,7 @@ def test_match_start_resumes_active_session_for_partner():
     db.execute.return_value = active_result
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).post("/api/match/sessions", json={"city_slug": "minsk"})
     finally:
@@ -158,6 +161,7 @@ def test_match_active_session_lookup_returns_current_couple_round():
     db.execute.return_value = result
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).get("/api/match/sessions/active?city_slug=minsk")
     finally:
@@ -179,6 +183,7 @@ def test_match_active_session_lookup_returns_empty_when_round_missing():
     db.execute.return_value = result
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).get("/api/match/sessions/active?city_slug=minsk")
     finally:
@@ -209,6 +214,7 @@ def test_couple_analytics_returns_shared_activity_and_match_history():
     db.execute.side_effect = [activity, categories, match_stats, history]
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).get("/api/analytics/couple")
     finally:
@@ -241,6 +247,7 @@ def test_couple_preferences_are_scoped_to_current_member_and_partner():
     db.execute.return_value = result
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).get("/api/couples/preferences")
     finally:
@@ -263,6 +270,7 @@ def test_couple_preferences_update_only_current_member():
     db.execute.side_effect = [MagicMock(), updated]
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).put(
             "/api/couples/preferences",
@@ -283,6 +291,7 @@ def test_couple_preferences_reject_unknown_categories():
                                  created_at=datetime.now(timezone.utc))
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).put(
             "/api/couples/preferences",
@@ -352,6 +361,7 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
     db.scalars.side_effect = scalars_for_recommendations
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).post(
             "/api/recommendations",
@@ -378,6 +388,7 @@ def test_recommendation_feedback_is_private_and_idempotent():
     db.scalar.return_value = "shared-cafe"
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).post("/api/recommendations/shared-cafe/dismiss")
     finally:
@@ -392,6 +403,7 @@ def test_recommendation_feedback_rejects_unknown_place():
     db.scalar.return_value = None
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).post("/api/recommendations/not-a-place/dismiss")
     finally:
@@ -404,6 +416,7 @@ def test_recommendations_reject_unknown_interest_categories():
     db = MagicMock()
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).post(
             "/api/recommendations",
@@ -432,6 +445,7 @@ def test_match_vote_increments_safe_realtime_activity_version():
     db.execute.side_effect = [exists, MagicMock(), MagicMock(), MagicMock(), session_result, candidates_result]
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).put(
             f"/api/match/sessions/{session_id}/votes",

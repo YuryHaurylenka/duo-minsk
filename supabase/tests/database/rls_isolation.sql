@@ -10,6 +10,34 @@ BEGIN
   IF position('FOR UPDATE' IN pg_get_functiondef('private.join_couple(text)'::regprocedure)) = 0 THEN
     RAISE EXCEPTION 'join_couple must lock the couple row before counting members';
   END IF;
+
+  IF NOT pg_has_role('duo_match_backend', 'authenticated', 'MEMBER') THEN
+    RAISE EXCEPTION 'Match backend role must inherit authenticated access for shared app tables';
+  END IF;
+  IF NOT has_table_privilege('authenticated', 'public.duo_match_sessions', 'SELECT')
+     OR has_table_privilege('authenticated', 'public.duo_match_sessions', 'INSERT')
+     OR has_table_privilege('authenticated', 'public.duo_match_sessions', 'UPDATE')
+     OR has_table_privilege('authenticated', 'public.duo_match_sessions', 'DELETE') THEN
+    RAISE EXCEPTION 'authenticated must have SELECT-only access to Match sessions';
+  END IF;
+  IF has_table_privilege('authenticated', 'public.duo_match_candidates', 'SELECT')
+     OR has_table_privilege('authenticated', 'public.duo_match_candidates', 'INSERT')
+     OR has_table_privilege('authenticated', 'public.duo_match_candidates', 'UPDATE')
+     OR has_table_privilege('authenticated', 'public.duo_match_candidates', 'DELETE') THEN
+    RAISE EXCEPTION 'authenticated must not access Match candidates directly';
+  END IF;
+  IF has_table_privilege('authenticated', 'public.duo_match_votes', 'SELECT')
+     OR has_table_privilege('authenticated', 'public.duo_match_votes', 'INSERT')
+     OR has_table_privilege('authenticated', 'public.duo_match_votes', 'UPDATE')
+     OR has_table_privilege('authenticated', 'public.duo_match_votes', 'DELETE') THEN
+    RAISE EXCEPTION 'authenticated must not access private Match votes directly';
+  END IF;
+  IF NOT has_table_privilege('duo_match_backend', 'public.duo_match_sessions', 'INSERT')
+     OR NOT has_table_privilege('duo_match_backend', 'public.duo_match_candidates', 'INSERT')
+     OR NOT has_table_privilege('duo_match_backend', 'public.duo_match_votes', 'INSERT') THEN
+    RAISE EXCEPTION 'Match backend role must retain write access to Match tables';
+  END IF;
+
   IF NOT has_table_privilege('anon', 'public.cities', 'SELECT') THEN
     RAISE EXCEPTION 'anon must be able to read active city metadata';
   END IF;

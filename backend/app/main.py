@@ -1,4 +1,5 @@
 from contextlib import asynccontextmanager
+from pathlib import Path
 import json
 from datetime import date, datetime, time, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -6,6 +7,7 @@ from decimal import Decimal
 from uuid import UUID, uuid4
 from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import select, func, or_, text, delete
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
@@ -27,6 +29,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="DUO API", version="2.0.0", description="Backend для DUO — city discovery and shared date planning", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=settings.allowed_origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+
+
+# Register Vite's generated assets as FastAPI static files so Vercel promotes
+# them to its CDN instead of routing /assets/* requests into the API function.
+ASSETS_DIRECTORY = Path(__file__).resolve().parents[2] / "public" / "assets"
+if ASSETS_DIRECTORY.is_dir():
+    app.mount("/assets", StaticFiles(directory=ASSETS_DIRECTORY), name="assets")
 
 
 def get_couple(db: Session, user: AuthUser) -> Couple:

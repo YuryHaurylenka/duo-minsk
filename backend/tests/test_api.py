@@ -481,6 +481,27 @@ def test_activity_sync_rejects_empty_patch(client, db):
     db.execute.assert_not_called()
 
 
+def test_activity_sync_rejects_null_for_non_nullable_fields(client, db):
+    for field in ("is_favorite", "visited", "note"):
+        response = client.put("/api/activity", json=[
+            {"place_slug": PLACE_SLUG, field: None}
+        ])
+        assert response.status_code == 422
+        assert "не может быть null" in response.json()["detail"][0]["msg"]
+    db.execute.assert_not_called()
+
+
+def test_activity_sync_allows_clearing_rating(client, db):
+    db.scalar.return_value = membership()
+    db.scalars.return_value.all.return_value = [Place(slug=PLACE_SLUG, name="Test Cafe")]
+    response = client.put("/api/activity", json=[
+        {"place_slug": PLACE_SLUG, "rating": None}
+    ])
+    assert response.status_code == 204
+    statement = db.execute.call_args.args[0]
+    assert {key for key, _ in statement._post_values_clause.update_values_to_set} == {"rating", "updated_at", "updated_by"}
+
+
 def test_delete_plan_requires_current_version(client, db):
     current_version = datetime(2026, 11, 21, 18, 0, tzinfo=timezone.utc)
     plan = SimpleNamespace(id=uuid4(), updated_at=current_version)

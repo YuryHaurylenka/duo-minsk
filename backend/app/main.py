@@ -313,15 +313,6 @@ def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends
             score += 17
             reasons.append("Совпадает с вашими интересами")
 
-        try:
-            external_rating = float(str(place.rating).replace(",", "."))
-        except (TypeError, ValueError):
-            external_rating = 0
-        if 0 < external_rating <= 5:
-            score += round(external_rating * 3)
-            if external_rating >= 4.5:
-                reasons.append("Высокая оценка гостей")
-
         if category in liked_categories:
             score += 12
             reasons.append("Вам нравятся места этой категории")
@@ -330,6 +321,15 @@ def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends
         if place.slug in mutual_likes:
             score += 18
             reasons.append("Вы оба выбрали это в DUO Match")
+
+        try:
+            external_rating = float(str(place.rating).replace(",", "."))
+        except (TypeError, ValueError):
+            external_rating = 0
+        if 0 < external_rating <= 5:
+            score += round(external_rating * 3)
+            if external_rating >= 4.5:
+                reasons.append("Высокая оценка гостей")
         score += 4
 
         if not reasons:

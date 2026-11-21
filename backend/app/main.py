@@ -176,6 +176,72 @@ def get_activity(user: AuthUser = Depends(require_user), db: Session = Depends(g
     return [{"place_slug": r.place_slug, "place_name": r.place_name, "is_favorite": r.is_favorite, "visited_at": r.visited_at, "rating": r.rating, "note": r.note} for r in rows]
 
 
+
+@app.get("/api/analytics/couple")
+def get_couple_analytics(user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    """Return shared activity and DUO Match aggregates for the authenticated user's couple."""
+    couple = get_couple(db, user)
+    activity = db.execute(text("""
+        SELECT COUNT(*) FILTER (WHERE is_favorite)::int AS favorites,
+               COUNT(*) FILTER (WHERE visited_at IS NOT NULL)::int AS visits,
+               COUNT(*) FILTER (WHERE rating IS NOT NULL)::int AS ratings,
+               COALESCE(ROUND(AVG(rating)::numeric, 1), 0)::float AS average_rating
+        FROM public.place_activity
+        WHERE couple_id = :couple
+    """), {"couple": couple.id}).mappings().one()
+    categories = db.execute(text("""
+        SELECT p.category AS name,
+               COUNT(*)::int AS value
+        FROM public.place_activity a
+        JOIN public.places p ON p.slug = a.place_slug
+        WHERE a.couple_id = :couple
+          AND (a.is_favorite IS TRUE OR a.visited_at IS NOT NULL)
+        GROUP BY p.category
+        ORDER BY value DESC, p.category
+        LIMIT 6
+    """), {"couple": couple.id}).mappings().all()
+    match_stats = db.execute(text("""
+        SELECT COUNT(*)::int AS rounds,
+               COUNT(*) FILTER (WHERE status = 'completed')::int AS completed_rounds,
+               COALESCE(SUM(mutual_matches), 0)::int AS mutual_matches
+        FROM (
+            SELECT s.id, s.status, COUNT(m.place_slug)::int AS mutual_matches
+            FROM public.duo_match_sessions s
+            LEFT JOIN (
+                SELECT session_id, place_slug
+                FROM public.duo_match_votes
+                WHERE liked IS TRUE
+                GROUP BY session_id, place_slug
+                HAVING COUNT(DISTINCT user_id) >= 2
+            ) m ON m.session_id = s.id
+            WHERE s.couple_id = :couple
+            GROUP BY s.id, s.status
+        ) rounds
+    """), {"couple": couple.id}).mappings().one()
+    history = db.execute(text("""
+        SELECT s.id::text AS id, s.status, s.city_slug, s.created_at,
+               COUNT(m.place_slug)::int AS mutual_matches
+        FROM public.duo_match_sessions s
+        LEFT JOIN (
+            SELECT session_id, place_slug
+            FROM public.duo_match_votes
+            WHERE liked IS TRUE
+            GROUP BY session_id, place_slug
+            HAVING COUNT(DISTINCT user_id) >= 2
+        ) m ON m.session_id = s.id
+        WHERE s.couple_id = :couple
+        GROUP BY s.id
+        ORDER BY s.created_at DESC
+        LIMIT 5
+    """), {"couple": couple.id}).mappings().all()
+    return {
+        "activity": dict(activity),
+        "common_interests": [dict(row) for row in categories],
+        "match_stats": dict(match_stats),
+        "match_history": [dict(row) for row in history],
+    }
+
+
 @app.put("/api/activity", status_code=204)
 def sync_activity(items: list[ActivitySyncItem], user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
     member = db.scalar(select(CoupleMember).where(CoupleMember.user_id == user.id).limit(1))

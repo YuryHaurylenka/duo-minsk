@@ -201,7 +201,7 @@ def test_update_plan_persists_reordered_items_for_current_couple(client, db):
     plan = SimpleNamespace(
         id=uuid4(), plan_date=date(2026, 12, 1), title="Dinner", mood="romantic",
         budget=Decimal("75.50"), items=[{"place": "first"}], notes="",
-        created_at=datetime.now(timezone.utc), updated_at=datetime.now(timezone.utc),
+        created_at=datetime.now(timezone.utc), updated_at=datetime.now(timezone.utc), updated_by=None,
     )
     db.scalar.side_effect = [membership(), plan]
     db.get.return_value = couple()
@@ -213,9 +213,27 @@ def test_update_plan_persists_reordered_items_for_current_couple(client, db):
     assert [item["place"] for item in response.json()["items"]] == ["second", "first"]
     assert response.json()["notes"] == "Meet at 18:00"
     assert response.json()["updated_at"] is not None
+    assert response.json()["updated_by"] == str(USER_ID)
     db.commit.assert_called_once()
     db.refresh.assert_called_once_with(plan)
 
+
+
+def test_update_plan_records_authenticated_editor(client, db):
+    editor_id = uuid4()
+    plan = SimpleNamespace(
+        id=uuid4(), plan_date=date(2026, 12, 1), title="Dinner", mood="romantic",
+        budget=Decimal("75.50"), items=[], notes="",
+        created_at=datetime.now(timezone.utc), updated_at=datetime.now(timezone.utc), updated_by=None,
+    )
+    db.scalar.side_effect = [membership(), plan]
+    db.get.return_value = couple()
+    response = client.patch(f"/api/plans/{plan.id}", json={
+        "expected_updated_at": plan.updated_at.isoformat(), "title": "Updated dinner"
+    })
+    assert response.status_code == 200
+    assert plan.updated_by is not None
+    assert response.json()["updated_by"] == str(plan.updated_by)
 
 
 def test_update_plan_rejects_stale_version(client, db):

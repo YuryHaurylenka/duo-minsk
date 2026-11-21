@@ -412,3 +412,33 @@ def test_recommendations_reject_unknown_interest_categories():
     finally:
         app.dependency_overrides.clear()
     assert response.status_code == 422
+
+
+def test_match_vote_increments_safe_realtime_activity_version():
+    session_id = uuid4()
+    db = MagicMock()
+    db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
+    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                                 created_at=datetime.now(timezone.utc))
+    exists = MagicMock()
+    exists.first.return_value = (1,)
+    session_result = MagicMock()
+    session_result.mappings.return_value.first.return_value = {
+        "id": session_id, "status": "active", "city_slug": "minsk",
+        "created_at": datetime.now(timezone.utc),
+    }
+    candidates_result = MagicMock()
+    candidates_result.mappings.return_value.all.return_value = []
+    db.execute.side_effect = [exists, MagicMock(), MagicMock(), MagicMock(), session_result, candidates_result]
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).put(
+            f"/api/match/sessions/{session_id}/votes",
+            json={"place_slug": "quiet-cafe", "liked": True},
+        )
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 200
+    assert "activity_version = activity_version + 1" in str(db.execute.call_args_list[2].args[0])
+    assert db.commit.called

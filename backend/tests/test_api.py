@@ -481,6 +481,16 @@ def test_activity_sync_rejects_empty_patch(client, db):
     db.execute.assert_not_called()
 
 
+def test_activity_sync_rejects_duplicate_places(client, db):
+    response = client.put("/api/activity", json=[
+        {"place_slug": PLACE_SLUG, "is_favorite": True},
+        {"place_slug": PLACE_SLUG, "visited": True},
+    ])
+    assert response.status_code == 422
+    assert response.json()["detail"] == "В запросе не должно быть повторяющихся мест"
+    db.execute.assert_not_called()
+
+
 def test_activity_sync_rejects_null_for_non_nullable_fields(client, db):
     for field in ("is_favorite", "visited", "note"):
         response = client.put("/api/activity", json=[

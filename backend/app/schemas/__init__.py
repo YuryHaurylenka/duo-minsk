@@ -127,7 +127,7 @@ class PlanCreate(BaseModel):
 
 
 class PlanUpdate(BaseModel):
-    expected_updated_at: datetime | None = None
+    expected_updated_at: datetime
     plan_date: date | None = None
     title: str | None = Field(default=None, min_length=1, max_length=180)
     mood: str | None = Field(default=None, max_length=40)

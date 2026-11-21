@@ -272,6 +272,7 @@ def test_couple_preferences_update_only_current_member():
         app.dependency_overrides.clear()
     assert response.status_code == 200
     assert response.json() == {"mine": {"interests": ["Рестораны"], "avoid": []}, "partner": None}
+    assert "private.set_couple_member_preferences" in str(db.execute.call_args_list[0].args[0])
     assert db.commit.called
 
 

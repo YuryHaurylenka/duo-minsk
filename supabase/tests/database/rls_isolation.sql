@@ -73,6 +73,7 @@ SELECT set_config('duo.test.user_b', gen_random_uuid()::text, true);
 SELECT set_config('duo.test.user_c', gen_random_uuid()::text, true);
 SELECT set_config('duo.test.user_d', gen_random_uuid()::text, true);
 SELECT set_config('duo.test.user_e', gen_random_uuid()::text, true);
+SELECT set_config('duo.test.user_f', gen_random_uuid()::text, true);
 SELECT set_config('duo.test.couple_a', gen_random_uuid()::text, true);
 SELECT set_config('duo.test.couple_b', gen_random_uuid()::text, true);
 SELECT set_config('duo.test.couple_c', gen_random_uuid()::text, true);
@@ -92,7 +93,9 @@ VALUES
   (current_setting('duo.test.user_d')::uuid, 'authenticated', 'authenticated',
    current_setting('duo.test.user_d') || '@duo-rls.invalid', '', now(), '{}'::jsonb, '{}'::jsonb, now(), now()),
   (current_setting('duo.test.user_e')::uuid, 'authenticated', 'authenticated',
-   current_setting('duo.test.user_e') || '@duo-rls.invalid', '', now(), '{}'::jsonb, '{}'::jsonb, now(), now());
+   current_setting('duo.test.user_e') || '@duo-rls.invalid', '', now(), '{}'::jsonb, '{}'::jsonb, now(), now()),
+  (current_setting('duo.test.user_f')::uuid, 'authenticated', 'authenticated',
+   current_setting('duo.test.user_f') || '@duo-rls.invalid', '', now(), '{}'::jsonb, '{}'::jsonb, now(), now());
 
 INSERT INTO public.couples (id, name, created_by)
 VALUES
@@ -107,7 +110,8 @@ INSERT INTO public.couple_members (couple_id, user_id, role)
 VALUES
   (current_setting('duo.test.couple_a')::uuid, current_setting('duo.test.user_a')::uuid, 'owner'),
   (current_setting('duo.test.couple_b')::uuid, current_setting('duo.test.user_b')::uuid, 'owner'),
-  (current_setting('duo.test.couple_c')::uuid, current_setting('duo.test.user_c')::uuid, 'owner');
+  (current_setting('duo.test.couple_c')::uuid, current_setting('duo.test.user_c')::uuid, 'owner'),
+  (current_setting('duo.test.couple_a')::uuid, current_setting('duo.test.user_f')::uuid, 'member');
 
 INSERT INTO public.duo_date_plans (couple_id, created_by, plan_date, title)
 VALUES
@@ -119,6 +123,25 @@ VALUES
   (current_setting('duo.test.couple_a')::uuid, current_setting('duo.test.place_slug'), current_setting('duo.test.place_name'), current_setting('duo.test.user_a')::uuid),
   (current_setting('duo.test.couple_b')::uuid, current_setting('duo.test.place_slug'), current_setting('duo.test.place_name'), current_setting('duo.test.user_b')::uuid);
 
+SELECT set_config('duo.test.match_session_a', gen_random_uuid()::text, true);
+SELECT set_config('duo.test.match_session_b', gen_random_uuid()::text, true);
+
+INSERT INTO public.duo_match_sessions (id, couple_id, city_slug, created_by)
+VALUES
+  (current_setting('duo.test.match_session_a')::uuid, current_setting('duo.test.couple_a')::uuid, 'minsk', current_setting('duo.test.user_a')::uuid),
+  (current_setting('duo.test.match_session_b')::uuid, current_setting('duo.test.couple_b')::uuid, 'minsk', current_setting('duo.test.user_b')::uuid);
+
+INSERT INTO public.duo_match_candidates (session_id, place_slug, position)
+VALUES
+  (current_setting('duo.test.match_session_a')::uuid, current_setting('duo.test.place_slug'), 1),
+  (current_setting('duo.test.match_session_b')::uuid, current_setting('duo.test.place_slug'), 1);
+
+INSERT INTO public.duo_match_votes (session_id, place_slug, user_id, liked)
+VALUES
+  (current_setting('duo.test.match_session_a')::uuid, current_setting('duo.test.place_slug'), current_setting('duo.test.user_a')::uuid, true),
+  (current_setting('duo.test.match_session_a')::uuid, current_setting('duo.test.place_slug'), current_setting('duo.test.user_f')::uuid, false),
+  (current_setting('duo.test.match_session_b')::uuid, current_setting('duo.test.place_slug'), current_setting('duo.test.user_b')::uuid, true);
+
 SET LOCAL ROLE authenticated;
 SELECT set_config('request.jwt.claim.sub', current_setting('duo.test.user_a'), true);
 SELECT set_config('request.jwt.claims', json_build_object('sub', current_setting('duo.test.user_a'), 'role', 'authenticated')::text, true);
@@ -129,9 +152,23 @@ BEGIN
   SELECT count(*) INTO visible_count FROM public.couples;
   IF visible_count <> 1 THEN RAISE EXCEPTION 'User A can see % couples; expected 1', visible_count; END IF;
   SELECT count(*) INTO visible_count FROM public.couple_members;
-  IF visible_count <> 1 THEN RAISE EXCEPTION 'User A can see % memberships; expected 1', visible_count; END IF;
+  IF visible_count <> 2 THEN RAISE EXCEPTION 'User A can see % memberships; expected 2', visible_count; END IF;
   SELECT count(*) INTO visible_count FROM public.duo_date_plans;
   IF visible_count <> 1 THEN RAISE EXCEPTION 'User A can see % plans; expected 1', visible_count; END IF;
+
+  SELECT count(*) INTO visible_count FROM public.duo_match_sessions;
+  IF visible_count <> 1 THEN RAISE EXCEPTION 'User A must only see their own Match session; found %', visible_count; END IF;
+  BEGIN
+    PERFORM count(*) FROM public.duo_match_votes;
+    RAISE EXCEPTION 'authenticated unexpectedly read private Match votes';
+  EXCEPTION WHEN insufficient_privilege THEN NULL;
+  END;
+  BEGIN
+    UPDATE public.duo_match_sessions SET activity_version = activity_version + 1
+      WHERE id = current_setting('duo.test.match_session_a')::uuid;
+    RAISE EXCEPTION 'authenticated unexpectedly updated Match session metadata';
+  EXCEPTION WHEN insufficient_privilege THEN NULL;
+  END;
   SELECT count(*) INTO visible_count FROM public.place_activity;
   IF visible_count <> 1 THEN RAISE EXCEPTION 'User A can see % activity rows; expected 1', visible_count; END IF;
 
@@ -166,6 +203,43 @@ BEGIN
   END;
 END $$;
 
+
+-- The API-only role can inspect both votes inside the current couple, but
+-- cannot read another couple's session or change the partner's vote.
+RESET ROLE;
+SET LOCAL ROLE duo_match_backend;
+SELECT set_config('request.jwt.claim.sub', current_setting('duo.test.user_a'), true);
+SELECT set_config('request.jwt.claims', json_build_object('sub', current_setting('duo.test.user_a'), 'role', 'authenticated')::text, true);
+DO $$
+DECLARE visible_count integer; affected integer;
+BEGIN
+  SELECT count(*) INTO visible_count FROM public.duo_match_sessions;
+  IF visible_count <> 1 THEN RAISE EXCEPTION 'Match backend saw % sessions for User A; expected 1', visible_count; END IF;
+  SELECT count(*) INTO visible_count FROM public.duo_match_candidates;
+  IF visible_count <> 1 THEN RAISE EXCEPTION 'Match backend saw % candidates for User A; expected 1', visible_count; END IF;
+  SELECT count(*) INTO visible_count FROM public.duo_match_votes;
+  IF visible_count <> 2 THEN RAISE EXCEPTION 'Match backend saw % couple votes; expected 2', visible_count; END IF;
+
+  UPDATE public.duo_match_votes SET liked = true
+    WHERE session_id = current_setting('duo.test.match_session_a')::uuid
+      AND user_id = current_setting('duo.test.user_f')::uuid;
+  GET DIAGNOSTICS affected = ROW_COUNT;
+  IF affected <> 0 THEN RAISE EXCEPTION 'Match backend changed the partner vote'; END IF;
+
+  UPDATE public.duo_match_votes SET liked = false
+    WHERE session_id = current_setting('duo.test.match_session_a')::uuid
+      AND user_id = current_setting('duo.test.user_a')::uuid;
+  GET DIAGNOSTICS affected = ROW_COUNT;
+  IF affected <> 1 THEN RAISE EXCEPTION 'Match backend could not update the current user vote'; END IF;
+
+  UPDATE public.duo_match_sessions SET activity_version = activity_version + 1
+    WHERE id = current_setting('duo.test.match_session_a')::uuid;
+  GET DIAGNOSTICS affected = ROW_COUNT;
+  IF affected <> 1 THEN RAISE EXCEPTION 'Match backend could not update its couple session'; END IF;
+END $$;
+
+RESET ROLE;
+SET LOCAL ROLE authenticated;
 SELECT set_config('request.jwt.claim.sub', current_setting('duo.test.user_b'), true);
 SELECT set_config('request.jwt.claims', json_build_object('sub', current_setting('duo.test.user_b'), 'role', 'authenticated')::text, true);
 DO $$

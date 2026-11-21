@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from decimal import Decimal
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 from uuid import uuid4
@@ -8,7 +9,7 @@ from fastapi.testclient import TestClient
 from app.auth import AuthUser, require_user
 from app.database import get_db
 from app.main import app
-from app.models.entities import Couple, CoupleMember
+from app.models.entities import Couple, CoupleMember, Place
 
 USER_ID = uuid4()
 COUPLE_ID = uuid4()
@@ -227,13 +228,15 @@ def test_couple_preferences_are_scoped_to_current_member_and_partner():
     db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
                                  created_at=datetime.now(timezone.utc))
     result = MagicMock()
+    partner_id = uuid4()
     result.mappings.return_value.one.return_value = {
         "preferences": {
             "members": {
                 str(USER_ID): {"interests": ["Кофейни"], "avoid": []},
-                str(uuid4()): {"interests": ["Культура"], "avoid": ["Бары и пабы"]},
+                str(partner_id): {"interests": ["Культура"], "avoid": ["Бары и пабы"]},
             }
-        }
+        },
+        "member_ids": [str(USER_ID), str(partner_id)],
     }
     db.execute.return_value = result
     app.dependency_overrides[get_db] = lambda: db
@@ -254,7 +257,8 @@ def test_couple_preferences_update_only_current_member():
                                  created_at=datetime.now(timezone.utc))
     updated = MagicMock()
     updated.mappings.return_value.one.return_value = {
-        "preferences": {"members": {str(USER_ID): {"interests": ["Рестораны"], "avoid": []}}}
+        "preferences": {"members": {str(USER_ID): {"interests": ["Рестораны"], "avoid": []}}},
+        "member_ids": [str(USER_ID)],
     }
     db.execute.side_effect = [MagicMock(), updated]
     app.dependency_overrides[get_db] = lambda: db
@@ -268,6 +272,7 @@ def test_couple_preferences_update_only_current_member():
         app.dependency_overrides.clear()
     assert response.status_code == 200
     assert response.json() == {"mine": {"interests": ["Рестораны"], "avoid": []}, "partner": None}
+    assert "private.set_couple_member_preferences" in str(db.execute.call_args_list[0].args[0])
     assert db.commit.called
 
 
@@ -287,3 +292,88 @@ def test_couple_preferences_reject_unknown_categories():
         app.dependency_overrides.clear()
     assert response.status_code == 422
     db.execute.assert_not_called()
+
+
+def _recommendation_place(slug, name, category, rating):
+    return Place(
+        id=uuid4(), slug=slug, city_slug="minsk", name=name, category=category,
+        emoji="✨", description="A good place", address="Minsk", rating=rating,
+        reviews="100", price_label="20 BYN", couple_price_label="40 BYN",
+        level=1, risk="good", tip="", website_url="", source_name="", source_url="",
+        cost=Decimal("20"),
+    )
+
+
+def test_recommendations_combine_both_partners_preferences_and_activity():
+    db = MagicMock()
+    partner_id = uuid4()
+    db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
+    db.get.side_effect = [SimpleNamespace(slug="minsk", is_active=True), Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                                 created_at=datetime.now(timezone.utc))]
+    preferences = MagicMock()
+    preferences.mappings.return_value.one.return_value = {
+        "preferences": {
+            "members": {
+                str(USER_ID): {"interests": ["Кофейни"], "avoid": []},
+                str(partner_id): {"interests": ["Кофейни"], "avoid": ["Бары и пабы"]},
+                str(uuid4()): {"interests": [], "avoid": ["Активности"]},
+            }
+        },
+        "member_ids": [str(USER_ID), str(partner_id)],
+    }
+    matches = MagicMock()
+    matches.scalars.return_value.all.return_value = ["shared-cafe"]
+    db.execute.side_effect = [preferences, matches]
+    activity_rows = MagicMock()
+    activity_rows.all.return_value = [
+        SimpleNamespace(place_slug="old-cafe", is_favorite=True, visited_at=None, rating=5)
+    ]
+    places_rows = MagicMock()
+    places_rows.all.return_value = [
+        _recommendation_place("old-cafe", "Old Coffee", "Кофейни", "4.8"),
+        _recommendation_place("shared-cafe", "Common Coffee", "Кофейни", "4.8"),
+        _recommendation_place("bar-place", "Cocktail Bar", "Пабы и бары", "4.9"),
+        _recommendation_place("game-place", "Game Room", "Игры", "4.2"),
+    ]
+    def scalars_for_recommendations(statement):
+        statement_text = str(statement).lower()
+        if "place_activity" in statement_text:
+            return activity_rows
+        if "places" in statement_text:
+            return places_rows
+        raise AssertionError(f"Unexpected recommendation query: {statement_text}")
+
+    db.scalars.side_effect = scalars_for_recommendations
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).post(
+            "/api/recommendations",
+            json={"city_slug": "minsk", "interests": [], "avoid": [], "limit": 6},
+        )
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["context"]["is_couple"] is True
+    assert payload["items"][0]["slug"] == "shared-cafe"
+    assert "Интересно обоим" in payload["items"][0]["reasons"]
+    assert "Вы оба выбрали это в DUO Match" in payload["items"][0]["reasons"]
+    assert "Вам нравятся места этой категории" in payload["items"][0]["reasons"]
+    assert "old-cafe" not in [item["slug"] for item in payload["items"]]
+    assert "bar-place" not in [item["slug"] for item in payload["items"]]
+    assert "game-place" in [item["slug"] for item in payload["items"]]
+
+
+def test_recommendations_reject_unknown_interest_categories():
+    db = MagicMock()
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).post(
+            "/api/recommendations",
+            json={"city_slug": "minsk", "interests": ["Secret"], "avoid": [], "limit": 6},
+        )
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 422

@@ -14,7 +14,7 @@ from app.config import get_settings
 from app.database import get_db
 from app.auth import AuthUser, require_user
 from app.models.entities import City, Place, Couple, CoupleMember, PlaceActivity, PersonalPlaceActivity, DuoEvent, DuoDatePlan, DuoPlaceUpdate
-from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, CouplePreferencesIn, ActivitySyncItem, PlanCreate, PlanOut, MatchSessionCreate, MatchVoteIn
+from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, CouplePreferencesIn, RecommendationRequest, ActivitySyncItem, PlanCreate, PlanOut, MatchSessionCreate, MatchVoteIn
 
 settings = get_settings()
 
@@ -126,14 +126,28 @@ def me(user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
 
 
 
+def _load_couple_preferences(db: Session, couple_id: UUID, user_id: UUID):
+    row = db.execute(text("""
+        SELECT preferences,
+               ARRAY(SELECT user_id::text FROM public.couple_members WHERE couple_id = :couple) AS member_ids
+        FROM public.couples
+        WHERE id = :couple
+    """), {"couple": couple_id}).mappings().one()
+    members = (row["preferences"] or {}).get("members", {})
+    active_member_ids = set(row["member_ids"] or [])
+    mine = members.get(str(user_id))
+    partner = next(
+        (members[member_id] for member_id in active_member_ids if member_id != str(user_id) and member_id in members),
+        None,
+    )
+    return members, mine, partner
+
+
 @app.get("/api/couples/preferences")
 def get_couple_preferences(user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
     """Return each partner's own discovery preferences without exposing account data."""
     couple = get_couple(db, user)
-    row = db.execute(text("SELECT preferences FROM public.couples WHERE id = :couple"), {"couple": couple.id}).mappings().one()
-    members = (row["preferences"] or {}).get("members", {})
-    mine = members.get(str(user.id))
-    partner = next((value for key, value in members.items() if key != str(user.id)), None)
+    members, mine, partner = _load_couple_preferences(db, couple.id, user.id)
     return {"mine": mine, "partner": partner}
 
 
@@ -143,13 +157,11 @@ def update_couple_preferences(payload: CouplePreferencesIn, user: AuthUser = Dep
     couple = get_couple(db, user)
     preferences_json = json.dumps(payload.model_dump())
     db.execute(
-        text("UPDATE public.couples SET preferences = jsonb_set(COALESCE(preferences, '{\"members\": {}}'::jsonb), ARRAY['members', CAST(:user_id AS text)], CAST(:preferences AS jsonb), true) WHERE id = :couple"),
-        {"user_id": user.id, "preferences": preferences_json, "couple": couple.id},
+        text("SELECT private.set_couple_member_preferences(:couple, CAST(:preferences AS jsonb))"),
+        {"preferences": preferences_json, "couple": couple.id},
     )
     db.commit()
-    row = db.execute(text("SELECT preferences FROM public.couples WHERE id = :couple"), {"couple": couple.id}).mappings().one()
-    members = (row["preferences"] or {}).get("members", {})
-    partner = next((value for key, value in members.items() if key != str(user.id)), None)
+    _, _, partner = _load_couple_preferences(db, couple.id, user.id)
     return {"mine": payload.model_dump(), "partner": partner}
 
 
@@ -204,6 +216,142 @@ def get_activity(user: AuthUser = Depends(require_user), db: Session = Depends(g
     rows = db.scalars(select(PlaceActivity).where(PlaceActivity.couple_id == member.couple_id)).all() if member else db.scalars(select(PersonalPlaceActivity).where(PersonalPlaceActivity.user_id == user.id)).all()
     return [{"place_slug": r.place_slug, "place_name": r.place_name, "is_favorite": r.is_favorite, "visited_at": r.visited_at, "rating": r.rating, "note": r.note} for r in rows]
 
+
+
+
+def _recommendation_category(value: str | None) -> str:
+    category = (value or "").lower()
+    if any(word in category for word in ("ресторан", "ужин")):
+        return "Рестораны"
+    if any(word in category for word in ("кофейн", "кофе", "завтрак")):
+        return "Кофейни"
+    if any(word in category for word in ("бар", "паб", "винн", "коктейл", "тики")):
+        return "Бары и пабы"
+    if any(word in category for word in ("музе", "театр", "кино", "выстав", "арт", "культур", "наука", "музык", "галере")):
+        return "Культура"
+    if any(word in category for word in ("прогул", "природ", "парк", "видов")):
+        return "Прогулки и отдых"
+    if any(word in category for word in ("игр", "квест", "vr", "экстрим", "спорт", "скал", "картинг", "вода", "лёд", "лед", "актив", "танц", "полёт", "полет", "скорост", "spa")):
+        return "Активности"
+    return "Другое"
+
+
+@app.post("/api/recommendations")
+def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    """Rank active places using the current user's preferences and real activity signals."""
+    city = require_active_city(db, payload.city_slug)
+    member = db.scalar(select(CoupleMember).where(CoupleMember.user_id == user.id).limit(1))
+    is_couple = bool(member)
+    if member:
+        couple = db.get(Couple, member.couple_id)
+        if not couple:
+            raise HTTPException(status_code=404, detail="Пространство пары не найдено")
+        _, stored_own_preferences, stored_partner_preferences = _load_couple_preferences(db, couple.id, user.id)
+        own_preferences = stored_own_preferences or {
+            "interests": payload.interests,
+            "avoid": payload.avoid,
+        }
+        partner_preferences = stored_partner_preferences or {}
+        preference_sets = [own_preferences, partner_preferences]
+        activities = db.scalars(
+            select(PlaceActivity).where(PlaceActivity.couple_id == member.couple_id)
+        ).all()
+        mutual_likes = set(db.execute(text("""
+            SELECT v.place_slug
+            FROM public.duo_match_votes v
+            JOIN public.duo_match_sessions s ON s.id = v.session_id
+            WHERE s.couple_id = :couple AND v.liked IS TRUE
+            GROUP BY v.session_id, v.place_slug
+            HAVING COUNT(DISTINCT v.user_id) >= 2
+        """), {"couple": couple.id}).scalars().all())
+    else:
+        preference_sets = [{"interests": payload.interests, "avoid": payload.avoid}]
+        activities = db.scalars(
+            select(PersonalPlaceActivity).where(PersonalPlaceActivity.user_id == user.id)
+        ).all()
+        mutual_likes = set()
+
+    interests_by_member = [
+        {_recommendation_category(item) for item in prefs.get("interests", [])}
+        for prefs in preference_sets
+    ]
+    avoided = {
+        _recommendation_category(item)
+        for prefs in preference_sets
+        for item in prefs.get("avoid", [])
+    }
+    activity_by_slug = {item.place_slug: item for item in activities}
+    places = db.scalars(
+        select(Place).where(Place.city_slug == city.slug, Place.is_active.is_(True))
+    ).all()
+    places_by_slug = {place.slug: place for place in places}
+    liked_categories = set()
+    disliked_categories = set()
+    for item in activities:
+        related_place = places_by_slug.get(item.place_slug)
+        if not related_place:
+            continue
+        related_category = _recommendation_category(related_place.category)
+        if item.is_favorite or (item.rating is not None and item.rating >= 4):
+            liked_categories.add(related_category)
+        elif item.rating is not None and item.rating <= 2:
+            disliked_categories.add(related_category)
+
+    ranked = []
+    for place in places:
+        category = _recommendation_category(place.category)
+        activity = activity_by_slug.get(place.slug)
+        if category in avoided or (activity and (activity.is_favorite or activity.visited_at)):
+            continue
+        score = 0
+        reasons = []
+        matched_members = sum(category in interests for interests in interests_by_member)
+        if matched_members == 2:
+            score += 30
+            reasons.append("Интересно обоим")
+        elif matched_members == 1:
+            score += 17
+            reasons.append("Совпадает с вашими интересами")
+
+        if category in liked_categories:
+            score += 12
+            reasons.append("Вам нравятся места этой категории")
+        elif category in disliked_categories:
+            score -= 10
+        if place.slug in mutual_likes:
+            score += 18
+            reasons.append("Вы оба выбрали это в DUO Match")
+
+        try:
+            external_rating = float(str(place.rating).replace(",", "."))
+        except (TypeError, ValueError):
+            external_rating = 0
+        if 0 < external_rating <= 5:
+            score += round(external_rating * 3)
+            if external_rating >= 4.5:
+                reasons.append("Высокая оценка гостей")
+        score += 4
+
+        if not reasons:
+            reasons.append("Идея для нового открытия")
+        ranked.append((score, place, reasons[:3]))
+
+    ranked.sort(key=lambda item: (-item[0], item[1].name.casefold(), item[1].slug))
+    return {
+        "items": [
+            {
+                **PlaceOut.model_validate(place).model_dump(),
+                "score": score,
+                "reasons": reasons,
+            }
+            for score, place, reasons in ranked[:payload.limit]
+        ],
+        "context": {
+            "is_couple": is_couple,
+            "uses_preferences": any(interests_by_member) or bool(avoided),
+            "signals": ["интересы", "избранное", "оценки", "посещения"] + (["DUO Match"] if is_couple else []),
+        },
+    }
 
 
 @app.get("/api/analytics/couple")

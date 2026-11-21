@@ -102,6 +102,13 @@ class CouplePreferencesIn(BaseModel):
     avoid: list[Literal["Бары и пабы", "Активности", "Культура", "Рестораны"]] = Field(default_factory=list, max_length=4)
 
 
+class RecommendationRequest(BaseModel):
+    city_slug: str = Field(default="minsk", min_length=2, max_length=80)
+    interests: list[Literal["Рестораны", "Кофейни", "Бары и пабы", "Активности", "Культура", "Прогулки и отдых", "Другое"]] = Field(default_factory=list, max_length=7)
+    avoid: list[Literal["Бары и пабы", "Активности", "Культура", "Рестораны"]] = Field(default_factory=list, max_length=4)
+    limit: int = Field(default=6, ge=1, le=12)
+
+
 class ActivitySyncItem(BaseModel):
     place_slug: str = Field(min_length=1, max_length=180)
     is_favorite: bool = False

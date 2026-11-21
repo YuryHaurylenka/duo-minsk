@@ -118,8 +118,12 @@ class ActivitySyncItem(BaseModel):
 
     @model_validator(mode="after")
     def require_activity_change(self):
-        if not ({"is_favorite", "visited", "rating", "note"} & self.model_fields_set):
+        changed_fields = {"is_favorite", "visited", "rating", "note"} & self.model_fields_set
+        if not changed_fields:
             raise ValueError("Не указано поле активности для изменения")
+        for field in ("is_favorite", "visited", "note"):
+            if field in changed_fields and getattr(self, field) is None:
+                raise ValueError(f"Поле {field} не может быть null")
         return self
 
 

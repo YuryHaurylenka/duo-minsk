@@ -154,7 +154,7 @@ useEffect(()=>{if(!session){setProfile(null);setPlans([]);return}let cancelled=f
    if(e.status!=='scheduled'||dateKey(e.starts_at)!==planDate)return false;
    const parts=new Intl.DateTimeFormat('en-GB',{timeZone:cityTimezone,hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(e.starts_at));
    const eventMinutes=Number(parts.find(x=>x.type==='hour')?.value||0)*60+Number(parts.find(x=>x.type==='minute')?.value||0);
-   if(eventMinutes<startMinutes||eventMinutes+90>endMinutes||(eventMinutes-startMinutes<60&&endMinutes-(eventMinutes+90)<60))return false;
+   if(eventMinutes<startMinutes||eventMinutes+90>endMinutes||(eventMinutes-startMinutes<75&&endMinutes-(eventMinutes+90)<75))return false;
    const eventCost=e.price_min==null?null:Number(e.price_min)*people;
    return budgetLimit===null||eventCost!==null&&eventCost<=budgetLimit;
   });

@@ -334,7 +334,15 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
         _recommendation_place("bar-place", "Cocktail Bar", "Пабы и бары", "4.9"),
         _recommendation_place("game-place", "Game Room", "Игры", "4.2"),
     ]
-    db.scalars.side_effect = [activity_rows, places_rows]
+    def scalars_for_recommendations(statement):
+        statement_text = str(statement).lower()
+        if "place_activity" in statement_text:
+            return activity_rows
+        if "places" in statement_text:
+            return places_rows
+        raise AssertionError(f"Unexpected recommendation query: {statement_text}")
+
+    db.scalars.side_effect = scalars_for_recommendations
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:

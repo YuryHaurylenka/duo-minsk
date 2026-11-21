@@ -146,9 +146,11 @@ def test_match_active_session_lookup_returns_current_couple_round():
     session_id = uuid4()
     db = MagicMock()
     db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
-    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
-                                 created_at=datetime.now(timezone.utc))
-    city = SimpleNamespace(slug="minsk", is_active=True)
+    db.get.side_effect = [
+        Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+               created_at=datetime.now(timezone.utc)),
+        SimpleNamespace(slug="minsk", is_active=True),
+    ]
     active = {"id": session_id, "status": "active", "city_slug": "minsk"}
     result = MagicMock()
     result.mappings.return_value.first.return_value = active
@@ -166,8 +168,11 @@ def test_match_active_session_lookup_returns_current_couple_round():
 def test_match_active_session_lookup_returns_empty_when_round_missing():
     db = MagicMock()
     db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
-    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
-                                 created_at=datetime.now(timezone.utc))
+    db.get.side_effect = [
+        Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+               created_at=datetime.now(timezone.utc)),
+        SimpleNamespace(slug="minsk", is_active=True),
+    ]
     result = MagicMock()
     result.mappings.return_value.first.return_value = None
     db.execute.return_value = result

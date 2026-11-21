@@ -265,3 +265,17 @@ body,#root{font-family:var(--font-body)}
 .calendar-hint{margin-top:15px;padding:11px 13px;border:1px dashed #52633d;border-radius:10px;color:var(--muted);font-size:9px}
 @media(max-width:900px){.calendar-layout{grid-template-columns:1fr}.calendar-agenda{min-height:180px}}
 @media(max-width:680px){.duo-calendar{padding:14px}.calendar-toolbar{align-items:flex-start;flex-direction:column}.calendar-toolbar h2{font-size:23px}.calendar-month-control{width:100%;justify-content:space-between}.calendar-grid,.calendar-weekdays{gap:3px}.calendar-day{min-height:58px;padding:7px 5px;border-radius:8px}.calendar-day>span{font-size:10px}.calendar-day small{font-size:7px}.calendar-dots{gap:3px}.calendar-dots i{width:5px;height:5px}.calendar-agenda{padding:13px}}
+
+
+/* Custom stops and per-stop timing */
+.plan-editor-item{align-items:flex-start}
+.plan-editor-item-fields{display:grid;grid-template-columns:minmax(120px,1fr) 104px 76px;gap:7px;align-items:center}
+.plan-editor-item-fields input{height:32px;padding:0 8px;font-size:9px}
+.plan-editor-item-fields label{display:flex;align-items:center;gap:4px;color:var(--muted);font-size:8px}
+.plan-editor-item-fields label input{width:100%;min-width:0}
+.plan-editor-custom{display:grid;gap:9px;margin-top:15px;padding:14px;border:1px dashed #52683d;border-radius:12px;background:#ffffff03}
+.plan-editor-custom>b{font-size:10px;color:#dce6d1}
+.plan-editor-custom>div{display:grid;grid-template-columns:1fr 1.3fr auto;gap:8px}
+.plan-editor-custom input{min-width:0;width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;background:#11170f;color:#eef3e8;font:inherit;font-size:9px}
+.plan-editor-custom>small{color:var(--muted);font-size:8px;line-height:1.5}
+@media(max-width:760px){.plan-editor-item{flex-wrap:wrap}.plan-editor-item-fields{flex:1 1 calc(100% - 32px);grid-template-columns:minmax(0,1fr) 90px 66px}.plan-editor-custom>div{grid-template-columns:1fr}.plan-editor-custom .button-ghost{justify-content:center}}

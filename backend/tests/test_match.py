@@ -184,3 +184,37 @@ def test_match_active_session_lookup_returns_empty_when_round_missing():
         app.dependency_overrides.clear()
     assert response.status_code == 200
     assert response.json() == {"active": False}
+
+def test_couple_analytics_returns_shared_activity_and_match_history():
+    db = MagicMock()
+    db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
+    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                                 created_at=datetime.now(timezone.utc))
+    activity = MagicMock()
+    activity.mappings.return_value.one.return_value = {
+        "favorites": 3, "visits": 2, "ratings": 1, "average_rating": 4.0
+    }
+    categories = MagicMock()
+    categories.mappings.return_value.all.return_value = [{"name": "Кофейни", "value": 2}]
+    match_stats = MagicMock()
+    match_stats.mappings.return_value.one.return_value = {
+        "rounds": 4, "completed_rounds": 3, "mutual_matches": 5
+    }
+    history = MagicMock()
+    history.mappings.return_value.all.return_value = [{
+        "id": "session-1", "status": "completed", "city_slug": "minsk",
+        "created_at": datetime.now(timezone.utc), "mutual_matches": 2
+    }]
+    db.execute.side_effect = [activity, categories, match_stats, history]
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).get("/api/analytics/couple")
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["activity"]["visits"] == 2
+    assert payload["common_interests"] == [{"name": "Кофейни", "value": 2}]
+    assert payload["match_stats"]["mutual_matches"] == 5
+    assert payload["match_history"][0]["status"] == "completed"

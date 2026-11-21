@@ -336,6 +336,7 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
         _recommendation_place("game-place", "Game Room", "Игры", "4.2"),
         _recommendation_place("unsafe-place", "Unsafe Attraction", "Игры", "4.9"),
     ]
+    places_rows.all.return_value[-1].risk = "avoid"
     def scalars_for_recommendations(statement):
         statement_text = str(statement).lower()
         if "place_activity" in statement_text:
@@ -365,39 +366,6 @@ def test_recommendations_combine_both_partners_preferences_and_activity():
     assert "bar-place" not in [item["slug"] for item in payload["items"]]
     assert "game-place" in [item["slug"] for item in payload["items"]]
     assert "unsafe-place" not in [item["slug"] for item in payload["items"]]
-
-
-def test_recommendations_reject_unknown_interest_categories():
-    db = MagicMock()
-    app.dependency_overrides[get_db] = lambda: db
-    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
-    try:
-        response = TestClient(app).post(
-            "/api/recommendations",
-            json={"city_slug": "minsk", "interests": ["Secret"], "avoid": [], "limit": 6},
-        )
-    finally:
-        app.dependency_overrides.clear()
-    assert response.status_code == 422    db.scalars.side_effect = scalars_for_recommendations
-    app.dependency_overrides[get_db] = lambda: db
-    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
-    try:
-        response = TestClient(app).post(
-            "/api/recommendations",
-            json={"city_slug": "minsk", "interests": [], "avoid": [], "limit": 6},
-        )
-    finally:
-        app.dependency_overrides.clear()
-    assert response.status_code == 200
-    payload = response.json()
-    assert payload["context"]["is_couple"] is True
-    assert payload["items"][0]["slug"] == "shared-cafe"
-    assert "Интересно обоим" in payload["items"][0]["reasons"]
-    assert "Вы оба выбрали это в DUO Match" in payload["items"][0]["reasons"]
-    assert "Вам нравятся места этой категории" in payload["items"][0]["reasons"]
-    assert "old-cafe" not in [item["slug"] for item in payload["items"]]
-    assert "bar-place" not in [item["slug"] for item in payload["items"]]
-    assert "game-place" in [item["slug"] for item in payload["items"]]
 
 
 def test_recommendations_reject_unknown_interest_categories():

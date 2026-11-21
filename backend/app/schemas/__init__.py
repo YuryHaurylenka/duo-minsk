@@ -127,6 +127,7 @@ class PlanCreate(BaseModel):
 
 
 class PlanUpdate(BaseModel):
+    expected_updated_at: datetime | None = None
     plan_date: date | None = None
     title: str | None = Field(default=None, min_length=1, max_length=180)
     mood: str | None = Field(default=None, max_length=40)
@@ -145,6 +146,7 @@ class PlanOut(BaseModel):
     items: list[dict]
     notes: str
     created_at: datetime
+    updated_at: datetime
 
 
 class MatchSessionCreate(BaseModel):

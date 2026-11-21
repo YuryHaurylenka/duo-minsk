@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from decimal import Decimal
 from uuid import UUID
+from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -94,6 +95,11 @@ class CoupleOut(BaseModel):
     name: str
     invite_code: str
     role: str
+
+
+class CouplePreferencesIn(BaseModel):
+    interests: list[Literal["Рестораны", "Кофейни", "Бары и пабы", "Активности", "Культура", "Прогулки и отдых", "Другое"]] = Field(default_factory=list, max_length=7)
+    avoid: list[Literal["Бары и пабы", "Активности", "Культура", "Рестораны"]] = Field(default_factory=list, max_length=4)
 
 
 class ActivitySyncItem(BaseModel):

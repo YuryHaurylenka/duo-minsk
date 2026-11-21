@@ -157,8 +157,8 @@ def update_couple_preferences(payload: CouplePreferencesIn, user: AuthUser = Dep
     couple = get_couple(db, user)
     preferences_json = json.dumps(payload.model_dump())
     db.execute(
-        text("UPDATE public.couples SET preferences = jsonb_set(COALESCE(preferences, '{\"members\": {}}'::jsonb), ARRAY['members', CAST(:user_id AS text)], CAST(:preferences AS jsonb), true) WHERE id = :couple"),
-        {"user_id": user.id, "preferences": preferences_json, "couple": couple.id},
+        text("SELECT private.set_couple_member_preferences(:couple, CAST(:preferences AS jsonb))"),
+        {"preferences": preferences_json, "couple": couple.id},
     )
     db.commit()
     _, _, partner = _load_couple_preferences(db, couple.id, user.id)

@@ -6,7 +6,7 @@ from uuid import uuid4
 
 from fastapi.testclient import TestClient
 
-from app.auth import AuthUser, require_user
+from app.auth import AuthUser, require_user, require_match_user
 from app.database import get_db
 from app.main import app
 from app.models.entities import Couple, CoupleMember, Place
@@ -22,6 +22,7 @@ def test_match_requires_second_member():
                                  created_at=datetime.now(timezone.utc))
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
     try:
         response = TestClient(app).post("/api/match/sessions", json={"city_slug": "minsk"})
     finally:

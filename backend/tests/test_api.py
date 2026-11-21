@@ -296,10 +296,14 @@ def test_delete_plan_is_scoped_to_current_couple(client, db):
 
 
 def test_delete_plan_deletes_matching_plan(client, db):
-    plan = SimpleNamespace(id=uuid4())
+    version = datetime.now(timezone.utc)
+    plan = SimpleNamespace(id=uuid4(), updated_at=version)
     db.scalar.side_effect = [membership(), plan]
     db.get.return_value = couple()
-    response = client.delete(f"/api/plans/{plan.id}")
+    response = client.delete(
+        f"/api/plans/{plan.id}",
+        params={"expected_updated_at": version.isoformat()},
+    )
     assert response.status_code == 204
     db.delete.assert_called_once_with(plan)
     db.commit.assert_called_once()

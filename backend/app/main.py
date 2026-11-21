@@ -289,6 +289,20 @@ def _match_session_payload(session_id: UUID, user: AuthUser, couple: Couple, db:
     return {"session": dict(session_row), "candidates": candidates, "matches": [r for r in candidates if r["my_vote"] is True and r["partner_vote"] is True], "my_votes": sum(r["my_vote"] is not None for r in candidates), "partner_votes": sum(bool(r["partner_has_voted"]) for r in candidates), "candidate_count": len(candidates)}
 
 
+@app.get("/api/match/sessions/active")
+def get_active_match_session(city_slug: str = Query(..., min_length=2, max_length=80), user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    couple = get_couple(db, user)
+    city = require_active_city(db, city_slug)
+    active_session = db.execute(text("""SELECT id, status, city_slug
+        FROM public.duo_match_sessions
+        WHERE couple_id = :couple AND city_slug = :city AND status = 'active'
+        ORDER BY created_at DESC LIMIT 1"""), {"couple": couple.id, "city": city.slug}).mappings().first()
+    if not active_session:
+        return {"active": False}
+    return {"active": True, "id": str(active_session["id"]), "status": active_session["status"],
+            "city_slug": active_session["city_slug"]}
+
+
 @app.get("/api/match/sessions/{session_id}")
 def get_match_session(session_id: UUID, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
     couple = get_couple(db, user)

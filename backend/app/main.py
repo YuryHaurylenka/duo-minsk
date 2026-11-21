@@ -13,7 +13,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from app.config import get_settings
 from app.database import get_db
 from app.auth import AuthUser, require_user
-from app.models.entities import City, Place, Couple, CoupleMember, PlaceActivity, PersonalPlaceActivity, DuoEvent, DuoDatePlan, DuoPlaceUpdate
+from app.models.entities import City, Place, Couple, CoupleMember, PlaceActivity, PersonalPlaceActivity, RecommendationFeedback, DuoEvent, DuoDatePlan, DuoPlaceUpdate
 from app.schemas import CityOut, PlaceOut, EventOut, PlaceUpdateOut, CoupleCreate, CoupleJoin, CoupleOut, CouplePreferencesIn, RecommendationRequest, ActivitySyncItem, PlanCreate, PlanOut, MatchSessionCreate, MatchVoteIn
 
 settings = get_settings()
@@ -284,6 +284,7 @@ def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends
     places = db.scalars(
         select(Place).where(Place.city_slug == city.slug, Place.is_active.is_(True))
     ).all()
+    dismissed_slugs = set(db.scalars(select(RecommendationFeedback.place_slug).where(RecommendationFeedback.user_id == user.id)).all())
     places_by_slug = {place.slug: place for place in places}
     liked_categories = set()
     disliked_categories = set()
@@ -301,7 +302,7 @@ def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends
     for place in places:
         category = _recommendation_category(place.category)
         activity = activity_by_slug.get(place.slug)
-        if category in avoided or place.risk == "avoid" or place.level > 3 or (activity and (activity.is_favorite or activity.visited_at)):
+        if place.slug in dismissed_slugs or category in avoided or place.risk == "avoid" or place.level > 3 or (activity and (activity.is_favorite or activity.visited_at)):
             continue
         score = 0
         reasons = []
@@ -352,6 +353,33 @@ def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends
             "signals": ["интересы", "избранное", "оценки", "посещения"] + (["DUO Match"] if is_couple else []),
         },
     }
+
+
+
+@app.post("/api/recommendations/{place_slug}/dismiss", status_code=204)
+def dismiss_recommendation(place_slug: str, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    """Hide a recommendation only for the authenticated user."""
+    place_exists = db.scalar(select(Place.slug).where(Place.slug == place_slug, Place.is_active.is_(True)))
+    if not place_exists:
+        raise HTTPException(status_code=404, detail="Место не найдено")
+    db.execute(
+        insert(RecommendationFeedback)
+        .values(user_id=user.id, place_slug=place_slug, action="dismiss")
+        .on_conflict_do_nothing(index_elements=["user_id", "place_slug"])
+    )
+    db.commit()
+    return None
+
+
+@app.delete("/api/recommendations/{place_slug}/dismiss")
+def restore_recommendation(place_slug: str, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+    """Restore a recommendation previously hidden by the authenticated user."""
+    db.execute(delete(RecommendationFeedback).where(
+        RecommendationFeedback.user_id == user.id,
+        RecommendationFeedback.place_slug == place_slug,
+    ))
+    db.commit()
+    return {"status": "restored"}
 
 
 @app.get("/api/analytics/couple")

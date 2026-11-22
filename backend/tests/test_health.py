@@ -8,12 +8,13 @@ def test_health():
     assert response.json()["status"] == "ok"
 
 
-def test_vite_assets_are_served():
+def test_vite_assets_are_served(monkeypatch):
     """Vite bundles must be served as static files, not routed into the API."""
     from pathlib import Path
 
     assets_dir = Path(__file__).resolve().parents[2] / "public" / "assets"
     asset = next(assets_dir.iterdir())
+    monkeypatch.chdir(assets_dir.parents[1])
     response = TestClient(app).get(f"/assets/{asset.name}")
 
     assert response.status_code == 200

@@ -34,7 +34,7 @@ app.add_middleware(CORSMiddleware, allow_origins=settings.allowed_origins, allow
 # discover the mount and promote the files to its CDN at build time.
 from fastapi.staticfiles import StaticFiles
 
-app.mount("/assets", StaticFiles(directory="public/assets"), name="assets")
+app.mount("/assets", StaticFiles(directory="public/assets", check_dir=False), name="assets")
 
 
 def get_couple(db: Session, user: AuthUser) -> Couple:

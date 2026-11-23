@@ -28,6 +28,15 @@ async function mockCatalogApi(page) {
 
 const routes = ['/', '/planner', '/map', '/analytics'];
 
+async function openCatalogue(page) {
+  await page.goto('/places');
+  const welcome = page.getByRole('dialog', { name: 'Добро пожаловать в DUO' });
+  if (await welcome.isVisible().catch(() => false)) {
+    await welcome.getByRole('button', { name: 'Открыть DUO' }).click();
+  }
+}
+
+
 for (const route of routes) {
   test(`renders DUO without a blank screen at ${route}`, async ({ page }) => {
     const pageErrors = [];
@@ -65,7 +74,7 @@ test('welcome experience is accessible on first visit', async ({ page }) => {
 
 test('catalogue cards and detail modal fit desktop and mobile viewports', async ({ page }) => {
   await mockCatalogApi(page);
-  await page.goto('/places');
+  await openCatalogue(page);
   const firstCard = page.locator('.place-card').first();
   await expect(firstCard).toBeVisible({ timeout: 20_000 });
 
@@ -97,7 +106,7 @@ test('catalogue cards and detail modal fit desktop and mobile viewports', async 
 
 test('licensed catalogue photos show author and direct license links', async ({ page }) => {
   await mockCatalogApi(page);
-  await page.goto('/places');
+  await openCatalogue(page);
   const search = page.locator('input[aria-label="Поиск по местам"]');
 
   for (const item of [

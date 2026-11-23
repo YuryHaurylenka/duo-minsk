@@ -99,7 +99,7 @@ const licensedPlaces = [
 
 async function mockCatalogApi(page) {
   await page.route('**/api/**', route => {
-    const path = new URL(route.request().url()).pathname.replace(/\\/$/, '');
+    const path = new URL(route.request().url()).pathname;
     if (path.endsWith('/cities')) {
       return route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] });
     }

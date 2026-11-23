@@ -968,7 +968,9 @@
     "geocode_score": 75,
     "geocode_match": "Минск",
     "district": "Московский",
-    "location_verified": true
+    "location_verified": true,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/View_of_Victory_Park_Minsk.jpg/1280px-View_of_Victory_Park_Minsk.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:View_of_Victory_Park_Minsk.jpg"
   },
   {
     "n": "Лошицкий парк",
@@ -1016,7 +1018,9 @@
     "longitude": 27.574652,
     "location_verified": true,
     "slug": "парк-горького",
-    "district": "Партизанский"
+    "district": "Партизанский",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Gorki_park%2C_Minsk1.JPG",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Gorki_park,_Minsk1.JPG"
   },
   {
     "n": "Центральный ботанический сад",
@@ -2033,7 +2037,9 @@
     "longitude": 27.5784712,
     "location_verified": true,
     "slug": "музеи-мастерская-заира-азгура",
-    "district": "Партизанский"
+    "district": "Партизанский",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Memorial_Museum-Workshop_of_Zair_Isakavi%C4%8D_Azhur_03.jpg/1280px-Memorial_Museum-Workshop_of_Zair_Isakavi%C4%8D_Azhur_03.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Memorial_Museum-Workshop_of_Zair_Isakavi%C4%8D_Azhur_03.jpg"
   },
   {
     "n": "Национальный исторический музей",

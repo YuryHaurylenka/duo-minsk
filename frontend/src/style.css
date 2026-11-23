@@ -289,3 +289,7 @@ body,#root{font-family:var(--font-body)}
 
 /* Category artwork is intentionally distinguished from real venue photography. */
 .image-illustration-label{font-size:7px;letter-spacing:.08em;opacity:.92;pointer-events:none;white-space:nowrap}
+
+
+/* Catalogue trust signals */
+.place-rating{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}.place-review-count{margin-left:2px;color:#788574;font-size:8px;font-style:normal}

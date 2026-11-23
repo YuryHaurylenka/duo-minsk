@@ -55,3 +55,13 @@ def test_additional_verified_official_venue_sites_are_kept_in_the_seed():
     assert websites["f1-картинг-веснянка"] == "https://f1karting.by/"
     assert websites["минскии-зоопарк"] == "https://minskzoo.by/"
     assert websites["музеи-истории-минска"] == "https://minskmuseum.by/"
+
+
+def test_verified_museum_and_gallery_sites_are_kept_in_the_seed():
+    places = json.loads(SEED_PLACES_PATH.read_text(encoding="utf-8"))
+    websites = {place.get("slug"): place.get("site") for place in places}
+
+    assert websites["музеи-мастерская-заира-азгура"] == "https://azgur.by/"
+    assert websites["галерея-арт-беларусь"] == "https://artpalace.by/exhibitions/"
+    assert websites["национальныи-историческии-музеи"] == "https://histmuseum.by/"
+    assert websites["музеи-древнебелорусскои-культуры"] == "https://belcentre.by/ru_ru/%D0%BC%D1%83%D0%B7%D0%B5%D0%B9-%D0%B4%D1%80%D0%B5%D0%B2%D0%BD%D0%B5%D0%B1%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B9-%D0%BA%D1%83%D0%BB%D1%8C%D1%82%D1%83%D1%80%D1%8B/"

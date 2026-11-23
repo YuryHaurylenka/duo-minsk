@@ -8,6 +8,7 @@ const licensedPlaces = [
     rating: '4.8', reviews: '240', price_label: 'Уточнить стоимость',
     website_url: 'https://www.google.com/search?q=National+Library+of+Belarus',
     source_url: 'https://www.google.com/maps/search/?api=1&query=National+Library+of+Belarus',
+    latitude: 53.9315, longitude: 27.6465, location_verified_at: '2026-11-20T10:00:00Z', district: 'Первомайский',
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG/1280px-View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG',
   },
@@ -16,6 +17,7 @@ const licensedPlaces = [
     name: 'Музей истории Великой Отечественной войны', category: 'Музеи и выставки',
     description: 'Музей истории войны и памятные экспозиции.', address: 'пр-т Победителей, 8, Минск',
     rating: '4.9', reviews: '900', price_label: 'Уточнить стоимость',
+    latitude: 53.9352, longitude: 27.5362, location_verified_at: '2026-11-20T10:00:00Z', district: 'Центральный',
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_%2827248715740%29.jpg/1280px-Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_%2827248715740%29.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_(27248715740).jpg',
   },
@@ -108,6 +110,7 @@ async function openCatalogue(page) {
 
 for (const route of routes) {
   test(`renders DUO without a blank screen at ${route}`, async ({ page }) => {
+    await mockCatalogApi(page);
     const pageErrors = [];
     const failedLocalAssets = [];
 
@@ -135,6 +138,7 @@ for (const route of routes) {
 }
 
 test('welcome experience is accessible on first visit', async ({ page }) => {
+  await mockCatalogApi(page);
   await page.goto('/');
   await expect(page.getByRole('dialog', { name: 'Добро пожаловать в DUO' })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Не просто.*Создать момент/ })).toBeVisible();
@@ -238,6 +242,7 @@ test('broken venue photos fall back to an explicitly labelled category illustrat
 
 
 test('DUO Match explains the sign-in requirement to guests and fits mobile screens', async ({ page }) => {
+  await mockCatalogApi(page);
   await page.addInitScript(() => sessionStorage.setItem('duoEntrySeen', '1'));
   await page.goto('/');
   await page.getByRole('button', { name: /DUO Match/ }).click();
@@ -252,5 +257,53 @@ test('DUO Match explains the sign-in requirement to guests and fits mobile scree
     document: document.documentElement.scrollWidth,
   }));
   expect(dimensions.document, 'DUO Match should not overflow horizontally on mobile')
+    .toBeLessThanOrEqual(dimensions.viewport + 1);
+});
+
+
+test('catalogue and favourites have distinct navigation labels and empty states', async ({ page }) => {
+  await mockCatalogApi(page);
+  await openCatalogue(page);
+
+  await expect(page.locator('.breadcrumb')).toContainText('Каталог мест');
+  await expect(page.getByRole('button', { name: /Каталог мест/ })).toBeVisible();
+  await expect(page.locator('.catalog-count')).toContainText('9 мест найдено');
+
+  await page.getByRole('button', { name: /Каталог мест/ }).click();
+  await expect(page.locator('.breadcrumb')).toContainText('Избранное');
+  await expect(page.getByRole('heading', { name: 'Ваше избранное.' })).toBeVisible();
+  await expect(page.locator('.catalog-count')).toContainText('0 мест найдено');
+  await expect(page.getByRole('heading', { name: 'Самое время найти любимые места.' })).toBeVisible();
+
+  await page.getByRole('button', { name: /Найти, что добавить/ }).click();
+  await expect(page.locator('.breadcrumb')).toContainText('Каталог мест');
+  await expect(page.locator('.catalog-count')).toContainText('9 мест найдено');
+});
+
+
+test('map renders real locations and its search filters both map results and place selection', async ({ page }) => {
+  await mockCatalogApi(page);
+  await page.addInitScript(() => sessionStorage.setItem('duoEntrySeen', '1'));
+  await page.goto('/map');
+
+  const map = page.locator('.duo-leaflet-map');
+  await expect(map).toBeVisible();
+  await expect(map.locator('canvas')).toHaveCount(1);
+  await expect(page.locator('.map-result')).toHaveCount(2);
+  await expect(page.locator('.map-counter')).toContainText('2');
+
+  const search = page.locator('input[placeholder="Найти место или улицу"]');
+  await search.fill('Национальная библиотека');
+  await expect(page.locator('.map-result')).toHaveCount(1);
+  await expect(page.locator('.map-result').first()).toContainText('Национальная библиотека');
+
+  await page.locator('.map-result-main').click();
+  await expect(page.getByRole('dialog', { name: 'Окно DUO' })).toBeVisible();
+  await page.setViewportSize({ width: 390, height: 844 });
+  const dimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    document: document.documentElement.scrollWidth,
+  }));
+  expect(dimensions.document, 'map should not overflow horizontally on mobile')
     .toBeLessThanOrEqual(dimensions.viewport + 1);
 });

@@ -283,6 +283,33 @@ test('DUO Match explains the sign-in requirement to guests and fits mobile scree
 });
 
 
+test('catalogue category filters keep karting out of culture and consolidate duplicates', async ({ page }) => {
+  await mockCatalogApi(page);
+  await page.route('**/api/places*', route => route.fulfill({ json: [...licensedPlaces, {
+    id: 'karting-fixture', slug: 'karting-fixture', city_slug: 'minsk', name: 'Картинг', category: 'Картинг и гонки',
+    description: 'Картинг и гоночная трасса.', address: 'Минск', level: 1, risk: 'good', cost: 25,
+  }] }));
+  await openCatalogue(page);
+
+  const filters = page.locator('.sub-category-scroll button');
+  await expect(filters).toHaveCount(6);
+  await expect(filters.filter({ hasText: 'Культура' })).toBeVisible();
+  await expect(filters.filter({ hasText: 'Видовые места' })).toBeVisible();
+
+  await page.locator('.category-pills button').filter({ hasText: 'Культура' }).click();
+  await expect(page.locator('.place-card').filter({ hasText: 'Картинг' })).toHaveCount(0);
+  await page.locator('.category-pills button').filter({ hasText: 'Все' }).click();
+  await filters.filter({ hasText: 'Культура' }).click();
+  await expect(page.locator('.catalog-count')).toContainText('мест найдено');
+  const labels = await page.locator('.place-card .image-category').allTextContents();
+  expect(labels.length).toBeGreaterThan(0);
+  expect(labels.every(label => /музеи|выставки|театр|кино/i.test(label))).toBeTruthy();
+
+  await filters.filter({ hasText: 'Все направления' }).click();
+  await expect(page.locator('.place-card')).toHaveCount(10);
+});
+
+
 test('catalogue and favourites have distinct navigation labels and empty states', async ({ page }) => {
   await mockCatalogApi(page);
   await openCatalogue(page);

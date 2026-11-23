@@ -17,6 +17,7 @@ const licensedPlaces = [
     name: 'Музей истории Великой Отечественной войны', category: 'Музеи и выставки',
     description: 'Музей истории войны и памятные экспозиции.', address: 'пр-т Победителей, 8, Минск',
     rating: '4.9', reviews: '900', price_label: 'Уточнить стоимость',
+    website_url: 'https://yandex.by/maps/?ll=27.5362%2C53.9352',
     latitude: 53.9352, longitude: 27.5362, location_verified_at: '2026-11-20T10:00:00Z', district: 'Центральный',
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_%2827248715740%29.jpg/1280px-Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_%2827248715740%29.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_(27248715740).jpg',
@@ -208,6 +209,20 @@ test('licensed catalogue photos show author and direct license links', async ({ 
 });
 
 
+test('planner never stores generic search pages as venue websites', async ({ page }) => {
+  await mockCatalogApi(page);
+  await page.route('**/api/places*', route => route.fulfill({ json: [{ ...licensedPlaces[0], category: 'Кофейни', level: 1, risk: 'low', cost: 15, price_label: '15 BYN' }] }));
+  await page.addInitScript(() => sessionStorage.setItem('duoEntrySeen', '1'));
+  await page.goto('/planner');
+  await page.getByRole('button', { name: /Создать план/ }).click();
+  await expect(page.getByRole('heading', { name: 'План-сюрприз' })).toBeVisible();
+  await page.getByRole('button', { name: /Сохранить план/ }).click();
+  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('duoGuestPlans') || '[]'));
+  expect(saved[0].items.length).toBeGreaterThan(0);
+  expect(saved[0].items.every(item => item.url === '')).toBeTruthy();
+});
+
+
 test('Google search and map URLs are not presented as official venue websites', async ({ page }) => {
   await mockCatalogApi(page);
   await openCatalogue(page);
@@ -221,6 +236,13 @@ test('Google search and map URLs are not presented as official venue websites', 
   await expect(detail.getByRole('link', { name: 'Открыть на карте' })).toBeVisible();
   await expect(detail.getByRole('link', { name: 'Поиск источника' })).toBeVisible();
   await expect(detail.getByRole('link', { name: 'Источник данных' })).toHaveCount(0);
+
+  await page.getByRole('button', { name: 'Закрыть окно' }).click();
+  await search.fill('Музей истории Великой Отечественной войны');
+  await page.locator('.place-card').filter({ hasText: 'Музей истории Великой Отечественной войны' }).first().click();
+  const yandexDetail = page.getByRole('dialog', { name: 'Окно DUO' });
+  await expect(yandexDetail.getByRole('link', { name: 'Сайт / меню' })).toHaveCount(0);
+  await expect(yandexDetail.getByRole('link', { name: 'Открыть на карте' })).toBeVisible();
 });
 
 

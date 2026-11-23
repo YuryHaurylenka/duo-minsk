@@ -177,3 +177,15 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     await page.getByRole('button', { name: 'Закрыть окно' }).click();
   }
 });
+
+
+test('broken venue photos fall back to an explicitly labelled category illustration', async ({ page }) => {
+  await mockCatalogApi(page);
+  await page.addInitScript(() => sessionStorage.setItem('duoEntrySeen', '1'));
+  await page.route('https://upload.wikimedia.org/**', route => route.abort());
+  await page.goto('/places');
+  const imageCover = page.locator('.place-card .image-cover').first();
+  await expect(imageCover).toHaveAttribute('data-image-kind', 'category-illustration');
+  await expect(imageCover.locator('.image-illustration-label')).toBeVisible();
+  await expect(imageCover.locator('img')).toHaveAttribute('alt', /Иллюстрация категории/);
+});

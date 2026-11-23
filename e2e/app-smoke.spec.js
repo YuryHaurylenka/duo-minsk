@@ -35,3 +35,35 @@ test('welcome experience is accessible on first visit', async ({ page }) => {
   await expect(page.getByRole('dialog', { name: 'Добро пожаловать в DUO' })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Не просто.*Создать момент/ })).toBeVisible();
 });
+
+
+test('catalogue cards and detail modal fit desktop and mobile viewports', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Открыть DUO' }).click();
+  const firstCard = page.locator('.place-card').first();
+  await expect(firstCard).toBeVisible({ timeout: 20_000 });
+
+  const checkNoHorizontalOverflow = async () => {
+    const metrics = await page.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      document: document.documentElement.scrollWidth,
+      cardRight: document.querySelector('.place-card')?.getBoundingClientRect().right ?? 0,
+    }));
+    expect(metrics.document, 'page should not scroll horizontally').toBeLessThanOrEqual(metrics.viewport + 1);
+    expect(metrics.cardRight, 'catalogue card should stay inside viewport').toBeLessThanOrEqual(metrics.viewport + 1);
+  };
+
+  await checkNoHorizontalOverflow();
+  const imageAltTexts = await page.locator('.place-card .image-cover img').evaluateAll(images => images.map(image => image.alt.trim()));
+  expect(imageAltTexts.every(Boolean), 'catalogue images should have descriptive alt text').toBeTruthy();
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await checkNoHorizontalOverflow();
+  await firstCard.click();
+  const detail = page.getByRole('dialog', { name: 'Окно DUO' });
+  await expect(detail).toBeVisible();
+  const modalBounds = await detail.boundingBox();
+  expect(modalBounds).not.toBeNull();
+  expect(modalBounds.x).toBeGreaterThanOrEqual(0);
+  expect(modalBounds.x + modalBounds.width).toBeLessThanOrEqual(391);
+});

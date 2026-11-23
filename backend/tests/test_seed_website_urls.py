@@ -34,3 +34,24 @@ def test_seed_website_field_contains_only_official_venue_sites():
     ]
 
     assert invalid == []
+
+
+def test_verified_official_venue_sites_are_kept_in_the_seed():
+    places = json.loads(SEED_PLACES_PATH.read_text(encoding="utf-8"))
+    websites = {place.get("slug"): place.get("site") for place in places}
+
+    assert websites["neurobox"] == "https://neurobox.by/"
+    assert websites["квест-пила"] == "https://pandorabox.by/"
+    assert websites["квест-проклятие-эмили"] == "https://pandorabox.by/"
+    assert websites["vasilki-minsk"] == "https://vasilki.by/"
+
+
+def test_additional_verified_official_venue_sites_are_kept_in_the_seed():
+    places = json.loads(SEED_PLACES_PATH.read_text(encoding="utf-8"))
+    websites = {place.get("slug"): place.get("site") for place in places}
+
+    assert websites["минскии-планетарии"] == "https://planetarium.by/"
+    assert websites["kartlend"] == "https://kartland.by/"
+    assert websites["f1-картинг-веснянка"] == "https://f1karting.by/"
+    assert websites["минскии-зоопарк"] == "https://minskzoo.by/"
+    assert websites["музеи-истории-минска"] == "https://minskmuseum.by/"

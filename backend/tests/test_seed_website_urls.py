@@ -91,3 +91,12 @@ def test_more_verified_restaurant_sites_are_kept_in_the_seed():
     assert websites["owino-minsk"] == "https://owino.by/"
     assert websites["zavtraki"] == "https://zavtraki.by/"
     assert websites["kamyanitsa-minsk"] == "https://kamyanitsa.by/"
+
+
+def test_verified_go_greek_gambrinus_and_golf_park_sites_are_kept_in_the_seed():
+    places = json.loads(SEED_PLACES_PATH.read_text(encoding="utf-8"))
+    websites = {place.get("slug"): place.get("site") for place in places}
+
+    assert websites["go-greek-minsk"] == "https://gogreek.by/"
+    assert websites["gambrinus-minsk"] == "https://www.gambrinus.by/"
+    assert websites["golf-park"] == "https://golfpark.by/"

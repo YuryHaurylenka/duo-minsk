@@ -26,6 +26,13 @@ const licensedPlaces = [
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Нацыянальны_мастацкі_музей_Рэспублікі_Беларусь.jpg',
   },
   {
+    id: 'trinity-fixture', slug: 'троицкое-предместье', city_slug: 'minsk',
+    name: 'Троицкое предместье', category: 'Видовые места',
+    description: 'Исторический квартал у Свислочи.', address: 'ул. Богдановича, Минск',
+    rating: '4.8', reviews: '200', price_label: 'Бесплатно',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Minsk_TrinityHill_001_3864.jpg/1280px-Minsk_TrinityHill_001_3864.jpg', image_source_url: 'https://commons.wikimedia.org/wiki/File:Minsk_TrinityHill_001_3864.jpg',
+  },
+  {
     id: 'island-fixture', slug: 'остров-слез', city_slug: 'minsk',
     name: 'Остров слёз', category: 'Видовые места',
     description: 'Мемориал на берегу Свислочи.', address: 'Старовиленский тракт, Минск',
@@ -160,6 +167,7 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Национальный художественный музей', author: 'DBatura', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
     { query: 'Центральный ботанический сад', author: 'Mila Chibireva', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Остров слёз', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+    { query: 'Троицкое предместье', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский зоопарк', author: 'Александр Сигачёв', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
     { query: 'Национальный художественный музей', author: 'DBatura', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
   ]) {

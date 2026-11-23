@@ -37,7 +37,7 @@ def _image_url(value, base_url):
                 return resolved
         return None
     if isinstance(value, dict):
-        for key in ("url", "contentUrl", "thumbnailUrl", "@id"):
+        for key in ("contentUrl", "thumbnailUrl", "url", "@id"):
             resolved = _image_url(value.get(key), base_url)
             if resolved:
                 return resolved

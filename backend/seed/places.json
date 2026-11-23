@@ -282,7 +282,7 @@
     "longitude": 27.5494218,
     "geocode_source": "Esri World Geocoding",
     "geocode_type": "Locality",
-    "geocode_score": 75.0,
+    "geocode_score": 75,
     "geocode_match": "Минск",
     "district": "Московский",
     "location_verified": false
@@ -636,7 +636,7 @@
     "longitude": 27.5494218,
     "geocode_source": "Esri World Geocoding",
     "geocode_type": "Locality",
-    "geocode_score": 75.0,
+    "geocode_score": 75,
     "geocode_match": "Минск",
     "district": "Московский",
     "location_verified": false
@@ -686,7 +686,7 @@
     "longitude": 27.5494218,
     "geocode_source": "Esri World Geocoding",
     "geocode_type": "Locality",
-    "geocode_score": 75.0,
+    "geocode_score": 75,
     "geocode_match": "Минск",
     "district": "Московский",
     "location_verified": false
@@ -963,7 +963,7 @@
     "longitude": 27.5494218,
     "geocode_source": "Esri World Geocoding",
     "geocode_type": "Locality",
-    "geocode_score": 75.0,
+    "geocode_score": 75,
     "geocode_match": "Минск",
     "district": "Московский",
     "location_verified": false
@@ -1663,7 +1663,7 @@
     "longitude": 27.725528733677,
     "geocode_source": "Esri World Geocoding",
     "geocode_type": "PointAddress",
-    "geocode_score": 95.0,
+    "geocode_score": 95,
     "geocode_match": "улица Тенистая 27, Минск",
     "district": "Первомайский",
     "location_verified": true
@@ -1828,7 +1828,7 @@
     "longitude": 27.5494218,
     "geocode_source": "Esri World Geocoding",
     "geocode_type": "Locality",
-    "geocode_score": 75.0,
+    "geocode_score": 75,
     "geocode_match": "Минск",
     "district": "Московский",
     "location_verified": false
@@ -2119,7 +2119,9 @@
     "geocode_score": 90.33,
     "geocode_match": "Белорусский Государственный Музей Истории Великой Отечественной Войны",
     "district": "Центральный",
-    "location_verified": true
+    "location_verified": true,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_%2827248715740%29.jpg/1280px-Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_%2827248715740%29.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_(27248715740).jpg"
   },
   {
     "n": "Музей истории Минска",
@@ -2508,7 +2510,7 @@
     "longitude": 27.5494218,
     "geocode_source": "Esri World Geocoding",
     "geocode_type": "Locality",
-    "geocode_score": 75.0,
+    "geocode_score": 75,
     "geocode_match": "Минск",
     "district": "Московский",
     "location_verified": false
@@ -2693,7 +2695,7 @@
     "longitude": 27.5494218,
     "geocode_source": "Esri World Geocoding",
     "geocode_type": "Locality",
-    "geocode_score": 75.0,
+    "geocode_score": 75,
     "geocode_match": "Минск",
     "district": "Московский",
     "location_verified": false
@@ -3115,7 +3117,9 @@
     "geocode_score": 92.97,
     "geocode_match": "Обзорная Площадка Национальной Библиотеки Беларуси",
     "district": "Первомайский",
-    "location_verified": true
+    "location_verified": true,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG/1280px-View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG"
   },
   {
     "n": "Красный дворик",

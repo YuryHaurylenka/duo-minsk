@@ -50,6 +50,8 @@ const PHOTO_CREDITS={
  'минскии-зоопарк':{author:'SStraySpirit',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
  'большои-театр-беларуси':{author:'Ludvig14',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
  'минскии-планетарии':{author:'Minsk Planetarium',license:'CC BY-SA 2.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/2.0/'},
+ 'национальныи-историческии-музеи':{author:'Tatiana Matlina',license:'CC BY-SA 3.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/3.0/'},
+ 'галерея-арт-беларусь':{author:'Tatiana Markina',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
 };
 const photoCreditFor=place=>PHOTO_CREDITS[place?.slug]||'';
 

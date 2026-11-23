@@ -258,7 +258,9 @@
     "longitude": 27.6286347,
     "location_verified": true,
     "slug": "чижовка-арена",
-    "district": "Заводской"
+    "district": "Заводской",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Chizhovka-Arena_inside_1.jpg/1280px-Chizhovka-Arena_inside_1.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg"
   },
   {
     "n": "F1 Каток у Дворца спорта",
@@ -1977,7 +1979,9 @@
     "longitude": 27.5795481,
     "location_verified": true,
     "slug": "галерея-арт-беларусь",
-    "district": "Советский"
+    "district": "Советский",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Yury_Yakovenko_23.10.2014_Palace_of_Art_Minsk.jpg/1280px-Yury_Yakovenko_23.10.2014_Palace_of_Art_Minsk.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Yury_Yakovenko_23.10.2014_Palace_of_Art_Minsk.jpg"
   },
   {
     "n": "Выставочный зал LIBRA",
@@ -2050,7 +2054,9 @@
     "longitude": 27.5556159,
     "location_verified": true,
     "slug": "национальныи-историческии-музеи",
-    "district": "Ленинский"
+    "district": "Ленинский",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Belarus-Minsk-National_museum_of_history_and_culture_of_Belarus-Exterior.jpg/1280px-Belarus-Minsk-National_museum_of_history_and_culture_of_Belarus-Exterior.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Belarus-Minsk-National_museum_of_history_and_culture_of_Belarus-Exterior.jpg"
   },
   {
     "n": "Музей древнебелорусской культуры",
@@ -3202,7 +3208,9 @@
     "longitude": 27.5564203,
     "location_verified": false,
     "slug": "верхнии-город-и-площадь-свободы",
-    "district": "Центральный"
+    "district": "Центральный",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Belarus-Minsk-Upper_Town-1.jpg/1280px-Belarus-Minsk-Upper_Town-1.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Belarus-Minsk-Upper_Town-1.jpg"
   },
   {
     "n": "Gambrinus",

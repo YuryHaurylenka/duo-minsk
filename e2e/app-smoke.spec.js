@@ -53,6 +53,32 @@ const licensedPlaces = [
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Minsk_TearsIsland_001_3847.jpg',
   },
   {
+    id: 'upper-town-fixture', slug: 'верхнии-город-и-площадь-свободы', city_slug: 'minsk',
+    name: 'Верхний город', category: 'Видовые места', description: 'Исторический центр Минска.', address: 'пл. Свободы, Минск',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Belarus-Minsk-Upper_Town-1.jpg/1280px-Belarus-Minsk-Upper_Town-1.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Belarus-Minsk-Upper_Town-1.jpg',
+  },
+  {
+    id: 'chizhovka-fixture', slug: 'чижовка-арена', city_slug: 'minsk',
+    name: 'Чижовка-Арена', category: 'Лёд', description: 'Ледовая арена Минска.', address: 'ул. Ташкентская, 19, Минск',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Chizhovka-Arena_inside_1.jpg/1280px-Chizhovka-Arena_inside_1.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg',
+  },
+  {
+    id: 'national-history-fixture', slug: 'национальныи-историческии-музеи', city_slug: 'minsk',
+    name: 'Национальный исторический музей', category: 'Музеи и выставки',
+    description: 'Национальный исторический музей Беларуси.', address: 'ул. Карла Маркса, 12, Минск',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Belarus-Minsk-National_museum_of_history_and_culture_of_Belarus-Exterior.jpg/1280px-Belarus-Minsk-National_museum_of_history_and_culture_of_Belarus-Exterior.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Belarus-Minsk-National_museum_of_history_and_culture_of_Belarus-Exterior.jpg',
+  },
+  {
+    id: 'art-belarus-fixture', slug: 'галерея-арт-беларусь', city_slug: 'minsk',
+    name: 'Галерея «Арт-Беларусь»', category: 'Музеи и выставки',
+    description: 'Выставочное пространство Дворца искусств.', address: 'ул. Козлова, 3, Минск',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Yury_Yakovenko_23.10.2014_Palace_of_Art_Minsk.jpg/1280px-Yury_Yakovenko_23.10.2014_Palace_of_Art_Minsk.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Yury_Yakovenko_23.10.2014_Palace_of_Art_Minsk.jpg',
+  },
+  {
     id: 'botanical-fixture', slug: 'центральныи-ботаническии-сад', city_slug: 'minsk',
     name: 'Центральный ботанический сад', category: 'Прогулки',
     description: 'Сад и прогулочные маршруты.', address: 'ул. Сурганова, 2В, Минск',
@@ -220,8 +246,12 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Остров слёз', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Троицкое предместье', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Большой театр Беларуси', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+    { query: 'Верхний город', author: 'Hanna Zelenko', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+    { query: 'Чижовка-Арена', author: 'Homoatrox', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { query: 'Минский зоопарк', author: 'SStraySpirit', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский планетарий', author: 'Minsk Planetarium', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
+    { query: 'Национальный исторический музей', author: 'Tatiana Matlina', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+    { query: 'Галерея «Арт-Беларусь»', author: 'Tatiana Markina', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
   ]) {
     await search.fill(item.query);
     const card = page.locator('.place-card').filter({ hasText: item.query }).first();
@@ -352,7 +382,7 @@ test('catalogue category filters keep karting out of culture and consolidate dup
   expect(labels.every(label => /музеи|выставки|театр|кино/i.test(label))).toBeTruthy();
 
   await filters.filter({ hasText: 'Все направления' }).click();
-  await expect(page.locator('.place-card')).toHaveCount(10);
+  await expect(page.locator('.place-card')).toHaveCount(14);
 });
 
 
@@ -362,7 +392,7 @@ test('catalogue and favourites have distinct navigation labels and empty states'
 
   await expect(page.locator('.breadcrumb')).toContainText('Каталог мест');
   await expect(page.getByRole('button', { name: /Каталог мест/ })).toBeVisible();
-  await expect(page.locator('.catalog-count')).toContainText('9 мест найдено');
+  await expect(page.locator('.catalog-count')).toContainText('13 мест найдено');
 
   await page.getByRole('button', { name: /Каталог мест/ }).click();
   await expect(page.locator('.breadcrumb')).toContainText('Избранное');
@@ -372,7 +402,7 @@ test('catalogue and favourites have distinct navigation labels and empty states'
 
   await page.getByRole('button', { name: /Найти, что добавить/ }).click();
   await expect(page.locator('.breadcrumb')).toContainText('Каталог мест');
-  await expect(page.locator('.catalog-count')).toContainText('9 мест найдено');
+  await expect(page.locator('.catalog-count')).toContainText('13 мест найдено');
 });
 
 

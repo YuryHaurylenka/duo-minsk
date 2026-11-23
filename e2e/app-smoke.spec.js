@@ -26,6 +26,13 @@ const licensedPlaces = [
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Нацыянальны_мастацкі_музей_Рэспублікі_Беларусь.jpg',
   },
   {
+    id: 'theatre-fixture', slug: 'большои-театр-беларуси', city_slug: 'minsk',
+    name: 'Большой театр Беларуси', category: 'Театры и кино',
+    description: 'Национальный академический театр оперы и балета.', address: 'пл. Парижской Коммуны, 1, Минск',
+    rating: '4.7', reviews: '413', price_label: 'Уточнить стоимость',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Minsk_ParizhskoyKommuny1_001_4213.jpg/1280px-Minsk_ParizhskoyKommuny1_001_4213.jpg', image_source_url: 'https://commons.wikimedia.org/wiki/File:Minsk_ParizhskoyKommuny1_001_4213.jpg',
+  },
+  {
     id: 'trinity-fixture', slug: 'троицкое-предместье', city_slug: 'minsk',
     name: 'Троицкое предместье', category: 'Видовые места',
     description: 'Исторический квартал у Свислочи.', address: 'ул. Богдановича, Минск',
@@ -168,6 +175,7 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Центральный ботанический сад', author: 'Mila Chibireva', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Остров слёз', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Троицкое предместье', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+    { query: 'Большой театр Беларуси', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский зоопарк', author: 'SStraySpirit', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Национальный художественный музей', author: 'DBatura', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
   ]) {

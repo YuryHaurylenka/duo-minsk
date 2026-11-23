@@ -161,6 +161,8 @@ test('catalogue cards and detail modal fit desktop and mobile viewports', async 
   };
 
   await checkNoHorizontalOverflow();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await checkNoHorizontalOverflow();
   await expect.poll(() => page.evaluate(() => window.innerWidth)).toBe(390);
   const mobileLayout = await page.evaluate(() => {
     const input = document.querySelector('input[aria-label="Поиск по местам"]');

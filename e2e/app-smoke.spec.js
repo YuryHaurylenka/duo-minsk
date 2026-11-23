@@ -65,6 +65,24 @@ const licensedPlaces = [
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg',
   },
   {
+    id: 'azgur-fixture', slug: 'музеи-мастерская-заира-азгура', city_slug: 'minsk',
+    name: 'Музей-мастерская Заира Азгура', category: 'Музеи и выставки', description: 'Мемориальный музей-мастерская скульптора.', address: 'ул. Азгура, 8, Минск',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Memorial_Museum-Workshop_of_Zair_Isakavi%C4%8D_Azhur_03.jpg/1280px-Memorial_Museum-Workshop_of_Zair_Isakavi%C4%8D_Azhur_03.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Memorial_Museum-Workshop_of_Zair_Isakavi%C4%8D_Azhur_03.jpg',
+  },
+  {
+    id: 'gorky-fixture', slug: 'парк-горького', city_slug: 'minsk',
+    name: 'Парк Горького', category: 'Прогулки', description: 'Центральный парк культуры и отдыха.', address: 'ул. Фрунзе, 2, Минск',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Gorki_park%2C_Minsk1.JPG',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Gorki_park,_Minsk1.JPG',
+  },
+  {
+    id: 'victory-park-fixture', slug: 'прогулка-по-парку-победы', city_slug: 'minsk',
+    name: 'Прогулка по парку Победы', category: 'Прогулки', description: 'Парк Победы и виды на Комсомольское озеро.', address: 'пр-т Победителей, Минск',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/View_of_Victory_Park_Minsk.jpg/1280px-View_of_Victory_Park_Minsk.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:View_of_Victory_Park_Minsk.jpg',
+  },
+  {
     id: 'loshitsky-fixture', slug: 'лошицкии-парк', city_slug: 'minsk',
     name: 'Лошицкий парк', category: 'Прогулки', description: 'Усадебный парк и исторические постройки.', address: 'Лошицкий парк, Минск',
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/2025.09.18_Loshitsky_Park%2C_Minsk.jpg/1280px-2025.09.18_Loshitsky_Park%2C_Minsk.jpg',
@@ -266,6 +284,9 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Галерея «Арт-Беларусь»', author: 'Tatiana Markina', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Лошицкий парк', author: 'Dina Panayotis', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Театр имени Янки Купалы', author: 'Hanna Zelenko', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+    { query: 'Музей-мастерская Заира Азгура', author: 'Andrej Hurynovič', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+    { query: 'Парк Горького', author: 'Gruszecki', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
+    { query: 'Прогулка по парку Победы', author: 'Nigel’s Europe', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
   ]) {
     await search.fill(item.query);
     const card = page.locator('.place-card').filter({ hasText: item.query }).first();
@@ -396,7 +417,7 @@ test('catalogue category filters keep karting out of culture and consolidate dup
   expect(labels.every(label => /музеи|выставки|театр|кино/i.test(label))).toBeTruthy();
 
   await filters.filter({ hasText: 'Все направления' }).click();
-  await expect(page.locator('.place-card')).toHaveCount(16);
+  await expect(page.locator('.place-card')).toHaveCount(19);
 });
 
 
@@ -406,7 +427,7 @@ test('catalogue and favourites have distinct navigation labels and empty states'
 
   await expect(page.locator('.breadcrumb')).toContainText('Каталог мест');
   await expect(page.getByRole('button', { name: /Каталог мест/ })).toBeVisible();
-  await expect(page.locator('.catalog-count')).toContainText('15 мест найдено');
+  await expect(page.locator('.catalog-count')).toContainText('18 мест найдено');
 
   await page.getByRole('button', { name: /Каталог мест/ }).click();
   await expect(page.locator('.breadcrumb')).toContainText('Избранное');
@@ -416,7 +437,7 @@ test('catalogue and favourites have distinct navigation labels and empty states'
 
   await page.getByRole('button', { name: /Найти, что добавить/ }).click();
   await expect(page.locator('.breadcrumb')).toContainText('Каталог мест');
-  await expect(page.locator('.catalog-count')).toContainText('15 мест найдено');
+  await expect(page.locator('.catalog-count')).toContainText('18 мест найдено');
 });
 
 

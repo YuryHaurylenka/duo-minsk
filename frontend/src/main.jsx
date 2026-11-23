@@ -54,6 +54,9 @@ const PHOTO_CREDITS={
  'галерея-арт-беларусь':{author:'Tatiana Markina',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
  'лошицкии-парк':{author:'Dina Panayotis',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
  'театр-имени-янки-купалы':{author:'Hanna Zelenko',license:'CC BY-SA 3.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/3.0/'},
+ 'музеи-мастерская-заира-азгура':{author:'Andrej Hurynovič',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
+ 'парк-горького':{author:'Gruszecki',license:'CC0',licenseUrl:'https://creativecommons.org/publicdomain/zero/1.0/'},
+ 'прогулка-по-парку-победы':{author:'Nigel’s Europe',license:'CC BY-SA 2.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/2.0/'},
 };
 const photoCreditFor=place=>PHOTO_CREDITS[place?.slug]||'';
 

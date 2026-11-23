@@ -84,14 +84,20 @@ def _parse_source(key, url, city_slug="minsk"):
                 price = float(re.sub(r"[^0-9.]", "", str(price))) if price not in (None, "") else None
             except ValueError:
                 price = None
+            event_url = urljoin(
+                url,
+                event.get("url")
+                or (offers.get("url") if isinstance(offers, dict) else "")
+                or "#"+re.sub(r"[^a-z0-9]+", "-", title.lower())+"-"+str(start),
+            )
             items.append({
                 "city_slug": city_slug,
-                "source_key": key, "source_url": urljoin(url, event.get("url") or (offers.get("url") if isinstance(offers, dict) else "") or "#"+re.sub(r"[^a-z0-9]+", "-", title.lower())+"-"+str(start)), "title": title[:500],
+                "source_key": key, "source_url": event_url, "title": title[:500],
                 "description": BeautifulSoup(str(event.get("description") or ""), "html.parser").get_text(" ", strip=True)[:4000],
                 "category": _text(event.get("eventType")) or "Событие", "venue": _text(location.get("name")),
                 "address": str(address)[:500], "starts_at": start, "ends_at": event.get("endDate"),
                 "price_min": price, "price_max": price, "currency": "BYN",
-                "image_url": _image_url(event.get("image"), url),
+                "image_url": _image_url(event.get("image"), event_url),
                 "ticket_url": offers.get("url") if isinstance(offers, dict) else None,
                 "status": "scheduled", "last_verified_at": datetime.now(timezone.utc),
             })

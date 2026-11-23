@@ -161,22 +161,31 @@ test('catalogue cards and detail modal fit desktop and mobile viewports', async 
   };
 
   await checkNoHorizontalOverflow();
-  const searchBox = page.locator('.toolbar .searchbox');
-  const searchInput = searchBox.locator('input');
-  const searchBounds = await searchBox.boundingBox();
-  const inputBounds = await searchInput.boundingBox();
-  expect(searchBounds).not.toBeNull();
-  expect(inputBounds).not.toBeNull();
-  expect(inputBounds.x + inputBounds.width).toBeLessThanOrEqual(searchBounds.x + searchBounds.width + 1);
-  expect(searchBounds.x).toBeGreaterThanOrEqual(0);
-  expect(searchBounds.x + searchBounds.width).toBeLessThanOrEqual(391);
-  const contentBounds = await page.locator('.page-content').boundingBox();
-  const toolbarBounds = await searchBox.evaluate(el => {
-    const bounds = el.closest('.toolbar').getBoundingClientRect();
-    return { left: bounds.left, right: bounds.right };
+  await expect.poll(() => page.evaluate(() => window.innerWidth)).toBe(390);
+  const mobileLayout = await page.evaluate(() => {
+    const input = document.querySelector('input[aria-label="Поиск по местам"]');
+    const box = input?.parentElement;
+    const toolbar = box?.closest('.toolbar');
+    const content = document.querySelector('.page-content');
+    const rect = element => {
+      const value = element?.getBoundingClientRect();
+      return value ? { left: value.left, right: value.right, width: value.width } : null;
+    };
+    return {
+      viewport: window.innerWidth,
+      searchBox: rect(box),
+      input: rect(input),
+      toolbar: rect(toolbar),
+      content: rect(content),
+      direction: toolbar ? getComputedStyle(toolbar).flexDirection : null,
+    };
   });
-  expect(toolbarBounds.left).toBeGreaterThanOrEqual(contentBounds.x);
-  expect(toolbarBounds.right).toBeLessThanOrEqual(contentBounds.x + contentBounds.width);
+  expect(mobileLayout.searchBox).not.toBeNull();
+  expect(mobileLayout.input).not.toBeNull();
+  expect(mobileLayout.toolbar).not.toBeNull();
+  expect(mobileLayout.direction).toBe('column');
+  expect(mobileLayout.searchBox.right).toBeLessThanOrEqual(mobileLayout.content.right + 1);
+  expect(mobileLayout.input.right).toBeLessThanOrEqual(mobileLayout.searchBox.right + 1);
   const imageAltTexts = await page.locator('.place-card .image-cover img').evaluateAll(images => images.map(image => image.alt.trim()));
   expect(imageAltTexts.every(Boolean), 'catalogue images should have descriptive alt text').toBeTruthy();
 

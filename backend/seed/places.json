@@ -3204,7 +3204,9 @@
     "longitude": 27.5564203,
     "location_verified": false,
     "slug": "верхнии-город-и-площадь-свободы",
-    "district": "Центральный"
+    "district": "Центральный",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Belarus-Minsk-Upper_Town-1.jpg/1280px-Belarus-Minsk-Upper_Town-1.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Belarus-Minsk-Upper_Town-1.jpg"
   },
   {
     "n": "Gambrinus",

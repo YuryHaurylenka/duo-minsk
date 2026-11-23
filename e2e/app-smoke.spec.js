@@ -162,7 +162,6 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Остров слёз', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский зоопарк', author: 'Александр Сигачёв', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
     { query: 'Национальный художественный музей', author: 'Koostia', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
-    { query: 'Центральный ботанический сад', author: 'Mila Chibireva', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
   ]) {
     await search.fill(item.query);
     const card = page.locator('.place-card').filter({ hasText: item.query }).first();

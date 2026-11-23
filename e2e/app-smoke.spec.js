@@ -17,6 +17,14 @@ const licensedPlaces = [
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_%2827248715740%29.jpg/1280px-Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_%2827248715740%29.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_(27248715740).jpg',
   },
+  {
+    id: 'zoo-fixture', slug: 'минскии-зоопарк', city_slug: 'minsk',
+    name: 'Минский зоопарк', category: 'Парки развлечений',
+    description: 'Зоопарк Минска.', address: 'ул. Ташкентская, 40, Минск',
+    rating: '4.6', reviews: '700', price_label: 'Уточнить стоимость',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA.jpg/1280px-%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Минский_зоопарк.jpg',
+  },
 ];
 
 async function mockCatalogApi(page) {
@@ -112,6 +120,7 @@ test('licensed catalogue photos show author and direct license links', async ({ 
   for (const item of [
     { query: 'Национальная библиотека', author: 'Хомелка', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { query: 'Музей истории Великой Отечественной войны', author: 'Adam Jones', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
+    { query: 'Минский зоопарк', author: 'Александр Сигачёв', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
   ]) {
     await search.fill(item.query);
     const card = page.locator('.place-card').filter({ hasText: item.query }).first();
@@ -121,6 +130,8 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     await expect(credits).toHaveCount(2);
     await expect(credits.nth(0)).toContainText(item.author);
     await expect(credits.nth(1)).toHaveAttribute('href', item.license);
+    const detailImage = page.locator('.detail-image .image-cover img');
+    await expect.poll(() => detailImage.evaluate(image => image.complete && image.naturalWidth > 0), { timeout: 20_000 }).toBe(true);
     await page.getByRole('button', { name: 'Закрыть окно' }).click();
   }
 });

@@ -58,7 +58,7 @@ function imageUrlFrom(value: unknown, baseUrl: string): string | null {
   }
   if (value && typeof value === "object") {
     const record = value as Record<string, unknown>;
-    for (const key of ["url", "contentUrl", "thumbnailUrl", "@id"]) {
+    for (const key of ["contentUrl", "thumbnailUrl", "url", "@id"]) {
       const resolved = imageUrlFrom(record[key], baseUrl);
       if (resolved) return resolved;
     }

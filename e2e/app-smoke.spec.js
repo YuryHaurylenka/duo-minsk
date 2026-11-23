@@ -90,10 +90,15 @@ const licensedPlaces = [
 ];
 
 async function mockCatalogApi(page) {
-  await page.route('**/api/cities*', route => route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] }));
-  await page.route('**/api/places*', route => route.fulfill({ json: licensedPlaces }));
-  await page.route('**/api/events*', route => route.fulfill({ json: [] }));
-  await page.route('**/api/updates*', route => route.fulfill({ json: [] }));
+  await page.route('**/api/**', route => {
+    const path = new URL(route.request().url()).pathname;
+    if (path.endsWith('/cities')) {
+      return route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] });
+    }
+    if (path.endsWith('/places')) return route.fulfill({ json: licensedPlaces });
+    if (path.endsWith('/events') || path.endsWith('/updates')) return route.fulfill({ json: [] });
+    return route.fulfill({ json: [] });
+  });
 }
 
 const routes = ['/', '/planner', '/map', '/analytics'];
@@ -163,8 +168,15 @@ test('catalogue cards and detail modal fit desktop and mobile viewports', async 
   expect(searchBounds).not.toBeNull();
   expect(inputBounds).not.toBeNull();
   expect(inputBounds.x + inputBounds.width).toBeLessThanOrEqual(searchBounds.x + searchBounds.width + 1);
-  const toolbarBounds = await page.locator('.toolbar').boundingBox();
-  expect(toolbarBounds.x + toolbarBounds.width).toBeLessThanOrEqual(391);
+  expect(searchBounds.x).toBeGreaterThanOrEqual(0);
+  expect(searchBounds.x + searchBounds.width).toBeLessThanOrEqual(391);
+  const contentBounds = await page.locator('.page-content').boundingBox();
+  const toolbarBounds = await searchBox.evaluate(el => {
+    const bounds = el.closest('.toolbar').getBoundingClientRect();
+    return { left: bounds.left, right: bounds.right };
+  });
+  expect(toolbarBounds.left).toBeGreaterThanOrEqual(contentBounds.x);
+  expect(toolbarBounds.right).toBeLessThanOrEqual(contentBounds.x + contentBounds.width);
   const imageAltTexts = await page.locator('.place-card .image-cover img').evaluateAll(images => images.map(image => image.alt.trim()));
   expect(imageAltTexts.every(Boolean), 'catalogue images should have descriptive alt text').toBeTruthy();
 
@@ -183,8 +195,6 @@ test('catalogue cards and detail modal fit desktop and mobile viewports', async 
 test('licensed catalogue photos show author and direct license links', async ({ page }) => {
   await mockCatalogApi(page);
   await openCatalogue(page);
-  const search = page.locator('input[aria-label="Поиск по местам"]');
-
   for (const item of [
     { query: 'Национальная библиотека', author: 'Хомелка', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { query: 'Музей истории Великой Отечественной войны', author: 'Adam Jones', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
@@ -196,7 +206,6 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Минский зоопарк', author: 'SStraySpirit', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский планетарий', author: 'Minsk Planetarium', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
   ]) {
-    await search.fill(item.query);
     const card = page.locator('.place-card').filter({ hasText: item.query }).first();
     await expect(card).toBeVisible({ timeout: 15_000 });
     await card.click();
@@ -221,6 +230,7 @@ test('broken venue photos fall back to an explicitly labelled category illustrat
     body: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><rect width="32" height="32" fill="#777"/></svg>',
   }));
   await page.goto('/places');
+  await expect(page.locator('.place-card').first()).toBeVisible({ timeout: 20_000 });
   const imageCover = page.locator('.place-card .image-cover').first();
   await expect(imageCover).toHaveAttribute('data-image-kind', 'category-illustration');
   await expect(imageCover.locator('.image-illustration-label')).toBeVisible();

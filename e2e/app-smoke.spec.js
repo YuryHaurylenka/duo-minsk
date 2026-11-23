@@ -56,6 +56,14 @@ const licensedPlaces = [
     image_source_url: 'https://commons.wikimedia.org/wiki/File:2026.06.26_Ботанический_сад_в_Минске,_Беларусь_22.jpg',
   },
   {
+    id: 'planetarium-fixture', slug: 'минскии-планетарии', city_slug: 'minsk',
+    name: 'Минский планетарий', category: 'Музеи и выставки',
+    description: 'Планетарий и обсерватория в парке Горького.', address: 'ул. Фрунзе, 2, Минск',
+    rating: '4.7', reviews: '500', price_label: 'Уточнить стоимость',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Minsk_Planetarium.jpg/1280px-Minsk_Planetarium.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Minsk_Planetarium.jpg',
+  },
+  {
     id: 'zoo-fixture', slug: 'минскии-зоопарк', city_slug: 'minsk',
     name: 'Минский зоопарк', category: 'Парки развлечений',
     description: 'Зоопарк Минска.', address: 'ул. Ташкентская, 40, Минск',
@@ -177,7 +185,7 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Троицкое предместье', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Большой театр Беларуси', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский зоопарк', author: 'SStraySpirit', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
-    { query: 'Национальный художественный музей', author: 'DBatura', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
+    { query: 'Минский планетарий', author: 'Minsk Planetarium', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
   ]) {
     await search.fill(item.query);
     const card = page.locator('.place-card').filter({ hasText: item.query }).first();

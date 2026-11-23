@@ -2269,7 +2269,9 @@
     "geocode_score": 96.02,
     "geocode_match": "Минский Планетарий",
     "district": "Партизанский",
-    "location_verified": true
+    "location_verified": true,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Minsk_Planetarium.jpg/1280px-Minsk_Planetarium.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Minsk_Planetarium.jpg"
   },
   {
     "n": "Минская обсерватория",

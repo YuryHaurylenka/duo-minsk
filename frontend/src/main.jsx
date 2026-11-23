@@ -41,6 +41,7 @@ const PHOTO_CREDITS={
  'музеи-истории-великои-отечественнои-воины':{author:'Adam Jones',license:'CC BY-SA 2.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/2.0/'},
  'национальныи-художественныи-музеи':{author:'Koostia',license:'CC BY-SA 3.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/3.0/'},
  'центральныи-ботаническии-сад':{author:'Mila Chibireva',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
+ 'остров-слез':{author:'Ludvig14',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
  'минскии-зоопарк':{author:'Александр Сигачёв',license:'CC0 1.0',licenseUrl:'https://creativecommons.org/publicdomain/zero/1.0/'},
 };
 const photoCreditFor=place=>PHOTO_CREDITS[place?.slug]||'';

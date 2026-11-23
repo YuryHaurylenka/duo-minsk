@@ -65,3 +65,18 @@ def test_verified_museum_and_gallery_sites_are_kept_in_the_seed():
     assert websites["галерея-арт-беларусь"] == "https://artpalace.by/exhibitions/"
     assert websites["национальныи-историческии-музеи"] == "https://histmuseum.by/"
     assert websites["музеи-древнебелорусскои-культуры"] == "https://belcentre.by/ru_ru/%D0%BC%D1%83%D0%B7%D0%B5%D0%B9-%D0%B4%D1%80%D0%B5%D0%B2%D0%BD%D0%B5%D0%B1%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B9-%D0%BA%D1%83%D0%BB%D1%8C%D1%82%D1%83%D1%80%D1%8B/"
+
+
+def test_additional_verified_venue_sites_are_kept_in_the_seed():
+    places = json.loads(SEED_PLACES_PATH.read_text(encoding="utf-8"))
+    websites = {place.get("slug"): place.get("site") for place in places}
+
+    assert websites["музеи-миниатюр-страна-мини"] == "https://belarusmini.by/"
+    assert websites["bergamo-minsk"] == "https://bergamo.by/"
+    assert websites["burgerlab"] == "https://burgerlab.by/"
+    assert websites["клуб-настольных-игр-people-meeple"] == "https://peoplemeeple.by/"
+    assert websites["скалодром-трапеция"] == "https://trapezia.by/"
+    assert websites["кухмистр"] == "https://www.kuhmistr.by/"
+    assert websites["il-patio-minsk"] == "https://www.ilpatio.by/"
+    assert websites["tokiny-minsk"] == "https://tokiny.by/"
+    assert websites["umami-minsk"] == "https://umami.by/"

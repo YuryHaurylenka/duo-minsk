@@ -94,6 +94,14 @@ const licensedPlaces = [
     rating: '5.0', reviews: '2927', price_label: 'Уточнить стоимость',
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Chizhovka-Arena_inside_1.jpg/1280px-Chizhovka-Arena_inside_1.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg',
+  },,
+  {
+    id: 'upper-town-fixture', slug: 'верхнии-город-и-площадь-свободы', city_slug: 'minsk',
+    name: 'Верхний город и площадь Свободы', category: 'Прогулки и природа',
+    description: 'Исторический центр Минска.', address: 'пл. Свободы, Минск',
+    rating: '—', reviews: '—', price_label: 'Бесплатно',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Belarus-Minsk-Upper_Town-1.jpg/1280px-Belarus-Minsk-Upper_Town-1.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Belarus-Minsk-Upper_Town-1.jpg',
   },
 ];
 
@@ -198,6 +206,7 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Минский зоопарк', author: 'SStraySpirit', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский планетарий', author: 'Minsk Planetarium', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
     { query: 'Чижовка-Арена', author: 'Homoatrox', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+    { query: 'Верхний город и площадь Свободы', author: 'Hanna Zelenko', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
   ]) {
     const card = page.locator('.place-card').filter({ hasText: item.query }).first();
     await expect(card).toBeVisible({ timeout: 15_000 });

@@ -65,6 +65,18 @@ const licensedPlaces = [
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg',
   },
   {
+    id: 'loshitsky-fixture', slug: 'лошицкии-парк', city_slug: 'minsk',
+    name: 'Лошицкий парк', category: 'Прогулки', description: 'Усадебный парк и исторические постройки.', address: 'Лошицкий парк, Минск',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/2025.09.18_Loshitsky_Park%2C_Minsk.jpg/1280px-2025.09.18_Loshitsky_Park%2C_Minsk.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:2025.09.18_Loshitsky_Park,_Minsk.jpg',
+  },
+  {
+    id: 'kupala-theatre-fixture', slug: 'театр-имени-янки-купалы', city_slug: 'minsk',
+    name: 'Театр имени Янки Купалы', category: 'Театры и кино', description: 'Национальный академический театр.', address: 'ул. Энгельса, 7, Минск',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Belarus-Minsk-Yanka_Kupala_National_Academic_Theatre.jpg/1280px-Belarus-Minsk-Yanka_Kupala_National_Academic_Theatre.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Belarus-Minsk-Yanka_Kupala_National_Academic_Theatre.jpg',
+  },
+  {
     id: 'national-history-fixture', slug: 'национальныи-историческии-музеи', city_slug: 'minsk',
     name: 'Национальный исторический музей', category: 'Музеи и выставки',
     description: 'Национальный исторический музей Беларуси.', address: 'ул. Карла Маркса, 12, Минск',
@@ -252,6 +264,8 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Минский планетарий', author: 'Minsk Planetarium', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
     { query: 'Национальный исторический музей', author: 'Tatiana Matlina', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { query: 'Галерея «Арт-Беларусь»', author: 'Tatiana Markina', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+    { query: 'Лошицкий парк', author: 'Dina Panayotis', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+    { query: 'Театр имени Янки Купалы', author: 'Hanna Zelenko', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
   ]) {
     await search.fill(item.query);
     const card = page.locator('.place-card').filter({ hasText: item.query }).first();
@@ -382,7 +396,7 @@ test('catalogue category filters keep karting out of culture and consolidate dup
   expect(labels.every(label => /музеи|выставки|театр|кино/i.test(label))).toBeTruthy();
 
   await filters.filter({ hasText: 'Все направления' }).click();
-  await expect(page.locator('.place-card')).toHaveCount(14);
+  await expect(page.locator('.place-card')).toHaveCount(16);
 });
 
 
@@ -392,7 +406,7 @@ test('catalogue and favourites have distinct navigation labels and empty states'
 
   await expect(page.locator('.breadcrumb')).toContainText('Каталог мест');
   await expect(page.getByRole('button', { name: /Каталог мест/ })).toBeVisible();
-  await expect(page.locator('.catalog-count')).toContainText('13 мест найдено');
+  await expect(page.locator('.catalog-count')).toContainText('15 мест найдено');
 
   await page.getByRole('button', { name: /Каталог мест/ }).click();
   await expect(page.locator('.breadcrumb')).toContainText('Избранное');
@@ -402,7 +416,7 @@ test('catalogue and favourites have distinct navigation labels and empty states'
 
   await page.getByRole('button', { name: /Найти, что добавить/ }).click();
   await expect(page.locator('.breadcrumb')).toContainText('Каталог мест');
-  await expect(page.locator('.catalog-count')).toContainText('13 мест найдено');
+  await expect(page.locator('.catalog-count')).toContainText('15 мест найдено');
 });
 
 

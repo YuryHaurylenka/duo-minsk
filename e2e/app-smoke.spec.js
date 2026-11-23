@@ -156,6 +156,15 @@ test('catalogue cards and detail modal fit desktop and mobile viewports', async 
   };
 
   await checkNoHorizontalOverflow();
+  const searchBox = page.locator('.toolbar .searchbox');
+  const searchInput = searchBox.locator('input');
+  const searchBounds = await searchBox.boundingBox();
+  const inputBounds = await searchInput.boundingBox();
+  expect(searchBounds).not.toBeNull();
+  expect(inputBounds).not.toBeNull();
+  expect(inputBounds.x + inputBounds.width).toBeLessThanOrEqual(searchBounds.x + searchBounds.width + 1);
+  const toolbarBounds = await page.locator('.toolbar').boundingBox();
+  expect(toolbarBounds.x + toolbarBounds.width).toBeLessThanOrEqual(391);
   const imageAltTexts = await page.locator('.place-card .image-cover img').evaluateAll(images => images.map(image => image.alt.trim()));
   expect(imageAltTexts.every(Boolean), 'catalogue images should have descriptive alt text').toBeTruthy();
 

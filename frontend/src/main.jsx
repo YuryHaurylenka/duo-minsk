@@ -39,6 +39,7 @@ const imageByCategory=(cat)=>{
 const PHOTO_CREDITS={
  'национальная-библиотека-беларуси-смотровая-площадка':{author:'Хомелка',license:'CC BY-SA 3.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/3.0/'},
  'музеи-истории-великои-отечественнои-воины':{author:'Adam Jones',license:'CC BY-SA 2.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/2.0/'},
+ 'минскии-зоопарк':{author:'Александр Сигачёв',license:'CC0 1.0',licenseUrl:'https://creativecommons.org/publicdomain/zero/1.0/'},
 };
 const photoCreditFor=place=>PHOTO_CREDITS[place?.slug]||'';
 

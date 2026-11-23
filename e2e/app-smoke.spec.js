@@ -22,7 +22,7 @@ const licensedPlaces = [
     name: 'Национальный художественный музей', category: 'Музеи и выставки',
     description: 'Коллекция белорусского и зарубежного искусства.', address: 'ул. Ленина, 20, Минск',
     rating: '4.4', reviews: '343', price_label: 'Уточнить стоимость',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/National_art_museum-Minsk.jpg/1280px-National_art_museum-Minsk.jpg',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/National_art_museum-Minsk.jpg/1280px-National_art_museum-Minsk.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:National_art_museum-Minsk.jpg',
   },
   {
@@ -30,7 +30,7 @@ const licensedPlaces = [
     name: 'Остров слёз', category: 'Видовые места',
     description: 'Мемориал на берегу Свислочи.', address: 'Старовиленский тракт, Минск',
     rating: '4.8', reviews: '120', price_label: 'Бесплатно',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Minsk_TearsIsland_001_3847.jpg/1280px-Minsk_TearsIsland_001_3847.jpg',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Minsk_TearsIsland_001_3847.jpg/1280px-Minsk_TearsIsland_001_3847.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Minsk_TearsIsland_001_3847.jpg',
   },
   {
@@ -38,7 +38,7 @@ const licensedPlaces = [
     name: 'Центральный ботанический сад', category: 'Прогулки',
     description: 'Сад и прогулочные маршруты.', address: 'ул. Сурганова, 2В, Минск',
     rating: '0', reviews: '0', price_label: 'Уточнить стоимость',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg/1280px-2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg/1280px-2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:2026.06.26_Ботанический_сад_в_Минске,_Беларусь_22.jpg',
   },
   {
@@ -54,7 +54,7 @@ const licensedPlaces = [
     name: 'Национальный художественный музей', category: 'Музеи и выставки',
     description: 'Национальный художественный музей Беларуси.', address: 'ул. Ленина, 20, Минск',
     rating: '4.8', reviews: '500', price_label: 'Уточнить стоимость',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/National_art_museum-Minsk.jpg/1280px-National_art_museum-Minsk.jpg',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/National_art_museum-Minsk.jpg/1280px-National_art_museum-Minsk.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:National_art_museum-Minsk.jpg',
   },
   {
@@ -62,7 +62,7 @@ const licensedPlaces = [
     name: 'Центральный ботанический сад', category: 'Парки',
     description: 'Ботанический сад Минска.', address: 'ул. Сурганова, 2В, Минск',
     rating: '4.7', reviews: '300', price_label: 'Уточнить стоимость',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg/1280px-2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg/1280px-2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:2026.06.26_Ботанический_сад_в_Минске,_Беларусь_22.jpg',
   },
 ];

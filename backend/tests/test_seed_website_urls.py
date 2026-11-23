@@ -80,3 +80,14 @@ def test_additional_verified_venue_sites_are_kept_in_the_seed():
     assert websites["il-patio-minsk"] == "https://www.ilpatio.by/"
     assert websites["tokiny-minsk"] == "https://tokiny.by/"
     assert websites["umami-minsk"] == "https://umami.by/"
+
+
+def test_more_verified_restaurant_sites_are_kept_in_the_seed():
+    places = json.loads(SEED_PLACES_PATH.read_text(encoding="utf-8"))
+    websites = {place.get("slug"): place.get("site") for place in places}
+
+    assert websites["malevich-minsk"] == "https://malevichrest.by/"
+    assert websites["monemane-minsk"] == "https://monemane.by/"
+    assert websites["owino-minsk"] == "https://owino.by/"
+    assert websites["zavtraki"] == "https://zavtraki.by/"
+    assert websites["kamyanitsa-minsk"] == "https://kamyanitsa.by/"

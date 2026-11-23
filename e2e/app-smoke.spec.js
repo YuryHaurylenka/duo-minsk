@@ -283,6 +283,26 @@ test('DUO Match explains the sign-in requirement to guests and fits mobile scree
 });
 
 
+test('catalogue subcategory filters consolidate duplicate source categories', async ({ page }) => {
+  await mockCatalogApi(page);
+  await openCatalogue(page);
+
+  const filters = page.locator('.sub-category-scroll button');
+  await expect(filters).toHaveCount(5);
+  await expect(filters.filter({ hasText: 'Культура' })).toBeVisible();
+  await expect(filters.filter({ hasText: 'Видовые места' })).toBeVisible();
+
+  await filters.filter({ hasText: 'Культура' }).click();
+  await expect(page.locator('.catalog-count')).toContainText('мест найдено');
+  const labels = await page.locator('.place-card .image-category').allTextContents();
+  expect(labels.length).toBeGreaterThan(0);
+  expect(labels.every(label => /музеи|выставки|театр|кино/i.test(label))).toBeTruthy();
+
+  await filters.filter({ hasText: 'Все направления' }).click();
+  await expect(page.locator('.place-card')).toHaveCount(9);
+});
+
+
 test('catalogue and favourites have distinct navigation labels and empty states', async ({ page }) => {
   await mockCatalogApi(page);
   await openCatalogue(page);

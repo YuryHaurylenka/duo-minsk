@@ -52,6 +52,8 @@ const PHOTO_CREDITS={
  'минскии-планетарии':{author:'Minsk Planetarium',license:'CC BY-SA 2.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/2.0/'},
  'национальныи-историческии-музеи':{author:'Tatiana Matlina',license:'CC BY-SA 3.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/3.0/'},
  'галерея-арт-беларусь':{author:'Tatiana Markina',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
+ 'лошицкии-парк':{author:'Dina Panayotis',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
+ 'театр-имени-янки-купалы':{author:'Hanna Zelenko',license:'CC BY-SA 3.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/3.0/'},
 };
 const photoCreditFor=place=>PHOTO_CREDITS[place?.slug]||'';
 

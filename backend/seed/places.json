@@ -991,7 +991,9 @@
     "longitude": 27.5814325,
     "location_verified": false,
     "slug": "лошицкии-парк",
-    "district": "Ленинский"
+    "district": "Ленинский",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/2025.09.18_Loshitsky_Park%2C_Minsk.jpg/1280px-2025.09.18_Loshitsky_Park%2C_Minsk.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:2025.09.18_Loshitsky_Park,_Minsk.jpg"
   },
   {
     "n": "Парк Горького",
@@ -2177,7 +2179,9 @@
     "longitude": 27.5627503,
     "location_verified": true,
     "slug": "театр-имени-янки-купалы",
-    "district": "Ленинский"
+    "district": "Ленинский",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Belarus-Minsk-Yanka_Kupala_National_Academic_Theatre.jpg/1280px-Belarus-Minsk-Yanka_Kupala_National_Academic_Theatre.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Belarus-Minsk-Yanka_Kupala_National_Academic_Theatre.jpg"
   },
   {
     "n": "Большой театр Беларуси",

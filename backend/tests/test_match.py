@@ -456,3 +456,29 @@ def test_match_vote_increments_safe_realtime_activity_version():
     assert response.status_code == 200
     assert "activity_version = activity_version + 1" in str(db.execute.call_args_list[2].args[0])
     assert db.commit.called
+
+
+def test_match_vote_rejects_place_outside_the_session():
+    session_id = uuid4()
+    db = MagicMock()
+    db.scalar.return_value = CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner")
+    db.get.return_value = Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+                                 created_at=datetime.now(timezone.utc))
+    missing_candidate = MagicMock()
+    missing_candidate.first.return_value = None
+    db.execute.return_value = missing_candidate
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).put(
+            f"/api/match/sessions/{session_id}/votes",
+            json={"place_slug": "not-in-this-round", "liked": True},
+        )
+    finally:
+        app.dependency_overrides.clear()
+
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Место не входит в этот раунд"
+    db.execute.assert_called_once()
+    db.commit.assert_not_called()

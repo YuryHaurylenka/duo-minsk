@@ -217,3 +217,22 @@ test('broken venue photos fall back to an explicitly labelled category illustrat
   await expect(imageCover.locator('.image-illustration-label')).toBeVisible();
   await expect(imageCover.locator('img')).toHaveAttribute('alt', /Иллюстрация категории/);
 });
+
+
+test('DUO Match explains the sign-in requirement to guests and fits mobile screens', async ({ page }) => {
+  await page.addInitScript(() => sessionStorage.setItem('duoEntrySeen', '1'));
+  await page.goto('/');
+  await page.getByRole('button', { name: /DUO Match/ }).click();
+
+  await expect(page.getByRole('heading', { name: /Два мнения/ })).toBeVisible();
+  await expect(page.getByText(/Войдите в аккаунт, создайте пространство пары/)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Войти в DUO/ })).toBeVisible();
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  const dimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    document: document.documentElement.scrollWidth,
+  }));
+  expect(dimensions.document, 'DUO Match should not overflow horizontally on mobile')
+    .toBeLessThanOrEqual(dimensions.viewport + 1);
+});

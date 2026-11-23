@@ -93,7 +93,7 @@ async function mockCatalogApi(page) {
   await page.route('**/*', route => {
     const requestUrl = new URL(route.request().url());
     if (!requestUrl.pathname.includes('/api/')) return route.continue();
-    const path = requestUrl.pathname.replace(/\\/+$/, '');
+    const path = requestUrl.pathname.endsWith('/') ? requestUrl.pathname.slice(0, -1) : requestUrl.pathname;
     console.log('[DUO test API mock]', route.request().method(), path);
     if (path.endsWith('/cities')) {
       return route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] });

@@ -26,6 +26,14 @@ const licensedPlaces = [
     image_source_url: 'https://commons.wikimedia.org/wiki/File:National_art_museum-Minsk.jpg',
   },
   {
+    id: 'island-fixture', slug: 'остров-слез', city_slug: 'minsk',
+    name: 'Остров слёз', category: 'Видовые места',
+    description: 'Мемориал на берегу Свислочи.', address: 'Старовиленский тракт, Минск',
+    rating: '4.8', reviews: '120', price_label: 'Бесплатно',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Minsk_TearsIsland_001_3847.jpg/1280px-Minsk_TearsIsland_001_3847.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Minsk_TearsIsland_001_3847.jpg',
+  },
+  {
     id: 'botanical-fixture', slug: 'центральныи-ботаническии-сад', city_slug: 'minsk',
     name: 'Центральный ботанический сад', category: 'Прогулки',
     description: 'Сад и прогулочные маршруты.', address: 'ул. Сурганова, 2В, Минск',
@@ -154,6 +162,7 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Музей истории Великой Отечественной войны', author: 'Adam Jones', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
     { query: 'Национальный художественный музей', author: 'Koostia', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { query: 'Центральный ботанический сад', author: 'Mila Chibireva', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+    { query: 'Остров слёз', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский зоопарк', author: 'Александр Сигачёв', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
     { query: 'Национальный художественный музей', author: 'Koostia', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { query: 'Центральный ботанический сад', author: 'Mila Chibireva', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },

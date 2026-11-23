@@ -44,6 +44,7 @@ const PHOTO_CREDITS={
  'остров-слез':{author:'Ludvig14',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
  'троицкое-предместье':{author:'Ludvig14',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
  'минскии-зоопарк':{author:'SStraySpirit',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
+ 'большои-театр-беларуси':{author:'Ludvig14',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
 };
 const photoCreditFor=place=>PHOTO_CREDITS[place?.slug]||'';
 

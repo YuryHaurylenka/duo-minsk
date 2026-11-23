@@ -86,6 +86,14 @@ const licensedPlaces = [
     rating: '4.7', reviews: '300', price_label: 'Уточнить стоимость',
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg/1280px-2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:2026.06.26_Ботанический_сад_в_Минске,_Беларусь_22.jpg',
+  },,
+  {
+    id: 'chizhovka-fixture', slug: 'чижовка-арена', city_slug: 'minsk',
+    name: 'Чижовка-Арена', category: 'Лёд',
+    description: 'Ледовая арена в Минске.', address: 'ул. Ташкентская, 19, Минск',
+    rating: '5.0', reviews: '2927', price_label: 'Уточнить стоимость',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Chizhovka-Arena_inside_1.jpg/1280px-Chizhovka-Arena_inside_1.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg',
   },
 ];
 
@@ -186,6 +194,7 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Большой театр Беларуси', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский зоопарк', author: 'SStraySpirit', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский планетарий', author: 'Minsk Planetarium', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
+    { query: 'Чижовка-Арена', author: 'Homoatrox', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
   ]) {
     await search.fill(item.query);
     const card = page.locator('.place-card').filter({ hasText: item.query }).first();

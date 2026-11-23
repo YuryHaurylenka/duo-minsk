@@ -6,6 +6,8 @@ const licensedPlaces = [
     name: 'Национальная библиотека Беларуси — смотровая площадка', category: 'Видовые места',
     description: 'Панорама Минска со смотровой площадки.', address: 'пр-т Независимости, 116, Минск',
     rating: '4.8', reviews: '240', price_label: 'Уточнить стоимость',
+    website_url: 'https://www.google.com/search?q=National+Library+of+Belarus',
+    source_url: 'https://www.google.com/maps/search/?api=1&query=National+Library+of+Belarus',
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG/1280px-View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG',
   },
@@ -199,6 +201,22 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     await expect.poll(() => detailImage.evaluate(image => image.complete && image.naturalWidth > 0), { timeout: 20_000 }).toBe(true);
     await page.getByRole('button', { name: 'Закрыть окно' }).click();
   }
+});
+
+
+test('Google search and map URLs are not presented as official venue websites', async ({ page }) => {
+  await mockCatalogApi(page);
+  await openCatalogue(page);
+  const search = page.locator('input[aria-label="Поиск по местам"]');
+  await search.fill('Национальная библиотека');
+  await page.locator('.place-card').filter({ hasText: 'Национальная библиотека' }).first().click();
+
+  const detail = page.getByRole('dialog', { name: 'Окно DUO' });
+  await expect(detail).toBeVisible();
+  await expect(detail.getByRole('link', { name: 'Сайт / меню' })).toHaveCount(0);
+  await expect(detail.getByRole('link', { name: 'Открыть на карте' })).toBeVisible();
+  await expect(detail.getByRole('link', { name: 'Поиск источника' })).toBeVisible();
+  await expect(detail.getByRole('link', { name: 'Источник данных' })).toHaveCount(0);
 });
 
 

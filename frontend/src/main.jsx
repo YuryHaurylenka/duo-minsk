@@ -43,7 +43,7 @@ const PHOTO_CREDITS={
  'центральныи-ботаническии-сад':{author:'Mila Chibireva',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
  'остров-слез':{author:'Ludvig14',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
  'троицкое-предместье':{author:'Ludvig14',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
- 'минскии-зоопарк':{author:'Александр Сигачёв',license:'CC0 1.0',licenseUrl:'https://creativecommons.org/publicdomain/zero/1.0/'},
+ 'минскии-зоопарк':{author:'SStraySpirit',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
 };
 const photoCreditFor=place=>PHOTO_CREDITS[place?.slug]||'';
 

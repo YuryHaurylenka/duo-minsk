@@ -53,8 +53,8 @@ const licensedPlaces = [
     name: 'Минский зоопарк', category: 'Парки развлечений',
     description: 'Зоопарк Минска.', address: 'ул. Ташкентская, 40, Минск',
     rating: '4.6', reviews: '700', price_label: 'Уточнить стоимость',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA.jpg/1280px-%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA.jpg',
-    image_source_url: 'https://commons.wikimedia.org/wiki/File:Минский_зоопарк.jpg',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA_-_%D0%BF%D0%B0%D0%B2%D0%BB%D0%B8%D0%BD.jpg/1280px-%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA_-_%D0%BF%D0%B0%D0%B2%D0%BB%D0%B8%D0%BD.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Минский_зоопарк_-_павлин.jpg',
   },
   {
     id: 'art-museum-fixture', slug: 'национальныи-художественныи-музеи', city_slug: 'minsk',
@@ -168,7 +168,7 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Центральный ботанический сад', author: 'Mila Chibireva', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Остров слёз', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Троицкое предместье', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
-    { query: 'Минский зоопарк', author: 'Александр Сигачёв', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
+    { query: 'Минский зоопарк', author: 'SStraySpirit', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Национальный художественный музей', author: 'DBatura', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
   ]) {
     await search.fill(item.query);

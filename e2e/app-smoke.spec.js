@@ -183,6 +183,11 @@ test('broken venue photos fall back to an explicitly labelled category illustrat
   await mockCatalogApi(page);
   await page.addInitScript(() => sessionStorage.setItem('duoEntrySeen', '1'));
   await page.route('https://upload.wikimedia.org/**', route => route.abort());
+  await page.route('https://images.unsplash.com/**', route => route.fulfill({
+    status: 200,
+    contentType: 'image/svg+xml',
+    body: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><rect width="32" height="32" fill="#777"/></svg>',
+  }));
   await page.goto('/places');
   const imageCover = page.locator('.place-card .image-cover').first();
   await expect(imageCover).toHaveAttribute('data-image-kind', 'category-illustration');

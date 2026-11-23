@@ -238,6 +238,23 @@ test('licensed catalogue photos show author and direct license links', async ({ 
 });
 
 
+test('verified venue websites are exposed as direct site links in place details', async ({ page }) => {
+  await page.route('**/api/cities*', route => route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] }));
+  await page.route('**/api/places*', route => route.fulfill({ json: [{
+    id: 'neurobox', slug: 'neurobox', city_slug: 'minsk', name: 'Neurobox', category: 'VR и игры',
+    description: 'Парк виртуальной реальности.', address: 'пр-т Дзержинского, 104, Минск',
+    website_url: 'https://neurobox.by/', source_url: 'https://zabava.by/razvlecheniya',
+  }] }));
+  await page.route('**/api/events*', route => route.fulfill({ json: [] }));
+  await page.route('**/api/updates*', route => route.fulfill({ json: [] }));
+  await openCatalogue(page);
+  await page.locator('.place-card').filter({ hasText: 'Neurobox' }).click();
+  const detail = page.getByRole('dialog', { name: 'Окно DUO' });
+  await expect(detail.getByRole('link', { name: 'Сайт / меню' })).toHaveAttribute('href', 'https://neurobox.by/');
+  await expect(detail.getByRole('link', { name: 'Источник данных' })).toHaveAttribute('href', 'https://zabava.by/razvlecheniya');
+});
+
+
 test('planner never stores generic search pages as venue websites', async ({ page }) => {
   await mockCatalogApi(page);
   await page.route('**/api/places*', route => route.fulfill({ json: [{ ...licensedPlaces[0], category: 'Кофейни', level: 1, risk: 'low', cost: 15, price_label: '15 BYN' }] }));

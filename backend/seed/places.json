@@ -2467,7 +2467,9 @@
     "longitude": 27.5565713,
     "location_verified": false,
     "slug": "троицкое-предместье",
-    "district": "Центральный"
+    "district": "Центральный",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Minsk_TrinityHill_001_3864.jpg/1280px-Minsk_TrinityHill_001_3864.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Minsk_TrinityHill_001_3864.jpg"
   },
   {
     "n": "ZABAVA — парк развлечений",

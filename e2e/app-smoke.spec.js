@@ -41,6 +41,22 @@ const licensedPlaces = [
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA.jpg/1280px-%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Минский_зоопарк.jpg',
   },
+  {
+    id: 'art-museum-fixture', slug: 'национальныи-художественныи-музеи', city_slug: 'minsk',
+    name: 'Национальный художественный музей', category: 'Музеи и выставки',
+    description: 'Национальный художественный музей Беларуси.', address: 'ул. Ленина, 20, Минск',
+    rating: '4.8', reviews: '500', price_label: 'Уточнить стоимость',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/National_art_museum-Minsk.jpg/1280px-National_art_museum-Minsk.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:National_art_museum-Minsk.jpg',
+  },
+  {
+    id: 'botanical-fixture', slug: 'центральныи-ботаническии-сад', city_slug: 'minsk',
+    name: 'Центральный ботанический сад', category: 'Парки',
+    description: 'Ботанический сад Минска.', address: 'ул. Сурганова, 2В, Минск',
+    rating: '4.7', reviews: '300', price_label: 'Уточнить стоимость',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg/1280px-2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:2026.06.26_Ботанический_сад_в_Минске,_Беларусь_22.jpg',
+  },
 ];
 
 async function mockCatalogApi(page) {
@@ -139,6 +155,8 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Национальный художественный музей', author: 'Koostia', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { query: 'Центральный ботанический сад', author: 'Mila Chibireva', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский зоопарк', author: 'Александр Сигачёв', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
+    { query: 'Национальный художественный музей', author: 'Koostia', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+    { query: 'Центральный ботанический сад', author: 'Mila Chibireva', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
   ]) {
     await search.fill(item.query);
     const card = page.locator('.place-card').filter({ hasText: item.query }).first();

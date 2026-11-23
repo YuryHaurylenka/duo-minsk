@@ -22,7 +22,7 @@ const licensedPlaces = [
     name: 'Национальный художественный музей', category: 'Музеи и выставки',
     description: 'Коллекция белорусского и зарубежного искусства.', address: 'ул. Ленина, 20, Минск',
     rating: '4.4', reviews: '343', price_label: 'Уточнить стоимость',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/National_art_museum-Minsk.jpg/1280px-National_art_museum-Minsk.jpg',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/%D0%9D%D0%B0%D1%86%D1%8B%D1%8F%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B_%D0%BC%D0%B0%D1%81%D1%82%D0%B0%D1%86%D0%BA%D1%96_%D0%BC%D1%83%D0%B7%D0%B5%D0%B9_%D0%A0%D1%8D%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D1%96_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C.jpg/1280px-%D0%9D%D0%B0%D1%86%D1%8B%D1%8F%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B_%D0%BC%D0%B0%D1%81%D1%82%D0%B0%D1%86%D0%BA%D1%96_%D0%BC%D1%83%D0%B7%D0%B5%D0%B9_%D0%A0%D1%8D%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D1%96_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:National_art_museum-Minsk.jpg',
   },
   {
@@ -54,7 +54,7 @@ const licensedPlaces = [
     name: 'Национальный художественный музей', category: 'Музеи и выставки',
     description: 'Национальный художественный музей Беларуси.', address: 'ул. Ленина, 20, Минск',
     rating: '4.8', reviews: '500', price_label: 'Уточнить стоимость',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/National_art_museum-Minsk.jpg/1280px-National_art_museum-Minsk.jpg',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/%D0%9D%D0%B0%D1%86%D1%8B%D1%8F%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B_%D0%BC%D0%B0%D1%81%D1%82%D0%B0%D1%86%D0%BA%D1%96_%D0%BC%D1%83%D0%B7%D0%B5%D0%B9_%D0%A0%D1%8D%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D1%96_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C.jpg/1280px-%D0%9D%D0%B0%D1%86%D1%8B%D1%8F%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B_%D0%BC%D0%B0%D1%81%D1%82%D0%B0%D1%86%D0%BA%D1%96_%D0%BC%D1%83%D0%B7%D0%B5%D0%B9_%D0%A0%D1%8D%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D1%96_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:National_art_museum-Minsk.jpg',
   },
   {
@@ -157,7 +157,7 @@ test('licensed catalogue photos show author and direct license links', async ({ 
   for (const item of [
     { query: 'Национальная библиотека', author: 'Хомелка', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { query: 'Музей истории Великой Отечественной войны', author: 'Adam Jones', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
-    { query: 'Национальный художественный музей', author: 'Koostia', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+    { query: 'Национальный художественный музей', author: 'DBatura', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },
     { query: 'Центральный ботанический сад', author: 'Mila Chibireva', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Остров слёз', author: 'Ludvig14', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский зоопарк', author: 'Александр Сигачёв', license: 'https://creativecommons.org/publicdomain/zero/1.0/' },

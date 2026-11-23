@@ -90,8 +90,11 @@ const licensedPlaces = [
 ];
 
 async function mockCatalogApi(page) {
-  await page.route('**/api/**', route => {
-    const path = new URL(route.request().url()).pathname.replace(/\/+$/, '');
+  await page.route('**/*', route => {
+    const requestUrl = new URL(route.request().url());
+    if (!requestUrl.pathname.includes('/api/')) return route.continue();
+    const path = requestUrl.pathname.replace(/\\/+$/, '');
+    console.log('[DUO test API mock]', route.request().method(), path);
     if (path.endsWith('/cities')) {
       return route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] });
     }

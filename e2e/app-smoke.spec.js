@@ -77,11 +77,8 @@ async function mockCatalogApi(page) {
 const routes = ['/', '/planner', '/map', '/analytics'];
 
 async function openCatalogue(page) {
+  await page.addInitScript(() => sessionStorage.setItem('duoEntrySeen', '1'));
   await page.goto('/places');
-  const welcome = page.getByRole('dialog', { name: 'Добро пожаловать в DUO' });
-  if (await welcome.isVisible().catch(() => false)) {
-    await welcome.getByRole('button', { name: 'Открыть DUO' }).click();
-  }
 }
 
 

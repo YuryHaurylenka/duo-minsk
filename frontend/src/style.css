@@ -285,3 +285,7 @@ body,#root{font-family:var(--font-body)}
 
 /* DUO Match realtime connection state */
 .match-live-status{display:flex;align-items:center;gap:8px;margin:10px 0 18px;color:var(--muted);font-size:11px}.match-live-status i{width:7px;height:7px;border-radius:50%;background:#a2a28f;flex:0 0 auto}.match-live-status.connected{color:#b8d995}.match-live-status.connected i{background:#b8e27c;box-shadow:0 0 0 3px rgba(184,226,124,.13)}.match-live-status.reconnecting{color:#e8c27d}.match-live-status.reconnecting i{background:#e8c27d;animation:realtime-pulse 1.4s ease-in-out infinite}
+
+
+/* Category artwork is intentionally distinguished from real venue photography. */
+.image-illustration-label{font-size:7px;letter-spacing:.08em;opacity:.92;pointer-events:none;white-space:nowrap}

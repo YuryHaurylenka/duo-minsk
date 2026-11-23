@@ -2313,7 +2313,9 @@
     "longitude": 27.6355888,
     "location_verified": true,
     "slug": "минскии-зоопарк",
-    "district": "Заводской"
+    "district": "Заводской",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA.jpg/1280px-%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Минский_зоопарк.jpg"
   },
   {
     "n": "Контактный зоопарк в ТЦ «Титан»",

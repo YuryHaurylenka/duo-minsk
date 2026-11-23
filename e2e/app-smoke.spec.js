@@ -67,3 +67,26 @@ test('catalogue cards and detail modal fit desktop and mobile viewports', async 
   expect(modalBounds.x).toBeGreaterThanOrEqual(0);
   expect(modalBounds.x + modalBounds.width).toBeLessThanOrEqual(391);
 });
+
+
+test('licensed catalogue photos show author and direct license links', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Открыть DUO' }).click();
+  await page.getByRole('button', { name: 'Смотреть места' }).click();
+  const search = page.locator('input[aria-label="Поиск по местам"]');
+
+  for (const item of [
+    { query: 'Национальная библиотека', author: 'Хомелка', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+    { query: 'Музей истории Великой Отечественной войны', author: 'Adam Jones', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
+  ]) {
+    await search.fill(item.query);
+    const card = page.locator('.place-card').filter({ hasText: item.query }).first();
+    await expect(card).toBeVisible({ timeout: 15_000 });
+    await card.click();
+    const credits = page.locator('.detail-image .image-attribution a');
+    await expect(credits).toHaveCount(2);
+    await expect(credits.nth(0)).toContainText(item.author);
+    await expect(credits.nth(1)).toHaveAttribute('href', item.license);
+    await page.getByRole('button', { name: 'Закрыть окно' }).click();
+  }
+});

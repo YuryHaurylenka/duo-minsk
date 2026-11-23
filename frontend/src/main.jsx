@@ -47,6 +47,7 @@ const PHOTO_CREDITS={
  'большои-театр-беларуси':{author:'Ludvig14',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'},
  'минскии-планетарии':{author:'Minsk Planetarium',license:'CC BY-SA 2.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/2.0/'},
  'чижовка-арена':{author:'Homoatrox',license:'CC BY-SA 3.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/3.0/'},
+ 'верхнии-город-и-площадь-свободы':{author:'Hanna Zelenko',license:'CC BY-SA 3.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/3.0/'},
 };
 const photoCreditFor=place=>PHOTO_CREDITS[place?.slug]||'';
 

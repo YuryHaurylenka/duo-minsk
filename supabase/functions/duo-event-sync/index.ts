@@ -48,6 +48,33 @@ function walk(value: unknown, out: Record<string, unknown>[]) {
   }
 }
 
+function imageUrlFrom(value: unknown, baseUrl: string): string | null {
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const resolved = imageUrlFrom(item, baseUrl);
+      if (resolved) return resolved;
+    }
+    return null;
+  }
+  if (value && typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    for (const key of ["url", "contentUrl", "thumbnailUrl", "@id"]) {
+      const resolved = imageUrlFrom(record[key], baseUrl);
+      if (resolved) return resolved;
+    }
+    return null;
+  }
+  if (typeof value !== "string") return null;
+  const candidate = clean(value, 1000);
+  if (!candidate || candidate.toLowerCase() === "[object object]") return null;
+  try {
+    const resolved = new URL(candidate, baseUrl);
+    return ["http:", "https:"].includes(resolved.protocol) ? resolved.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
 function categoryFor(event: Record<string, unknown>, sourceKey: string): string {
   const type = String(event["@type"] ?? "");
   const text = `${type} ${event.name ?? ""} ${event.description ?? ""}`.toLowerCase();
@@ -128,7 +155,7 @@ function extractEvents(
       price_min: Number.isFinite(low) && low >= 0 ? low : null,
       price_max: Number.isFinite(high) && high >= 0 ? high : null,
       currency: clean(offers.priceCurrency ?? "BYN", 8),
-      image_url: clean(event.image ?? "", 1000) || null,
+      image_url: imageUrlFrom(event.image, url),
       ticket_url: clean(offers.url ?? url, 1000),
       status: /EventCancelled/i.test(statusText) ? "cancelled" : ((event.endDate ? new Date(String(event.endDate)).getTime() : start.getTime()) < Date.now() ? "ended" : "scheduled"),
       last_verified_at: new Date().toISOString(),

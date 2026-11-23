@@ -2194,7 +2194,9 @@
     "longitude": 27.561931,
     "location_verified": false,
     "slug": "большои-театр-беларуси",
-    "district": "Центральный"
+    "district": "Центральный",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Minsk_ParizhskoyKommuny1_001_4213.jpg/1280px-Minsk_ParizhskoyKommuny1_001_4213.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Minsk_ParizhskoyKommuny1_001_4213.jpg"
   },
   {
     "n": "Кинотеатр «Москва»",

@@ -108,6 +108,35 @@ async function openCatalogue(page) {
   await page.goto('/places');
 }
 
+test('Wikimedia photo cards show creator and license attribution, failed photos use labeled fallback', async ({ page }) => {
+  const imagePixel = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/pWQAAAAASUVORK5CYII=', 'base64');
+  await page.route('**/api/cities*', route => route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] }));
+  await page.route('**/api/places*', route => route.fulfill({ json: [
+    { id: 'upper-town', slug: 'верхнии-город-и-площадь-свободы', city_slug: 'minsk', name: 'Верхний город', category: 'Видовые места', description: 'Исторический центр Минска.', address: 'Минск', image_url: 'https://images.example.test/upper-town.png', image_source_url: 'https://commons.wikimedia.org/wiki/File:Belarus-Minsk-Upper_Town-1.jpg' },
+    { id: 'arena', slug: 'чижовка-арена', city_slug: 'minsk', name: 'Чижовка-Арена', category: 'Спорт', description: 'Спортивная арена.', address: 'Минск', image_url: 'https://images.example.test/arena.png', image_source_url: 'https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg' },
+    { id: 'broken-photo', slug: 'broken-photo', city_slug: 'minsk', name: 'Место без фото', category: 'Квесты', description: 'Карточка без доступной фотографии.', address: 'Минск', image_url: 'https://images.example.test/broken.jpg' },
+  ] }));
+  await page.route('https://images.example.test/**', route => route.request().url().endsWith('/broken.jpg')
+    ? route.fulfill({ status: 404, contentType: 'image/jpeg', body: '' })
+    : route.fulfill({ status: 200, contentType: 'image/png', body: imagePixel }));
+  await page.route('**/api/events*', route => route.fulfill({ json: [] }));
+  await page.route('**/api/updates*', route => route.fulfill({ json: [] }));
+  await openCatalogue(page);
+
+  const upper = page.locator('.place-card').filter({ hasText: 'Верхний город' });
+  const arena = page.locator('.place-card').filter({ hasText: 'Чижовка-Арена' });
+  await expect(upper.locator('.image-attribution')).toContainText('Hanna Zelenko');
+  await expect(upper.locator('.image-attribution')).toContainText('Кадрировано');
+  await expect(upper.locator('.image-attribution a').last()).toHaveAttribute('href', 'https://creativecommons.org/licenses/by-sa/3.0/');
+  await expect(arena.locator('.image-attribution')).toContainText('Homoatrox');
+  await expect(arena.locator('.image-attribution a').last()).toHaveAttribute('href', 'https://creativecommons.org/licenses/by-sa/3.0/');
+
+  const broken = page.locator('.place-card').filter({ hasText: 'Место без фото' });
+  await broken.scrollIntoViewIfNeeded();
+  await expect(broken.locator('.image-cover')).toHaveAttribute('data-image-kind', 'category-illustration');
+  await expect(broken.locator('.image-illustration-label')).toBeVisible();
+});
+
 
 for (const route of routes) {
   test(`renders DUO without a blank screen at ${route}`, async ({ page }) => {

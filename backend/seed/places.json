@@ -258,7 +258,9 @@
     "longitude": 27.6286347,
     "location_verified": true,
     "slug": "чижовка-арена",
-    "district": "Заводской"
+    "district": "Заводской",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Chizhovka-Arena_inside_1.jpg/1280px-Chizhovka-Arena_inside_1.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg"
   },
   {
     "n": "F1 Каток у Дворца спорта",

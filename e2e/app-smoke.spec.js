@@ -1,5 +1,31 @@
 import { test, expect } from '@playwright/test';
 
+const licensedPlaces = [
+  {
+    id: 'library-fixture', slug: 'национальная-библиотека-беларуси-смотровая-площадка', city_slug: 'minsk',
+    name: 'Национальная библиотека Беларуси — смотровая площадка', category: 'Видовые места',
+    description: 'Панорама Минска со смотровой площадки.', address: 'пр-т Независимости, 116, Минск',
+    rating: '4.8', reviews: '240', price_label: 'Уточнить стоимость',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG/1280px-View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:View_of_Minsk_from_the_National_Library_of_Belarus_01.JPG',
+  },
+  {
+    id: 'museum-fixture', slug: 'музеи-истории-великои-отечественнои-воины', city_slug: 'minsk',
+    name: 'Музей истории Великой Отечественной войны', category: 'Музеи и выставки',
+    description: 'Музей истории войны и памятные экспозиции.', address: 'пр-т Победителей, 8, Минск',
+    rating: '4.9', reviews: '900', price_label: 'Уточнить стоимость',
+    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_%2827248715740%29.jpg/1280px-Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_%2827248715740%29.jpg',
+    image_source_url: 'https://commons.wikimedia.org/wiki/File:Museum_of_the_Great_Patriotic_War_-_Minsk_-_Belarus_(27248715740).jpg',
+  },
+];
+
+async function mockCatalogApi(page) {
+  await page.route('**/api/cities*', route => route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] }));
+  await page.route('**/api/places*', route => route.fulfill({ json: licensedPlaces }));
+  await page.route('**/api/events*', route => route.fulfill({ json: [] }));
+  await page.route('**/api/updates*', route => route.fulfill({ json: [] }));
+}
+
 const routes = ['/', '/planner', '/map', '/analytics'];
 
 for (const route of routes) {
@@ -38,8 +64,8 @@ test('welcome experience is accessible on first visit', async ({ page }) => {
 
 
 test('catalogue cards and detail modal fit desktop and mobile viewports', async ({ page }) => {
-  await page.goto('/');
-  await page.getByRole('button', { name: 'Открыть DUO' }).click();
+  await mockCatalogApi(page);
+  await page.goto('/places');
   const firstCard = page.locator('.place-card').first();
   await expect(firstCard).toBeVisible({ timeout: 20_000 });
 
@@ -70,9 +96,8 @@ test('catalogue cards and detail modal fit desktop and mobile viewports', async 
 
 
 test('licensed catalogue photos show author and direct license links', async ({ page }) => {
-  await page.goto('/');
-  await page.getByRole('button', { name: 'Открыть DUO' }).click();
-  await page.getByRole('button', { name: 'Смотреть места' }).click();
+  await mockCatalogApi(page);
+  await page.goto('/places');
   const search = page.locator('input[aria-label="Поиск по местам"]');
 
   for (const item of [

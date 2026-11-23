@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 import json
 import re
 from uuid import uuid4
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 import requests
 from bs4 import BeautifulSoup
 from sqlalchemy.dialects.postgresql import insert
@@ -26,6 +26,30 @@ def _walk_events(node):
     elif isinstance(node, list):
         for value in node:
             yield from _walk_events(value)
+
+
+def _image_url(value, base_url):
+    """Resolve JSON-LD image values to a safe absolute HTTP(S) URL."""
+    if isinstance(value, list):
+        for item in value:
+            resolved = _image_url(item, base_url)
+            if resolved:
+                return resolved
+        return None
+    if isinstance(value, dict):
+        for key in ("url", "contentUrl", "thumbnailUrl", "@id"):
+            resolved = _image_url(value.get(key), base_url)
+            if resolved:
+                return resolved
+        return None
+    if not isinstance(value, str):
+        return None
+    candidate = value.strip()
+    if not candidate or candidate.lower() == "[object object]":
+        return None
+    resolved = urljoin(base_url, candidate)
+    parsed = urlparse(resolved)
+    return resolved if parsed.scheme in {"http", "https"} and parsed.netloc else None
 
 
 def _text(value):
@@ -60,14 +84,20 @@ def _parse_source(key, url, city_slug="minsk"):
                 price = float(re.sub(r"[^0-9.]", "", str(price))) if price not in (None, "") else None
             except ValueError:
                 price = None
+            event_url = urljoin(
+                url,
+                event.get("url")
+                or (offers.get("url") if isinstance(offers, dict) else "")
+                or "#"+re.sub(r"[^a-z0-9]+", "-", title.lower())+"-"+str(start),
+            )
             items.append({
                 "city_slug": city_slug,
-                "source_key": key, "source_url": urljoin(url, event.get("url") or (offers.get("url") if isinstance(offers, dict) else "") or "#"+re.sub(r"[^a-z0-9]+", "-", title.lower())+"-"+str(start)), "title": title[:500],
+                "source_key": key, "source_url": event_url, "title": title[:500],
                 "description": BeautifulSoup(str(event.get("description") or ""), "html.parser").get_text(" ", strip=True)[:4000],
                 "category": _text(event.get("eventType")) or "Событие", "venue": _text(location.get("name")),
                 "address": str(address)[:500], "starts_at": start, "ends_at": event.get("endDate"),
                 "price_min": price, "price_max": price, "currency": "BYN",
-                "image_url": event.get("image") if isinstance(event.get("image"), str) else None,
+                "image_url": _image_url(event.get("image"), event_url),
                 "ticket_url": offers.get("url") if isinstance(offers, dict) else None,
                 "status": "scheduled", "last_verified_at": datetime.now(timezone.utc),
             })

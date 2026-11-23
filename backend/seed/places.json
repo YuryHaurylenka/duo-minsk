@@ -2442,7 +2442,9 @@
     "longitude": 27.5545133,
     "location_verified": false,
     "slug": "остров-слез",
-    "district": "Центральный"
+    "district": "Центральный",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Minsk_TearsIsland_001_3847.jpg/1280px-Minsk_TearsIsland_001_3847.jpg",
+    "image_source_url": "https://commons.wikimedia.org/wiki/File:Minsk_TearsIsland_001_3847.jpg"
   },
   {
     "n": "Троицкое предместье",

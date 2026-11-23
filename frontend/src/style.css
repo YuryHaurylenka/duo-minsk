@@ -293,3 +293,5 @@ body,#root{font-family:var(--font-body)}
 
 /* Catalogue trust signals */
 .place-rating{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}.place-review-count{margin-left:2px;color:#788574;font-size:8px;font-style:normal}
+
+.image-attribution{display:flex;align-items:center;gap:7px}.image-attribution a{color:inherit;text-decoration:none}.image-attribution a:last-child{color:#c8f36a}

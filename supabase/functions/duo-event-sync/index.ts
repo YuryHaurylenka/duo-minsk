@@ -29,7 +29,7 @@ function clean(value: unknown, max = 6000): string {
     .replace(/&#39;/g, "'")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
-    .replace(/\\s+/g, " ")
+    .replace(/\s+/g, " ")
     .trim()
     .slice(0, max);
 }
@@ -69,6 +69,11 @@ function imageUrlFrom(value: unknown, baseUrl: string): string | null {
   if (!candidate || candidate.toLowerCase() === "[object object]") return null;
   try {
     const resolved = new URL(candidate, baseUrl);
+    const base = new URL(baseUrl);
+    const samePage =
+      resolved.origin === base.origin &&
+      resolved.pathname.replace(/\/+$/, "") === base.pathname.replace(/\/+$/, "");
+    if (samePage) return null;
     return ["http:", "https:"].includes(resolved.protocol) ? resolved.toString() : null;
   } catch {
     return null;

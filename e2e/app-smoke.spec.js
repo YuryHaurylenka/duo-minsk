@@ -248,11 +248,26 @@ test('catalogue cards and detail modal fit desktop and mobile viewports', async 
   };
 
   await checkNoHorizontalOverflow();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await checkNoHorizontalOverflow();
+  const mobileLayout = await page.evaluate(() => {
+    const input = document.querySelector('input[aria-label="Поиск по местам"]');
+    const searchBox = input?.parentElement;
+    const content = document.querySelector('.page-content');
+    const bounds = element => {
+      const rect = element?.getBoundingClientRect();
+      return rect ? { left: rect.left, right: rect.right } : null;
+    };
+    return { searchBox: bounds(searchBox), input: bounds(input), content: bounds(content) };
+  });
+  expect(mobileLayout.searchBox).not.toBeNull();
+  expect(mobileLayout.input).not.toBeNull();
+  expect(mobileLayout.content).not.toBeNull();
+  expect(mobileLayout.searchBox.right).toBeLessThanOrEqual(mobileLayout.content.right + 1);
+  expect(mobileLayout.input.right).toBeLessThanOrEqual(mobileLayout.searchBox.right + 1);
   const imageAltTexts = await page.locator('.place-card .image-cover img').evaluateAll(images => images.map(image => image.alt.trim()));
   expect(imageAltTexts.every(Boolean), 'catalogue images should have descriptive alt text').toBeTruthy();
 
-  await page.setViewportSize({ width: 390, height: 844 });
-  await checkNoHorizontalOverflow();
   await firstCard.click();
   const detail = page.getByRole('dialog', { name: 'Окно DUO' });
   await expect(detail).toBeVisible();

@@ -11,6 +11,7 @@ from app.services import event_sync
     [
         ("https://cdn.example.com/poster.jpg", "https://cdn.example.com/poster.jpg"),
         ("poster.webp", "https://bezkassira.by/events/minsk/poster.webp"),
+        ({"url": "https://bezkassira.by/events/minsk/", "contentUrl": "https://cdn.example.com/actual-poster.webp"}, "https://cdn.example.com/actual-poster.webp"),
         ({"url": "https://cdn.example.com/poster.webp"}, "https://cdn.example.com/poster.webp"),
         ({"contentUrl": "/images/poster.jpg"}, "https://bezkassira.by/images/poster.jpg"),
         ([{"thumbnailUrl": "/images/thumb.jpg"}, {"url": "/images/full.jpg"}],

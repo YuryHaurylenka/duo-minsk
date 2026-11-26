@@ -49,6 +49,14 @@ def _image_url(value, base_url):
         return None
     resolved = urljoin(base_url, candidate)
     parsed = urlparse(resolved)
+    base = urlparse(base_url)
+    same_page = (
+        parsed.scheme.lower() == base.scheme.lower()
+        and parsed.netloc.lower() == base.netloc.lower()
+        and parsed.path.rstrip("/") == base.path.rstrip("/")
+    )
+    if same_page:
+        return None
     return resolved if parsed.scheme in {"http", "https"} and parsed.netloc else None
 
 

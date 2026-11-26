@@ -22,7 +22,7 @@ def test_image_url_resolves_json_ld_image_shapes(value, expected):
     assert event_sync._image_url(value, "https://bezkassira.by/events/minsk/") == expected
 
 
-@pytest.mark.parametrize("value", [None, {}, [], "[object Object]", "javascript:alert(1)"])
+@pytest.mark.parametrize("value", [None, {}, [], "[object Object]", "javascript:alert(1)", "https://bezkassira.by/events/minsk/?utm_source=duo", "/events/minsk/#details"])
 def test_image_url_rejects_invalid_values(value):
     assert event_sync._image_url(value, "https://bezkassira.by/events/minsk/") is None
 

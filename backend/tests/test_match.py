@@ -83,6 +83,47 @@ def test_match_start_resumes_active_session_for_partner():
     db.commit.assert_not_called()
 
 
+
+def test_match_start_recovers_when_another_request_wins_active_round_race():
+    from sqlalchemy.exc import IntegrityError
+
+    session_id = uuid4()
+    db = MagicMock()
+    db.scalar.side_effect = [
+        CoupleMember(couple_id=COUPLE_ID, user_id=USER_ID, role="owner"),
+        2,
+    ]
+    db.get.side_effect = [
+        Couple(id=COUPLE_ID, name="Us", invite_code="ABC123", created_by=USER_ID,
+               created_at=datetime.now(timezone.utc)),
+        SimpleNamespace(slug="minsk", is_active=True),
+    ]
+    no_active = MagicMock()
+    no_active.mappings.return_value.first.return_value = None
+    places = MagicMock()
+    places.scalars.return_value.all.return_value = ["place-one", "place-two"]
+    concurrent = MagicMock()
+    concurrent.mappings.return_value.first.return_value = {
+        "id": session_id, "status": "active", "city_slug": "minsk", "candidate_count": 8,
+    }
+    db.execute.side_effect = [no_active, places, MagicMock(), MagicMock(), MagicMock(), concurrent]
+    db.commit.side_effect = IntegrityError("insert", {}, Exception("duplicate active round"))
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    app.dependency_overrides[require_match_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")
+    try:
+        response = TestClient(app).post("/api/match/sessions", json={"city_slug": "minsk", "limit": 8})
+    finally:
+        app.dependency_overrides.clear()
+
+    assert response.status_code == 201
+    assert response.json() == {
+        "id": str(session_id), "status": "active", "candidate_count": 8,
+        "city_slug": "minsk", "resumed": True,
+    }
+    db.rollback.assert_called_once()
+    assert any("SET LOCAL ROLE duo_match_backend" in str(call.args[0]) for call in db.execute.call_args_list)
+
 def test_match_payload_hides_partner_likes_until_mutual_match():
     from app.main import _match_session_payload
 

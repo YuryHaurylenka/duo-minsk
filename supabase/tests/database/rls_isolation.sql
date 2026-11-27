@@ -131,6 +131,18 @@ VALUES
   (current_setting('duo.test.match_session_a')::uuid, current_setting('duo.test.couple_a')::uuid, 'minsk', current_setting('duo.test.user_a')::uuid),
   (current_setting('duo.test.match_session_b')::uuid, current_setting('duo.test.couple_b')::uuid, 'minsk', current_setting('duo.test.user_b')::uuid);
 
+-- Concurrent requests for the same couple/city must not create a second active round.
+DO $
+BEGIN
+  BEGIN
+    INSERT INTO public.duo_match_sessions (couple_id, city_slug, created_by)
+    VALUES (current_setting('duo.test.couple_a')::uuid, 'minsk', current_setting('duo.test.user_a')::uuid);
+    RAISE EXCEPTION 'A couple received two active Match rounds for the same city';
+  EXCEPTION WHEN unique_violation THEN
+    NULL;
+  END;
+END $;
+
 INSERT INTO public.duo_match_candidates (session_id, place_slug, position)
 VALUES
   (current_setting('duo.test.match_session_a')::uuid, current_setting('duo.test.place_slug'), 1),

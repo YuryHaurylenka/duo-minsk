@@ -295,3 +295,13 @@ body,#root{font-family:var(--font-body)}
 .place-rating{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}.place-review-count{margin-left:2px;color:#788574;font-size:8px;font-style:normal}
 
 .image-attribution{display:flex;align-items:center;gap:7px}.image-attribution a{color:inherit;text-decoration:none}.image-attribution a:last-child{color:#c8f36a}.image-attribution span{color:#aab59f;font-size:7px;white-space:nowrap}
+
+
+/* Accessible interaction polish */
+.modal-backdrop{overflow-y:auto;overscroll-behavior:contain}
+.modal{overscroll-behavior:contain;scrollbar-gutter:stable}
+.modal:focus{outline:none}
+.modal-close:focus-visible,.modal button:focus-visible,.modal a:focus-visible,.modal input:focus-visible,.modal select:focus-visible,.modal textarea:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,[role="button"]:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+@media(max-height:620px){.modal-backdrop{place-items:start center;padding:10px}.modal{max-height:calc(100dvh - 20px)}}
+@media(prefers-reduced-motion:reduce){.place-card,.event-card{transition:none!important}}

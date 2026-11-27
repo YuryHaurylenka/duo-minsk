@@ -42,6 +42,12 @@ def couple(couple_id=COUPLE_ID):
                   created_at=datetime.now(timezone.utc))
 
 
+def test_recommendations_use_match_database_role_for_private_vote_signals():
+    route = next(route for route in app.routes if getattr(route, "path", None) == "/api/recommendations")
+    dependency_calls = {dependency.call for dependency in route.dependant.dependencies}
+    assert require_match_user in dependency_calls
+
+
 def test_health_is_public():
     response = TestClient(app).get("/api/health")
     assert response.status_code == 200

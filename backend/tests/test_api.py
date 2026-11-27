@@ -416,6 +416,10 @@ def test_places_include_coordinates_for_map(client, db):
         reviews="—", price_label="Уточнить", couple_price_label="Уточнить", level=1,
         risk="good", tip="", website_url="", source_name="OSM", source_url="", cost=None,
         latitude=53.9001, longitude=27.5601, location_verified_at=None,
+        image_url="https://images.example.test/place.jpg",
+        image_source_url="https://commons.wikimedia.org/wiki/File:Place.jpg",
+        image_author="Photo Author", image_license="CC BY-SA 4.0",
+        image_license_url="https://creativecommons.org/licenses/by-sa/4.0/",
     )
     db.scalars.return_value.all.return_value = [place]
     response = client.get("/api/places?city=minsk")
@@ -423,6 +427,10 @@ def test_places_include_coordinates_for_map(client, db):
     assert response.json()[0]["latitude"] == 53.9001
     assert response.json()[0]["longitude"] == 27.5601
     assert response.json()[0]["location_verified_at"] is None
+    assert response.json()[0]["image_author"] == "Photo Author"
+    assert response.json()[0]["image_license"] == "CC BY-SA 4.0"
+    assert response.json()[0]["image_license_url"] == "https://creativecommons.org/licenses/by-sa/4.0/"
+    assert response.json()[0]["image_source_url"] == "https://commons.wikimedia.org/wiki/File:Place.jpg"
 
 
 def test_places_reject_unknown_or_inactive_city(client, db):

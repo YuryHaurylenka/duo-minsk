@@ -217,8 +217,9 @@ test('Wikimedia photo cards show creator and license attribution, failed photos 
 
   const broken = page.locator('.place-card').filter({ hasText: 'Место без фото' });
   await broken.scrollIntoViewIfNeeded();
-  await expect(broken.locator('.image-cover')).toHaveAttribute('data-image-kind', 'category-illustration');
-  await expect(broken.locator('.image-illustration-label')).toBeVisible();
+  await expect(broken.locator('.image-cover')).toHaveAttribute('data-image-kind', 'category-placeholder');
+  await expect(broken.locator('.image-cover-placeholder')).toBeVisible();
+  await expect(broken.locator('.image-cover-placeholder small')).toHaveText('ФОТО НЕ ДОБАВЛЕНО');
 });
 
 

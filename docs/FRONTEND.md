@@ -54,7 +54,7 @@ PostgreSQL RLS isolation tests run when the optional `DUO_RLS_TEST_DATABASE_URL`
 
 ## Quality checks (2026-11-27)
 
-- Latest GitHub Actions run `45989135989` passed all three jobs: 99 backend tests, frontend unit tests and production build, and Chromium browser smoke tests.
+- GitHub Actions validation: 99 backend tests passed; frontend unit tests and production build passed; Chromium browser smoke tests passed. The production dependency audit (`npm audit --omit=dev`) found 0 vulnerabilities.
 - The production dependency audit (`npm audit --omit=dev`) found 0 vulnerabilities. This does not suppress the separately documented development-toolchain advisory.
 - Live preview smoke checks returned HTTP 200 for health, database readiness, cities, places, events, updates, and the SPA entry point.
 - Live catalog: 182 active places, 60 scheduled events (59 upcoming and 1 currently running), and 7 city updates.

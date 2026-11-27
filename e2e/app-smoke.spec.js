@@ -496,3 +496,23 @@ test('map renders real locations and its search filters both map results and pla
   expect(dimensions.document, 'map should not overflow horizontally on mobile')
     .toBeLessThanOrEqual(dimensions.viewport + 1);
 });
+
+
+test('detail dialogs support Escape and keep keyboard focus inside', async ({ page }) => {
+  await mockCatalogApi(page);
+  await page.addInitScript(() => sessionStorage.setItem('duoEntrySeen', '1'));
+  await page.goto('/places');
+  await page.locator('.place-card').first().click();
+
+  const dialog = page.getByRole('dialog', { name: 'Окно DUO' });
+  await expect(dialog).toBeVisible();
+  const close = dialog.getByRole('button', { name: 'Закрыть окно' });
+  await expect(close).toBeFocused();
+
+  await page.keyboard.press('Shift+Tab');
+  const focusStayedInside = await dialog.evaluate(element => element.contains(document.activeElement));
+  expect(focusStayedInside, 'Shift+Tab should wrap focus to the last dialog control').toBeTruthy();
+
+  await page.keyboard.press('Escape');
+  await expect(dialog).toHaveCount(0);
+});

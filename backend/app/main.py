@@ -615,7 +615,7 @@ def _match_session_payload(session_id: UUID, user: AuthUser, couple: Couple, db:
     if not session_row:
         raise HTTPException(status_code=404, detail="Раунд DUO Match не найден")
     rows = db.execute(text("""
-        SELECT p.slug, p.name, p.category, p.description, p.address, p.rating, p.reviews, p.price_label, p.image_url, p.image_source_url, p.latitude, p.longitude, p.district, c.position,
+        SELECT p.slug, p.name, p.category, p.description, p.address, p.rating, p.reviews, p.price_label, p.image_url, p.image_source_url, p.image_author, p.image_license, p.image_license_url, p.latitude, p.longitude, p.district, c.position,
                bool_or(v.liked) FILTER (WHERE v.user_id = :user_id) AS my_vote,
                CASE
                    WHEN bool_or(v.liked) FILTER (WHERE v.user_id = :user_id) IS TRUE

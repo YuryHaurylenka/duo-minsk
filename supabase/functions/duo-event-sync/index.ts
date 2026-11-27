@@ -128,6 +128,9 @@ function extractEvents(
     const url = clean(event.url, 1000);
     const start = event.startDate ? new Date(String(event.startDate)) : null;
     if (!name || !url || !start || Number.isNaN(start.getTime())) continue;
+    // Event feeds sometimes expose permanent attractions as events with multi-year dates.
+    // Keep genuinely current/recent multi-day events, but exclude listings that began over a year ago.
+    if (start.getTime() < Date.now() - 365 * 24 * 60 * 60 * 1000) continue;
     const location = (event.location && typeof event.location === "object")
       ? event.location as Record<string, unknown>
       : {};
@@ -280,6 +283,13 @@ Deno.serve(async (req: Request) => {
     body: JSON.stringify({ status: "ended", updated_at: new Date().toISOString() }),
   });
   await rest("duo_events?status=eq.scheduled&ends_at=is.null&starts_at=lt." + nowIso, {
+    method: "PATCH",
+    body: JSON.stringify({ status: "ended", updated_at: new Date().toISOString() }),
+  });
+
+  // Close stale multi-year listings that represent permanent attractions rather than current events.
+  const staleStartCutoff = encodeURIComponent(new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString());
+  await rest("duo_events?status=eq.scheduled&starts_at=lt." + staleStartCutoff, {
     method: "PATCH",
     body: JSON.stringify({ status: "ended", updated_at: new Date().toISOString() }),
   });

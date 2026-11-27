@@ -29,7 +29,7 @@ Vercel keeps the FastAPI framework for API functions and runs `npm ci && npm run
 Every push and pull request targeting `main` runs three independent checks:
 
 - **Backend tests:** install the pinned Python dependencies and run the Pytest suite.
-- **Frontend production build:** install the lockfile-exact npm dependencies with `npm ci` and run `npm run build`.
+- **Frontend production build:** install the lockfile-exact npm dependencies with `npm ci`, run `npm audit --omit=dev`, execute frontend unit tests, and run `npm run build`.
 - **Browser smoke tests:** install Chromium and exercise the main discovery flows, photo attribution and honest image fallbacks with Playwright.
 
 PostgreSQL RLS isolation tests run when the optional `DUO_RLS_TEST_DATABASE_URL` GitHub secret is configured. The frontend build and browser smoke jobs do not need production credentials.
@@ -54,7 +54,8 @@ PostgreSQL RLS isolation tests run when the optional `DUO_RLS_TEST_DATABASE_URL`
 
 ## Quality checks (2026-11-27)
 
-- GitHub Actions passed all three jobs on the photo-attribution implementation: backend tests, frontend production build, and Chromium browser smoke tests.
+- Latest GitHub Actions run `45989135989` passed all three jobs: 99 backend tests, frontend unit tests and production build, and Chromium browser smoke tests.
+- The production dependency audit (`npm audit --omit=dev`) found 0 vulnerabilities. This does not suppress the separately documented development-toolchain advisory.
 - Live preview smoke checks returned HTTP 200 for health, database readiness, cities, places, events, updates, and the SPA entry point.
 - Live catalog: 182 active places, 60 scheduled events (59 upcoming and 1 currently running), and 7 city updates.
 - Catalog integrity: no empty descriptions or addresses, no missing place source URLs, no duplicate normalized active names, and no out-of-range coordinates. One active place still has no verified coordinates; it is intentionally not assigned an estimate.

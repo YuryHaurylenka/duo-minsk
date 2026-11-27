@@ -14,7 +14,7 @@
 
 ## Database tests
 
-`supabase/tests/database/rls_isolation.sql` is a transaction-scoped integration test. It creates five synthetic Auth users, three couples, and private activity/plans, switches to the real `authenticated` and `anon` database roles, checks cross-couple isolation, one-couple-per-user enforcement, the two-member invite limit, invite-row locking, and privilege boundaries, then rolls everything back.
+`supabase/tests/database/rls_isolation.sql` is a transaction-scoped integration test. It creates six synthetic Auth users, three couples, private activity/plans, and two Match rounds. It switches between the real `authenticated`, `anon`, and `duo_match_backend` database roles to check cross-couple isolation, invite limits, Match session/vote isolation, each partner's ability to cast their own vote, mutual-like detection, and privilege boundaries, then rolls everything back.
 
 Run the entire SQL file using a trusted PostgreSQL connection in Supabase SQL Editor or a privileged test connection. Do not run it using the public API key or a normal end-user session. The test is designed to roll back all fixture rows.
 
@@ -30,6 +30,11 @@ GitHub Actions also supports this check when the repository secret `DUO_RLS_TEST
 - The transaction-scoped multi-user isolation script completed successfully against the live database and rolled back all five synthetic users and all three fixture couples. It also checks that public city metadata is readable and private activity is keyed by place slug.
 - Supabase Security Advisor no longer reports exposed authenticated `SECURITY DEFINER` functions: all three couple functions are in the non-exposed `private` schema, use an empty `search_path`, and are executable only by `authenticated`/`service_role`.
 - Leaked-password protection remains a dashboard-level Auth setting and still needs to be enabled by an authorized project administrator.
+
+## Match lifecycle integration coverage (2026-11-27)
+
+- The transaction-scoped RLS suite now models two distinct members in the same couple voting on the same candidate. It verifies each member can update their own vote, the backend role can calculate the mutual result only after both likes exist, and a member cannot modify the partner's vote.
+- This is database-level integration coverage; it does not replace a browser-level registration/invitation flow or prove that the hosted Auth UI works end to end.
 
 ## Latest live privilege check (2026-11-27)
 

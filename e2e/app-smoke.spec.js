@@ -132,22 +132,6 @@ const licensedPlaces = [
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA_-_%D0%BF%D0%B0%D0%B2%D0%BB%D0%B8%D0%BD.jpg/1280px-%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA_-_%D0%BF%D0%B0%D0%B2%D0%BB%D0%B8%D0%BD.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Минский_зоопарк_-_павлин.jpg',
   },
-  {
-    id: 'art-museum-fixture', slug: 'национальныи-художественныи-музеи', city_slug: 'minsk',
-    name: 'Национальный художественный музей', category: 'Музеи и выставки',
-    description: 'Национальный художественный музей Беларуси.', address: 'ул. Ленина, 20, Минск',
-    rating: '4.8', reviews: '500', price_label: 'Уточнить стоимость',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/%D0%9D%D0%B0%D1%86%D1%8B%D1%8F%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B_%D0%BC%D0%B0%D1%81%D1%82%D0%B0%D1%86%D0%BA%D1%96_%D0%BC%D1%83%D0%B7%D0%B5%D0%B9_%D0%A0%D1%8D%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D1%96_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C.jpg/1280px-%D0%9D%D0%B0%D1%86%D1%8B%D1%8F%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B_%D0%BC%D0%B0%D1%81%D1%82%D0%B0%D1%86%D0%BA%D1%96_%D0%BC%D1%83%D0%B7%D0%B5%D0%B9_%D0%A0%D1%8D%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D1%96_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C.jpg',
-    image_source_url: 'https://commons.wikimedia.org/wiki/File:Нацыянальны_мастацкі_музей_Рэспублікі_Беларусь.jpg',
-  },
-  {
-    id: 'botanical-fixture', slug: 'центральныи-ботаническии-сад', city_slug: 'minsk',
-    name: 'Центральный ботанический сад', category: 'Парки',
-    description: 'Ботанический сад Минска.', address: 'ул. Сурганова, 2В, Минск',
-    rating: '4.7', reviews: '300', price_label: 'Уточнить стоимость',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg/1280px-2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg',
-    image_source_url: 'https://commons.wikimedia.org/wiki/File:2026.06.26_Ботанический_сад_в_Минске,_Беларусь_22.jpg',
-  },
 
 ];
 

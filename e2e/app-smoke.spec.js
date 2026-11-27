@@ -164,7 +164,7 @@ const fixturePhotoCredits = {
   'большои-театр-беларуси': ['Ludvig14', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
   'минскии-планетарии': ['Minsk Planetarium', 'CC BY-SA 2.0', 'https://creativecommons.org/licenses/by-sa/2.0/'],
   'национальныи-историческии-музеи': ['Tatiana Matlina', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
-  'галерея-арт-беларусь': ['Tatiana Markina', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'галерея-арт-беларусь': ['Tatiana Matlina', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
   'лошицкии-парк': ['Dina Panayotis', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
   'театр-имени-янки-купалы': ['Hanna Zelenko', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
   'музеи-мастерская-заира-азгура': ['Andrej Hurynovič', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],

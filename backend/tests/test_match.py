@@ -106,7 +106,7 @@ def test_match_start_recovers_when_another_request_wins_active_round_race():
     concurrent.mappings.return_value.first.return_value = {
         "id": session_id, "status": "active", "city_slug": "minsk", "candidate_count": 8,
     }
-    db.execute.side_effect = [no_active, places, MagicMock(), MagicMock(), MagicMock(), concurrent]
+    db.execute.side_effect = [no_active, places, MagicMock(), MagicMock(), MagicMock(), MagicMock(), concurrent]
     db.commit.side_effect = IntegrityError("insert", {}, Exception("duplicate active round"))
     app.dependency_overrides[get_db] = lambda: db
     app.dependency_overrides[require_user] = lambda: AuthUser(id=USER_ID, email="test@example.com")

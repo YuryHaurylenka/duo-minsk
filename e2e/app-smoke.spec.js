@@ -326,7 +326,7 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Минский зоопарк', author: 'SStraySpirit', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский планетарий', author: 'Minsk Planetarium', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
     { query: 'Национальный исторический музей', author: 'Tatiana Matlina', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
-    { query: 'Галерея «Арт-Беларусь»', author: 'Tatiana Markina', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+    { query: 'Галерея «Арт-Беларусь»', author: 'Tatiana Matlina', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Лошицкий парк', author: 'Dina Panayotis', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Театр имени Янки Купалы', author: 'Hanna Zelenko', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { query: 'Музей-мастерская Заира Азгура', author: 'Andrej Hurynovič', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },

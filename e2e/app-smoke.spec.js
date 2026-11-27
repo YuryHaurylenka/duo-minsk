@@ -210,7 +210,8 @@ test('Wikimedia photo cards show creator and license attribution, failed photos 
   const upper = page.locator('.place-card').filter({ hasText: 'Верхний город' });
   const arena = page.locator('.place-card').filter({ hasText: 'Чижовка-Арена' });
   await expect(upper.locator('.image-attribution')).toContainText('Hanna Zelenko');
-  await expect(upper.locator('.image-attribution')).toContainText('Кадрировано');
+  await expect(upper.locator('.image-attribution')).toContainText('CC BY-SA 3.0');
+  await expect(upper.locator('.image-attribution a').first()).toHaveAttribute('href', /commons\.wikimedia\.org/);
   await expect(upper.locator('.image-attribution a').last()).toHaveAttribute('href', 'https://creativecommons.org/licenses/by-sa/3.0/');
   await expect(arena.locator('.image-attribution')).toContainText('Homoatrox');
   await expect(arena.locator('.image-attribution a').last()).toHaveAttribute('href', 'https://creativecommons.org/licenses/by-sa/3.0/');

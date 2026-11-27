@@ -45,6 +45,9 @@ class PlaceOut(BaseModel):
     district: str | None = None
     image_url: str | None = None
     image_source_url: str | None = None
+    image_author: str | None = None
+    image_license: str | None = None
+    image_license_url: str | None = None
 
 
 class EventOut(BaseModel):

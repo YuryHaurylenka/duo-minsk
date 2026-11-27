@@ -104,7 +104,11 @@ jobs:
         run: npm install --no-save --package-lock=false @playwright/test@1.56.1
 
       - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+        run: |
+          # The hosted runner may contain a Microsoft apt source that returns 403.
+          # It is unrelated to Playwright; remove it so Ubuntu dependencies can install.
+          sudo grep -rlZ 'packages.microsoft.com' /etc/apt/sources.list /etc/apt/sources.list.d 2>/dev/null | xargs -0 -r sudo rm -f
+          npx playwright install --with-deps chromium
 
       - name: Run browser smoke tests
         run: npm run test:e2e

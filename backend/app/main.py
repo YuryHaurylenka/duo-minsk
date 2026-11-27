@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import select, func, or_, text, delete
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from app.config import get_settings
 from app.database import get_db
 from app.auth import AuthUser, require_user, require_match_user
@@ -606,7 +606,25 @@ def create_match_session(payload: MatchSessionCreate, user: AuthUser = Depends(r
     db.execute(text("INSERT INTO public.duo_match_sessions (id, couple_id, city_slug, created_by) VALUES (:id, :couple, :city, :user)"), {"id": session_id, "couple": couple.id, "city": city.slug, "user": user.id})
     for position, slug in enumerate(slugs):
         db.execute(text("INSERT INTO public.duo_match_candidates (session_id, place_slug, position) VALUES (:session, :slug, :position)"), {"session": session_id, "slug": slug, "position": position})
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        # A concurrent request may have created the active round after our
+        # initial lookup. The database's partial unique index is authoritative.
+        db.rollback()
+        db.execute(text("SET LOCAL ROLE duo_match_backend"))
+        concurrent_session = db.execute(text("""
+            SELECT s.id, s.status, s.city_slug,
+                (SELECT count(*) FROM public.duo_match_candidates c WHERE c.session_id=s.id) AS candidate_count
+            FROM public.duo_match_sessions s
+            WHERE s.couple_id=:couple AND s.city_slug=:city AND s.status='active'
+            ORDER BY s.created_at DESC LIMIT 1
+        """), {"couple": couple.id, "city": city.slug}).mappings().first()
+        if not concurrent_session:
+            raise
+        return {"id": str(concurrent_session["id"]), "status": concurrent_session["status"],
+                "candidate_count": concurrent_session["candidate_count"],
+                "city_slug": concurrent_session["city_slug"], "resumed": True}
     return {"id": str(session_id), "status": "active", "candidate_count": len(slugs), "city_slug": city.slug, "resumed": False}
 
 

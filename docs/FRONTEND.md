@@ -56,11 +56,11 @@ PostgreSQL RLS isolation tests run when the optional `DUO_RLS_TEST_DATABASE_URL`
 
 - GitHub Actions passed all three jobs on the photo-attribution implementation: backend tests, frontend production build, and Chromium browser smoke tests.
 - Live preview smoke checks returned HTTP 200 for health, database readiness, cities, places, events, updates, and the SPA entry point.
-- Live catalog: 182 active places, 61 upcoming or currently running events, and 7 city updates.
+- Live catalog: 182 active places, 60 scheduled events (59 upcoming and 1 currently running), and 7 city updates.
 - Catalog integrity: no empty descriptions or addresses, no missing place source URLs, no duplicate normalized active names, and no out-of-range coordinates. One active place still has no verified coordinates; it is intentionally not assigned an estimate.
-- Pricing and official-site coverage remain editorial work: 157 places have no numeric cost and 118 have no website URL. Unknown values are labelled as needing confirmation rather than fabricated.
+- Pricing and official-site coverage remain editorial work: 157 places have no numeric cost and 116 have no website URL; 66 have an official website URL. Unknown values are labelled as needing confirmation rather than fabricated.
 - Photo integrity: all 18 active venue photos have a stored source, author, license label, and license URL. Other places use the labelled category placeholder instead of unrelated stock photography.
-- The API filters events by their end time. A maintenance pass also moved 11 already-ended Hubl sessions out of the `scheduled` state; they are no longer counted as upcoming.
+- The API filters events by their end time. A maintenance pass also moved 12 already-ended Hubl sessions out of the `scheduled` state; they are no longer counted as upcoming.
 
 ### Development-toolchain advisory
 

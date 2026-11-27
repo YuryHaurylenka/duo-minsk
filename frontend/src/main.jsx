@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createClient } from '@supabase/supabase-js';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -391,6 +391,28 @@ function ImageCover({src,category,className='',source,alt,credit}){const [failed
 function PlaceCard({place,activity,onSelect,onFavorite,index=0}){return <motion.article className="place-card" role="button" tabIndex={0} aria-label={'Открыть место: '+cleanText(place.name)} onClick={onSelect} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();onSelect()}}} initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{delay:Math.min(index*.04,.24)}} whileHover={{y:-4}}><div className="place-image"><ImageCover src={place.image_url} category={place.category} source={place.image_source_url} alt={place.name} credit={photoCreditFor(place)}/><span className="image-category">{cleanText(place.category)}</span><span className="image-open-label">Открыть место <ArrowUpRight size={12}/></span></div><div className="place-content"><div className="place-title-row"><h3>{cleanText(place.name)}</h3><button className={'heart-button '+(activity?.is_favorite?'saved':'')} onClick={e=>{e.stopPropagation();onFavorite()}} aria-label={activity?.is_favorite?'Убрать из избранного':'Добавить в хочу посетить'} title={activity?.is_favorite?'Убрать из избранного':'Хочу посетить'}><Heart size={17} fill={activity?.is_favorite?'currentColor':'none'}/></button></div><p>{cleanText(place.description)}</p><div className="place-meta"><span><MapPin size={12}/>{place.branches?.length>1?`${place.branches.length} адреса`:cleanText(place.address)||'Адрес уточняется'}</span><span className="place-rating">{validRating(place.rating)?<><Star size={12}/>{place.rating}{Number(place.reviews)>0&&<small className="place-review-count">{Number(place.reviews).toLocaleString('ru-RU')} отз.</small>}</>:'Без оценки'}</span></div><div className="place-bottom"><b>{cleanText(place.price_label)||'Уточнить стоимость'}</b><span className="card-detail-link">Подробнее <ArrowUpRight size={14}/></span></div></div></motion.article>}
 function EventCard({event,onClick,timezone='Europe/Minsk'}){return <motion.article className="event-card" role="button" tabIndex={0} aria-label={'Подробнее о событии: '+cleanText(event.title)} whileHover={{y:-4}} onClick={onClick} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();onClick()}}}><div className="event-image"><ImageCover src={event.image_url} category={event.category} alt={event.title}/><span>{cleanText(event.category)}</span></div><div className="event-info"><small>{fmtDate(event.starts_at,timezone)} · {fmtTime(event.starts_at,timezone)}</small><h3>{cleanText(event.title)}</h3><p>{cleanText(event.venue||event.address)}</p><div className="event-foot"><b>{event.price_min==null?'Цена уточняется':'от '+money(event.price_min,event.currency)}</b><ArrowUpRight size={15}/></div></div></motion.article>}
 function Empty({text}){return <div className="empty-state"><Sparkles/><p>{text}</p></div>}
-function Modal({children,onClose,wide}){return <motion.div className="modal-backdrop" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onMouseDown={onClose}><motion.section role="dialog" aria-modal="true" aria-label="Окно DUO" className={'modal '+(wide?'modal-wide':'')} initial={{opacity:0,y:25,scale:.97}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:15,scale:.98}} onMouseDown={e=>e.stopPropagation()}><button className="modal-close" aria-label="Закрыть окно" onClick={onClose}><X/></button>{children}</motion.section></motion.div>}
+function Modal({children,onClose,wide}){
+ const dialogRef=useRef(null),closeRef=useRef(onClose);
+ useEffect(()=>{closeRef.current=onClose},[onClose]);
+ useEffect(()=>{
+  const previousFocus=document.activeElement,previousOverflow=document.body.style.overflow;
+  const selector='button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  document.body.style.overflow='hidden';
+  const focusFirst=()=>dialogRef.current?.querySelector(selector)?.focus();
+  const onKeyDown=event=>{
+   if(event.key==='Escape'){event.preventDefault();closeRef.current?.();return}
+   if(event.key!=='Tab')return;
+   const items=Array.from(dialogRef.current?.querySelectorAll(selector)||[]).filter(node=>node.getClientRects().length);
+   if(!items.length){event.preventDefault();dialogRef.current?.focus();return}
+   const first=items[0],last=items[items.length-1];
+   if(event.shiftKey&&(document.activeElement===first||!dialogRef.current?.contains(document.activeElement))){event.preventDefault();last.focus()}
+   else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}
+  };
+  document.addEventListener('keydown',onKeyDown);
+  const frame=requestAnimationFrame(focusFirst);
+  return()=>{cancelAnimationFrame(frame);document.removeEventListener('keydown',onKeyDown);document.body.style.overflow=previousOverflow;if(previousFocus?.isConnected)previousFocus.focus()}
+ },[]);
+ return <motion.div className="modal-backdrop" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onMouseDown={onClose}><motion.section ref={dialogRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label="Окно DUO" className={'modal '+(wide?'modal-wide':'')} initial={{opacity:0,y:25,scale:.97}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:15,scale:.98}} onMouseDown={e=>e.stopPropagation()}><button className="modal-close" aria-label="Закрыть окно" onClick={onClose}><X/></button>{children}</motion.section></motion.div>
+}
 
 createRoot(document.getElementById('root')).render(<App/>);

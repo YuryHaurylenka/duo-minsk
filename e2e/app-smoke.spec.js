@@ -132,23 +132,35 @@ const licensedPlaces = [
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA_-_%D0%BF%D0%B0%D0%B2%D0%BB%D0%B8%D0%BD.jpg/1280px-%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D0%B7%D0%BE%D0%BE%D0%BF%D0%B0%D1%80%D0%BA_-_%D0%BF%D0%B0%D0%B2%D0%BB%D0%B8%D0%BD.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:Минский_зоопарк_-_павлин.jpg',
   },
-  {
-    id: 'art-museum-fixture', slug: 'национальныи-художественныи-музеи', city_slug: 'minsk',
-    name: 'Национальный художественный музей', category: 'Музеи и выставки',
-    description: 'Национальный художественный музей Беларуси.', address: 'ул. Ленина, 20, Минск',
-    rating: '4.8', reviews: '500', price_label: 'Уточнить стоимость',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/%D0%9D%D0%B0%D1%86%D1%8B%D1%8F%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B_%D0%BC%D0%B0%D1%81%D1%82%D0%B0%D1%86%D0%BA%D1%96_%D0%BC%D1%83%D0%B7%D0%B5%D0%B9_%D0%A0%D1%8D%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D1%96_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C.jpg/1280px-%D0%9D%D0%B0%D1%86%D1%8B%D1%8F%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B_%D0%BC%D0%B0%D1%81%D1%82%D0%B0%D1%86%D0%BA%D1%96_%D0%BC%D1%83%D0%B7%D0%B5%D0%B9_%D0%A0%D1%8D%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D1%96_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C.jpg',
-    image_source_url: 'https://commons.wikimedia.org/wiki/File:Нацыянальны_мастацкі_музей_Рэспублікі_Беларусь.jpg',
-  },
-  {
-    id: 'botanical-fixture', slug: 'центральныи-ботаническии-сад', city_slug: 'minsk',
-    name: 'Центральный ботанический сад', category: 'Парки',
-    description: 'Ботанический сад Минска.', address: 'ул. Сурганова, 2В, Минск',
-    rating: '4.7', reviews: '300', price_label: 'Уточнить стоимость',
-    image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg/1280px-2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg',
-    image_source_url: 'https://commons.wikimedia.org/wiki/File:2026.06.26_Ботанический_сад_в_Минске,_Беларусь_22.jpg',
-  },
+
 ];
+
+const fixturePhotoCredits = {
+  'национальная-библиотека-беларуси-смотровая-площадка': ['Хомелка', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
+  'верхнии-город-и-площадь-свободы': ['Hanna Zelenko', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
+  'чижовка-арена': ['Homoatrox', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
+  'музеи-истории-великои-отечественнои-воины': ['Adam Jones', 'CC BY-SA 2.0', 'https://creativecommons.org/licenses/by-sa/2.0/'],
+  'национальныи-художественныи-музеи': ['DBatura', 'CC0 1.0', 'https://creativecommons.org/publicdomain/zero/1.0/'],
+  'центральныи-ботаническии-сад': ['Mila Chibireva', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'остров-слез': ['Ludvig14', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'троицкое-предместье': ['Ludvig14', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'минскии-зоопарк': ['SStraySpirit', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'большои-театр-беларуси': ['Ludvig14', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'минскии-планетарии': ['Minsk Planetarium', 'CC BY-SA 2.0', 'https://creativecommons.org/licenses/by-sa/2.0/'],
+  'национальныи-историческии-музеи': ['Tatiana Matlina', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
+  'галерея-арт-беларусь': ['Tatiana Matlina', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'лошицкии-парк': ['Dina Panayotis', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'театр-имени-янки-купалы': ['Hanna Zelenko', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
+  'музеи-мастерская-заира-азгура': ['Andrej Hurynovič', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'парк-горького': ['Gruszecki', 'CC0', 'https://creativecommons.org/publicdomain/zero/1.0/'],
+  'прогулка-по-парку-победы': ['Nigel’s Europe', 'CC BY-SA 2.0', 'https://creativecommons.org/licenses/by-sa/2.0/'],
+};
+for (const place of licensedPlaces) {
+  const credit = fixturePhotoCredits[place.slug];
+  if (credit) {
+    [place.image_author, place.image_license, place.image_license_url] = credit;
+  }
+}
 
 async function mockCatalogApi(page) {
   await page.route('**/api/cities*', route => route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] }));
@@ -168,8 +180,8 @@ test('Wikimedia photo cards show creator and license attribution, failed photos 
   const imagePixel = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/pWQAAAAASUVORK5CYII=', 'base64');
   await page.route('**/api/cities*', route => route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] }));
   await page.route('**/api/places*', route => route.fulfill({ json: [
-    { id: 'upper-town', slug: 'верхнии-город-и-площадь-свободы', city_slug: 'minsk', name: 'Верхний город', category: 'Видовые места', description: 'Исторический центр Минска.', address: 'Минск', image_url: 'https://images.example.test/upper-town.png', image_source_url: 'https://commons.wikimedia.org/wiki/File:Belarus-Minsk-Upper_Town-1.jpg' },
-    { id: 'arena', slug: 'чижовка-арена', city_slug: 'minsk', name: 'Чижовка-Арена', category: 'Спорт', description: 'Спортивная арена.', address: 'Минск', image_url: 'https://images.example.test/arena.png', image_source_url: 'https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg' },
+    { id: 'upper-town', slug: 'верхнии-город-и-площадь-свободы', city_slug: 'minsk', name: 'Верхний город', category: 'Видовые места', description: 'Исторический центр Минска.', address: 'Минск', image_url: 'https://images.example.test/upper-town.png', image_source_url: 'https://commons.wikimedia.org/wiki/File:Belarus-Minsk-Upper_Town-1.jpg', image_author: 'Hanna Zelenko', image_license: 'CC BY-SA 3.0', image_license_url: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+    { id: 'arena', slug: 'чижовка-арена', city_slug: 'minsk', name: 'Чижовка-Арена', category: 'Спорт', description: 'Спортивная арена.', address: 'Минск', image_url: 'https://images.example.test/arena.png', image_source_url: 'https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg', image_author: 'Homoatrox', image_license: 'CC BY-SA 3.0', image_license_url: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { id: 'broken-photo', slug: 'broken-photo', city_slug: 'minsk', name: 'Место без фото', category: 'Квесты', description: 'Карточка без доступной фотографии.', address: 'Минск', image_url: 'https://images.example.test/broken.jpg' },
   ] }));
   await page.route('https://images.example.test/**', route => route.request().url().endsWith('/broken.jpg')
@@ -182,15 +194,17 @@ test('Wikimedia photo cards show creator and license attribution, failed photos 
   const upper = page.locator('.place-card').filter({ hasText: 'Верхний город' });
   const arena = page.locator('.place-card').filter({ hasText: 'Чижовка-Арена' });
   await expect(upper.locator('.image-attribution')).toContainText('Hanna Zelenko');
-  await expect(upper.locator('.image-attribution')).toContainText('Кадрировано');
+  await expect(upper.locator('.image-attribution')).toContainText('CC BY-SA 3.0');
+  await expect(upper.locator('.image-attribution a').first()).toHaveAttribute('href', /commons\.wikimedia\.org/);
   await expect(upper.locator('.image-attribution a').last()).toHaveAttribute('href', 'https://creativecommons.org/licenses/by-sa/3.0/');
   await expect(arena.locator('.image-attribution')).toContainText('Homoatrox');
   await expect(arena.locator('.image-attribution a').last()).toHaveAttribute('href', 'https://creativecommons.org/licenses/by-sa/3.0/');
 
   const broken = page.locator('.place-card').filter({ hasText: 'Место без фото' });
   await broken.scrollIntoViewIfNeeded();
-  await expect(broken.locator('.image-cover')).toHaveAttribute('data-image-kind', 'category-illustration');
-  await expect(broken.locator('.image-illustration-label')).toBeVisible();
+  await expect(broken.locator('.image-cover')).toHaveAttribute('data-image-kind', 'category-placeholder');
+  await expect(broken.locator('.image-cover-placeholder')).toBeVisible();
+  await expect(broken.locator('.image-cover-placeholder small')).toHaveText('ФОТО НЕ ДОБАВЛЕНО');
 });
 
 
@@ -296,7 +310,7 @@ test('licensed catalogue photos show author and direct license links', async ({ 
     { query: 'Минский зоопарк', author: 'SStraySpirit', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Минский планетарий', author: 'Minsk Planetarium', license: 'https://creativecommons.org/licenses/by-sa/2.0/' },
     { query: 'Национальный исторический музей', author: 'Tatiana Matlina', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
-    { query: 'Галерея «Арт-Беларусь»', author: 'Tatiana Markina', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+    { query: 'Галерея «Арт-Беларусь»', author: 'Tatiana Matlina', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Лошицкий парк', author: 'Dina Panayotis', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
     { query: 'Театр имени Янки Купалы', author: 'Hanna Zelenko', license: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { query: 'Музей-мастерская Заира Азгура', author: 'Andrej Hurynovič', license: 'https://creativecommons.org/licenses/by-sa/4.0/' },
@@ -383,9 +397,9 @@ test('broken venue photos fall back to an explicitly labelled category illustrat
   }));
   await page.goto('/places');
   const imageCover = page.locator('.place-card .image-cover').first();
-  await expect(imageCover).toHaveAttribute('data-image-kind', 'category-illustration');
-  await expect(imageCover.locator('.image-illustration-label')).toBeVisible();
-  await expect(imageCover.locator('img')).toHaveAttribute('alt', /Иллюстрация категории/);
+  await expect(imageCover).toHaveAttribute('data-image-kind', 'category-placeholder');
+  await expect(imageCover.locator('.image-cover-placeholder')).toBeVisible();
+  await expect(imageCover.locator('.image-cover-placeholder small')).toHaveText('ФОТО НЕ ДОБАВЛЕНО');
 });
 
 
@@ -481,4 +495,24 @@ test('map renders real locations and its search filters both map results and pla
   }));
   expect(dimensions.document, 'map should not overflow horizontally on mobile')
     .toBeLessThanOrEqual(dimensions.viewport + 1);
+});
+
+
+test('detail dialogs support Escape and keep keyboard focus inside', async ({ page }) => {
+  await mockCatalogApi(page);
+  await page.addInitScript(() => sessionStorage.setItem('duoEntrySeen', '1'));
+  await page.goto('/places');
+  await page.locator('.place-card').first().click();
+
+  const dialog = page.getByRole('dialog', { name: 'Окно DUO' });
+  await expect(dialog).toBeVisible();
+  const close = dialog.getByRole('button', { name: 'Закрыть окно' });
+  await expect(close).toBeFocused();
+
+  await page.keyboard.press('Shift+Tab');
+  const focusStayedInside = await dialog.evaluate(element => element.contains(document.activeElement));
+  expect(focusStayedInside, 'Shift+Tab should wrap focus to the last dialog control').toBeTruthy();
+
+  await page.keyboard.press('Escape');
+  await expect(dialog).toHaveCount(0);
 });

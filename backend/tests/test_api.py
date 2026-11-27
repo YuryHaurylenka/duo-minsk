@@ -42,6 +42,31 @@ def couple(couple_id=COUPLE_ID):
                   created_at=datetime.now(timezone.utc))
 
 
+def test_recommendations_use_match_database_role_for_private_vote_signals():
+    route = next(route for route in app.routes if getattr(route, "path", None) == "/api/recommendations")
+    dependency_calls = {dependency.call for dependency in route.dependant.dependencies}
+    assert require_match_user in dependency_calls
+
+
+
+def test_all_private_match_routes_use_the_dedicated_database_role():
+    protected_paths = {
+        "/api/recommendations",
+        "/api/match/sessions",
+        "/api/match/sessions/active",
+        "/api/match/sessions/{session_id}",
+        "/api/match/sessions/{session_id}/votes",
+    }
+    routes = {
+        route.path: route
+        for route in app.routes
+        if getattr(route, "path", None) in protected_paths
+    }
+    assert set(routes) == protected_paths
+    for path, route in routes.items():
+        dependency_calls = {dependency.call for dependency in route.dependant.dependencies}
+        assert require_match_user in dependency_calls, f"{path} must switch to duo_match_backend"
+
 def test_health_is_public():
     response = TestClient(app).get("/api/health")
     assert response.status_code == 200
@@ -416,6 +441,10 @@ def test_places_include_coordinates_for_map(client, db):
         reviews="—", price_label="Уточнить", couple_price_label="Уточнить", level=1,
         risk="good", tip="", website_url="", source_name="OSM", source_url="", cost=None,
         latitude=53.9001, longitude=27.5601, location_verified_at=None,
+        image_url="https://images.example.test/place.jpg",
+        image_source_url="https://commons.wikimedia.org/wiki/File:Place.jpg",
+        image_author="Photo Author", image_license="CC BY-SA 4.0",
+        image_license_url="https://creativecommons.org/licenses/by-sa/4.0/",
     )
     db.scalars.return_value.all.return_value = [place]
     response = client.get("/api/places?city=minsk")
@@ -423,6 +452,10 @@ def test_places_include_coordinates_for_map(client, db):
     assert response.json()[0]["latitude"] == 53.9001
     assert response.json()[0]["longitude"] == 27.5601
     assert response.json()[0]["location_verified_at"] is None
+    assert response.json()[0]["image_author"] == "Photo Author"
+    assert response.json()[0]["image_license"] == "CC BY-SA 4.0"
+    assert response.json()[0]["image_license_url"] == "https://creativecommons.org/licenses/by-sa/4.0/"
+    assert response.json()[0]["image_source_url"] == "https://commons.wikimedia.org/wiki/File:Place.jpg"
 
 
 def test_places_reject_unknown_or_inactive_city(client, db):

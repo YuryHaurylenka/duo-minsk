@@ -14,7 +14,7 @@
 
 ## Database tests
 
-`supabase/tests/database/rls_isolation.sql` is a transaction-scoped integration test. It creates five synthetic Auth users, three couples, and private activity/plans, switches to the real `authenticated` and `anon` database roles, checks cross-couple isolation, one-couple-per-user enforcement, the two-member invite limit, invite-row locking, and privilege boundaries, then rolls everything back.
+`supabase/tests/database/rls_isolation.sql` is a transaction-scoped integration test. It creates six synthetic Auth users, three couples, private activity/plans, and two Match rounds. It switches between the real `authenticated`, `anon`, and `duo_match_backend` database roles to check cross-couple isolation, invite limits, Match session/vote isolation, each partner's ability to cast their own vote, mutual-like detection, and privilege boundaries, then rolls everything back.
 
 Run the entire SQL file using a trusted PostgreSQL connection in Supabase SQL Editor or a privileged test connection. Do not run it using the public API key or a normal end-user session. The test is designed to roll back all fixture rows.
 
@@ -30,6 +30,21 @@ GitHub Actions also supports this check when the repository secret `DUO_RLS_TEST
 - The transaction-scoped multi-user isolation script completed successfully against the live database and rolled back all five synthetic users and all three fixture couples. It also checks that public city metadata is readable and private activity is keyed by place slug.
 - Supabase Security Advisor no longer reports exposed authenticated `SECURITY DEFINER` functions: all three couple functions are in the non-exposed `private` schema, use an empty `search_path`, and are executable only by `authenticated`/`service_role`.
 - Leaked-password protection remains a dashboard-level Auth setting and still needs to be enabled by an authorized project administrator.
+
+## Match lifecycle integration coverage (2026-11-27)
+
+- The transaction-scoped RLS suite now models two distinct members in the same couple voting on the same candidate. It verifies each member can update their own vote, the backend role can calculate the mutual result only after both likes exist, and a member cannot modify the partner's vote.
+- This is database-level integration coverage; it does not replace a browser-level registration/invitation flow or prove that the hosted Auth UI works end to end.
+
+## Latest live privilege check (2026-11-27)
+
+- All 16 current tables in the exposed `public` schema have RLS enabled.
+- Public read access is limited to the intended catalog tables: `cities`, `places`, `duo_events`, and `duo_place_updates`.
+- Couple and personal activity tables are not readable by `anon`; authenticated reads remain subject to their existing RLS policies.
+- Event-ingestion control tables (`duo_event_sources`, `duo_event_sync_config`, `duo_event_sync_runs`) have no SELECT grants for either `anon` or `authenticated`. Their RLS-enabled/no-policy advisor notices are intentional: access is reserved for the trusted ingestion runtime.
+- Match candidates and votes have no direct SELECT grants for browser roles; Match sessions are visible only to authenticated users under couple-scoped RLS.
+- The photo-attribution migration adds nullable content metadata to `places`; it does not change grants or RLS policies.
+- Supabase Security Advisor still reports leaked-password protection as disabled. This is an Auth dashboard setting and remains an administrator action; it is not silently changed by a database migration.
 
 ## City expansion
 

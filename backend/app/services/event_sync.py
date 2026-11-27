@@ -80,6 +80,15 @@ def _parse_source(key, url, city_slug="minsk"):
             title, start = _text(event.get("name")), event.get("startDate")
             if not title or not start:
                 continue
+            try:
+                starts_at = datetime.fromisoformat(str(start).replace("Z", "+00:00"))
+            except ValueError:
+                continue
+            if starts_at.tzinfo is None:
+                starts_at = starts_at.replace(tzinfo=timezone.utc)
+            # Some source pages expose permanent attractions as multi-year "events".
+            if (datetime.now(timezone.utc) - starts_at.astimezone(timezone.utc)).days > 365:
+                continue
             location = event.get("location") or {}
             address = location.get("address") or {}
             if isinstance(address, dict):

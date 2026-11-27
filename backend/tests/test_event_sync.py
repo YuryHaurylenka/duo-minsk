@@ -48,3 +48,24 @@ def test_parse_source_extracts_image_object_url(monkeypatch):
 
     assert len(parsed) == 1
     assert parsed[0]["image_url"] == "https://bezkassira.by/storage/poster.webp"
+    
+def test_parse_source_ignores_permanent_listings_with_old_start_dates(monkeypatch):
+    event = {
+        "@type": "Event",
+        "name": "Permanent museum admission",
+        "startDate": "2019-11-05T09:00:00+03:00",
+        "endDate": "2026-12-31T20:00:00+03:00",
+        "url": "/vxodnojbiletvmuzejminiatyurbelarusistranamini-7570/",
+    }
+    response = SimpleNamespace(
+        text=f'<script type="application/ld+json">{json.dumps(event)}</script>',
+        raise_for_status=lambda: None,
+    )
+    monkeypatch.setattr(event_sync.requests, "get", lambda *args, **kwargs: response)
+
+    parsed = event_sync._parse_source(
+        "bezkassira-culture",
+        "https://bezkassira.by/events/culture-minsk/",
+    )
+
+    assert parsed == []

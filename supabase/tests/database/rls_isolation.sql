@@ -131,6 +131,18 @@ VALUES
   (current_setting('duo.test.match_session_a')::uuid, current_setting('duo.test.couple_a')::uuid, 'minsk', current_setting('duo.test.user_a')::uuid),
   (current_setting('duo.test.match_session_b')::uuid, current_setting('duo.test.couple_b')::uuid, 'minsk', current_setting('duo.test.user_b')::uuid);
 
+-- Concurrent requests for the same couple/city must not create a second active round.
+DO $test$
+BEGIN
+  BEGIN
+    INSERT INTO public.duo_match_sessions (couple_id, city_slug, created_by)
+    VALUES (current_setting('duo.test.couple_a')::uuid, 'minsk', current_setting('duo.test.user_a')::uuid);
+    RAISE EXCEPTION 'A couple received two active Match rounds for the same city';
+  EXCEPTION WHEN unique_violation THEN
+    NULL;
+  END;
+END $test$;
+
 INSERT INTO public.duo_match_candidates (session_id, place_slug, position)
 VALUES
   (current_setting('duo.test.match_session_a')::uuid, current_setting('duo.test.place_slug'), 1),
@@ -237,6 +249,56 @@ BEGIN
   GET DIAGNOSTICS affected = ROW_COUNT;
   IF affected <> 1 THEN RAISE EXCEPTION 'Match backend could not update its couple session'; END IF;
 END $$;
+
+-- Exercise the second member's Match vote as a distinct authenticated identity.
+-- Both users must be able to vote, while the API role can see the mutual result.
+RESET ROLE;
+SET LOCAL ROLE duo_match_backend;
+SELECT set_config('request.jwt.claim.sub', current_setting('duo.test.user_f'), true);
+SELECT set_config('request.jwt.claims', json_build_object('sub', current_setting('duo.test.user_f'), 'role', 'authenticated')::text, true);
+DO $
+DECLARE affected integer; mutual_count integer; own_vote boolean;
+BEGIN
+  SELECT count(*) INTO mutual_count
+  FROM public.duo_match_votes
+  WHERE session_id = current_setting('duo.test.match_session_a')::uuid;
+  IF mutual_count <> 2 THEN
+    RAISE EXCEPTION 'Second member expected to see two couple votes, found %', mutual_count;
+  END IF;
+
+  UPDATE public.duo_match_votes
+  SET liked = true
+  WHERE session_id = current_setting('duo.test.match_session_a')::uuid
+    AND place_slug = current_setting('duo.test.place_slug')
+    AND user_id = current_setting('duo.test.user_f')::uuid;
+  GET DIAGNOSTICS affected = ROW_COUNT;
+  IF affected <> 1 THEN
+    RAISE EXCEPTION 'Second member could not update their own Match vote';
+  END IF;
+
+  SELECT count(*) INTO mutual_count
+  FROM public.duo_match_votes first_vote
+  JOIN public.duo_match_votes second_vote
+    ON second_vote.session_id = first_vote.session_id
+   AND second_vote.place_slug = first_vote.place_slug
+  WHERE first_vote.session_id = current_setting('duo.test.match_session_a')::uuid
+    AND first_vote.user_id = current_setting('duo.test.user_a')::uuid
+    AND first_vote.liked IS TRUE
+    AND second_vote.user_id = current_setting('duo.test.user_f')::uuid
+    AND second_vote.liked IS TRUE;
+  IF mutual_count <> 1 THEN
+    RAISE EXCEPTION 'Expected one mutual Match after both members liked the candidate, found %', mutual_count;
+  END IF;
+
+  SELECT liked INTO own_vote
+  FROM public.duo_match_votes
+  WHERE session_id = current_setting('duo.test.match_session_a')::uuid
+    AND place_slug = current_setting('duo.test.place_slug')
+    AND user_id = current_setting('duo.test.user_f')::uuid;
+  IF own_vote IS DISTINCT FROM TRUE THEN
+    RAISE EXCEPTION 'Second member cannot read their own Match vote';
+  END IF;
+END $;
 
 RESET ROLE;
 SET LOCAL ROLE authenticated;

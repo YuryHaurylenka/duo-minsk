@@ -26,12 +26,13 @@ Vercel keeps the FastAPI framework for API functions and runs `npm ci && npm run
 
 ## Continuous integration
 
-Every push and pull request targeting `main` runs two independent checks:
+Every push and pull request targeting `main` runs three independent checks:
 
 - **Backend tests:** install the pinned Python dependencies and run the Pytest suite.
 - **Frontend production build:** install the lockfile-exact npm dependencies with `npm ci` and run `npm run build`.
+- **Browser smoke tests:** install Chromium and exercise the main discovery flows, photo attribution and honest image fallbacks with Playwright.
 
-PostgreSQL RLS isolation tests run when the optional `DUO_RLS_TEST_DATABASE_URL` GitHub secret is configured. The frontend build job does not need production credentials.
+PostgreSQL RLS isolation tests run when the optional `DUO_RLS_TEST_DATABASE_URL` GitHub secret is configured. The frontend build and browser smoke jobs do not need production credentials.
 
 ## Current interface areas
 
@@ -51,13 +52,15 @@ PostgreSQL RLS isolation tests run when the optional `DUO_RLS_TEST_DATABASE_URL`
 - Analytics are derived from saved activity. They are not synthetic sample metrics.
 - Current place-card photos are category-level editorial imagery unless a place provides its own `image_url`; they should not be presented as verified venue photographs.
 
-## Quality checks (2026-11-18)
+## Quality checks (2026-11-27)
 
-- `npm run build` succeeds with Vite 7.3.8.
-- `npm audit --omit=dev` reports no vulnerabilities in production dependencies.
-- Backend test suite: 31 passed.
-- Catalog QA: 110 active places, 64 upcoming/active events, and 7 city updates were checked for missing names/descriptions/addresses, malformed URLs, replacement characters, and repeated whitespace. Repeated whitespace is normalized before display.
-- API smoke checks: health, readiness, cities, places, events, and updates return HTTP 200; unauthenticated `/api/me` returns HTTP 401 as expected.
+- GitHub Actions passed all three jobs on the photo-attribution implementation: backend tests, frontend production build, and Chromium browser smoke tests.
+- Live preview smoke checks returned HTTP 200 for health, database readiness, cities, places, events, updates, and the SPA entry point.
+- Live catalog: 182 active places, 61 upcoming or currently running events, and 7 city updates.
+- Catalog integrity: no empty descriptions or addresses, no missing place source URLs, no duplicate normalized active names, and no out-of-range coordinates. One active place still has no verified coordinates; it is intentionally not assigned an estimate.
+- Pricing and official-site coverage remain editorial work: 157 places have no numeric cost and 118 have no website URL. Unknown values are labelled as needing confirmation rather than fabricated.
+- Photo integrity: all 18 active venue photos have a stored source, author, license label, and license URL. Other places use the labelled category placeholder instead of unrelated stock photography.
+- The API filters events by their end time. A maintenance pass also moved 11 already-ended Hubl sessions out of the `scheduled` state; they are no longer counted as upcoming.
 
 ### Development-toolchain advisory
 

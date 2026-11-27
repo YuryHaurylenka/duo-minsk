@@ -48,6 +48,25 @@ def test_recommendations_use_match_database_role_for_private_vote_signals():
     assert require_match_user in dependency_calls
 
 
+
+def test_all_private_match_routes_use_the_dedicated_database_role():
+    protected_paths = {
+        "/api/recommendations",
+        "/api/match/sessions",
+        "/api/match/sessions/active",
+        "/api/match/sessions/{session_id}",
+        "/api/match/sessions/{session_id}/votes",
+    }
+    routes = {
+        route.path: route
+        for route in app.routes
+        if getattr(route, "path", None) in protected_paths
+    }
+    assert set(routes) == protected_paths
+    for path, route in routes.items():
+        dependency_calls = {dependency.call for dependency in route.dependant.dependencies}
+        assert require_match_user in dependency_calls, f"{path} must switch to duo_match_backend"
+
 def test_health_is_public():
     response = TestClient(app).get("/api/health")
     assert response.status_code == 200

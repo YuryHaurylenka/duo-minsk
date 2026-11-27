@@ -148,7 +148,35 @@ const licensedPlaces = [
     image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg/1280px-2026.06.26_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B0%D0%B4_%D0%B2_%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%D0%B5%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C_22.jpg',
     image_source_url: 'https://commons.wikimedia.org/wiki/File:2026.06.26_Ботанический_сад_в_Минске,_Беларусь_22.jpg',
   },
+
 ];
+
+const fixturePhotoCredits = {
+  'национальная-библиотека-беларуси-смотровая-площадка': ['Хомелка', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
+  'верхнии-город-и-площадь-свободы': ['Hanna Zelenko', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
+  'чижовка-арена': ['Homoatrox', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
+  'музеи-истории-великои-отечественнои-воины': ['Adam Jones', 'CC BY-SA 2.0', 'https://creativecommons.org/licenses/by-sa/2.0/'],
+  'национальныи-художественныи-музеи': ['DBatura', 'CC0 1.0', 'https://creativecommons.org/publicdomain/zero/1.0/'],
+  'центральныи-ботаническии-сад': ['Mila Chibireva', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'остров-слез': ['Ludvig14', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'троицкое-предместье': ['Ludvig14', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'минскии-зоопарк': ['SStraySpirit', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'большои-театр-беларуси': ['Ludvig14', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'минскии-планетарии': ['Minsk Planetarium', 'CC BY-SA 2.0', 'https://creativecommons.org/licenses/by-sa/2.0/'],
+  'национальныи-историческии-музеи': ['Tatiana Matlina', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
+  'галерея-арт-беларусь': ['Tatiana Markina', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'лошицкии-парк': ['Dina Panayotis', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'театр-имени-янки-купалы': ['Hanna Zelenko', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'],
+  'музеи-мастерская-заира-азгура': ['Andrej Hurynovič', 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+  'парк-горького': ['Gruszecki', 'CC0', 'https://creativecommons.org/publicdomain/zero/1.0/'],
+  'прогулка-по-парку-победы': ['Nigel’s Europe', 'CC BY-SA 2.0', 'https://creativecommons.org/licenses/by-sa/2.0/'],
+};
+for (const place of licensedPlaces) {
+  const credit = fixturePhotoCredits[place.slug];
+  if (credit) {
+    [place.image_author, place.image_license, place.image_license_url] = credit;
+  }
+}
 
 async function mockCatalogApi(page) {
   await page.route('**/api/cities*', route => route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] }));
@@ -168,8 +196,8 @@ test('Wikimedia photo cards show creator and license attribution, failed photos 
   const imagePixel = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/pWQAAAAASUVORK5CYII=', 'base64');
   await page.route('**/api/cities*', route => route.fulfill({ json: [{ slug: 'minsk', name_localized: 'Минск', timezone: 'Europe/Minsk' }] }));
   await page.route('**/api/places*', route => route.fulfill({ json: [
-    { id: 'upper-town', slug: 'верхнии-город-и-площадь-свободы', city_slug: 'minsk', name: 'Верхний город', category: 'Видовые места', description: 'Исторический центр Минска.', address: 'Минск', image_url: 'https://images.example.test/upper-town.png', image_source_url: 'https://commons.wikimedia.org/wiki/File:Belarus-Minsk-Upper_Town-1.jpg' },
-    { id: 'arena', slug: 'чижовка-арена', city_slug: 'minsk', name: 'Чижовка-Арена', category: 'Спорт', description: 'Спортивная арена.', address: 'Минск', image_url: 'https://images.example.test/arena.png', image_source_url: 'https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg' },
+    { id: 'upper-town', slug: 'верхнии-город-и-площадь-свободы', city_slug: 'minsk', name: 'Верхний город', category: 'Видовые места', description: 'Исторический центр Минска.', address: 'Минск', image_url: 'https://images.example.test/upper-town.png', image_source_url: 'https://commons.wikimedia.org/wiki/File:Belarus-Minsk-Upper_Town-1.jpg', image_author: 'Hanna Zelenko', image_license: 'CC BY-SA 3.0', image_license_url: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+    { id: 'arena', slug: 'чижовка-арена', city_slug: 'minsk', name: 'Чижовка-Арена', category: 'Спорт', description: 'Спортивная арена.', address: 'Минск', image_url: 'https://images.example.test/arena.png', image_source_url: 'https://commons.wikimedia.org/wiki/File:Chizhovka-Arena_inside_1.jpg', image_author: 'Homoatrox', image_license: 'CC BY-SA 3.0', image_license_url: 'https://creativecommons.org/licenses/by-sa/3.0/' },
     { id: 'broken-photo', slug: 'broken-photo', city_slug: 'minsk', name: 'Место без фото', category: 'Квесты', description: 'Карточка без доступной фотографии.', address: 'Минск', image_url: 'https://images.example.test/broken.jpg' },
   ] }));
   await page.route('https://images.example.test/**', route => route.request().url().endsWith('/broken.jpg')
@@ -383,9 +411,9 @@ test('broken venue photos fall back to an explicitly labelled category illustrat
   }));
   await page.goto('/places');
   const imageCover = page.locator('.place-card .image-cover').first();
-  await expect(imageCover).toHaveAttribute('data-image-kind', 'category-illustration');
-  await expect(imageCover.locator('.image-illustration-label')).toBeVisible();
-  await expect(imageCover.locator('img')).toHaveAttribute('alt', /Иллюстрация категории/);
+  await expect(imageCover).toHaveAttribute('data-image-kind', 'category-placeholder');
+  await expect(imageCover.locator('.image-cover-placeholder')).toBeVisible();
+  await expect(imageCover.locator('.image-cover-placeholder small')).toHaveText('ФОТО НЕ ДОБАВЛЕНО');
 });
 
 

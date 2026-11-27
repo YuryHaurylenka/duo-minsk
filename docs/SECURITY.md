@@ -31,6 +31,16 @@ GitHub Actions also supports this check when the repository secret `DUO_RLS_TEST
 - Supabase Security Advisor no longer reports exposed authenticated `SECURITY DEFINER` functions: all three couple functions are in the non-exposed `private` schema, use an empty `search_path`, and are executable only by `authenticated`/`service_role`.
 - Leaked-password protection remains a dashboard-level Auth setting and still needs to be enabled by an authorized project administrator.
 
+## Latest live privilege check (2026-11-27)
+
+- All 16 current tables in the exposed `public` schema have RLS enabled.
+- Public read access is limited to the intended catalog tables: `cities`, `places`, `duo_events`, and `duo_place_updates`.
+- Couple and personal activity tables are not readable by `anon`; authenticated reads remain subject to their existing RLS policies.
+- Event-ingestion control tables (`duo_event_sources`, `duo_event_sync_config`, `duo_event_sync_runs`) have no SELECT grants for either `anon` or `authenticated`. Their RLS-enabled/no-policy advisor notices are intentional: access is reserved for the trusted ingestion runtime.
+- Match candidates and votes have no direct SELECT grants for browser roles; Match sessions are visible only to authenticated users under couple-scoped RLS.
+- The photo-attribution migration adds nullable content metadata to `places`; it does not change grants or RLS policies.
+- Supabase Security Advisor still reports leaked-password protection as disabled. This is an Auth dashboard setting and remains an administrator action; it is not silently changed by a database migration.
+
 ## City expansion
 
 The city directory currently exposes only Minsk. Places, events, updates, event sources, and sync-run records now carry a `city_slug`; event ingestion resolves each source against active city metadata (localized name, country, time zone and currency). A new city must not be activated until its venue catalog and event sources are verified.

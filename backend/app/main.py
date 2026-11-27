@@ -245,7 +245,7 @@ def _recommendation_category(value: str | None) -> str:
 
 
 @app.post("/api/recommendations")
-def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends(require_user), db: Session = Depends(get_db)):
+def get_recommendations(payload: RecommendationRequest, user: AuthUser = Depends(require_match_user), db: Session = Depends(get_db)):
     """Rank active places using the current user's preferences and real activity signals."""
     city = require_active_city(db, payload.city_slug)
     member = db.scalar(select(CoupleMember).where(CoupleMember.user_id == user.id).limit(1))
